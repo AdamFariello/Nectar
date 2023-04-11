@@ -11,7 +11,7 @@ public class databaseConnection{
 	public databaseConnection() {
 		//Default connection 
 		//Login is from server/database/.notes
-		username = "Aeyjaejay";
+		username = "Yocif";
 		password = "1234";
 		url 	 = "jdbc:mysql://localhost:3306/" + server
 				 + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=" + timeZone

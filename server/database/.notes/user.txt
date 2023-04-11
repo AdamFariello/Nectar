@@ -1,2 +1,6 @@
 username: Yocif@localhost
 password: 1234
+
+username: root
+password: root
+CREATE USER 'root'@'localhost' IDENTIFIED BY 'root'; FLUSH PRIVILEGES;

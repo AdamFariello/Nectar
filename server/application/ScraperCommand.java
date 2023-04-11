@@ -1,9 +1,9 @@
 package server.application;
 
 public abstract class ScraperCommand {
-    private Receiver receiver;
-    private String productID;
-    private String url;
+    protected Receiver receiver;
+    protected String productID;
+    protected String url;
 
     public ScraperCommand(String productID, String url, Receiver receiver){
         this.productID = productID;

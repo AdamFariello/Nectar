@@ -1,8 +1,28 @@
 package server.application;
 
+import java.util.HashMap;
+
 public class Receiver {
+    HashMap<String, UserSubscriber> userSubscribers;
     ProductVO previousProductVO;
-    //Add user publisher list for product here
+
+    public void addUser(String userID, UserSubscriber userSubscriber){
+        userSubscribers.put(userID, userSubscriber);
+    }
+
+    //Returns if there are no more users left to notify
+    public boolean removeUser(String userID){
+        if (userSubscribers.size() == 0){
+            return true;
+            
+        }else if (userSubscribers.size() == 1){
+            userSubscribers.remove(userID);
+            return true;
+        }else{
+            userSubscribers.remove(userID);
+            return false;
+        }
+    }
 
     /*TODO: build message to notify user publisher that product info has changed. 
         Publisher will know productTrackerSettings for each user and based on that
@@ -14,7 +34,7 @@ public class Receiver {
         if (previousProductVO == null){
             previousProductVO = productVO;
         } else if (previousProductVO != productVO){
-            String msg = "";
+            userSubscribers.forEach((k, v) -> v.notify(productVO, previousProductVO));
         }
     }
 }

@@ -3,7 +3,7 @@ package server.application;
 import java.util.HashMap;
 
 public class WebScraper {
-    HashMap<String, Command> scraperCommands;
+    HashMap<String, ScraperCommand> scraperCommands;
 
     public void addProduct(String productID, String url, String website, Receiver receiver){
         switch (website) {

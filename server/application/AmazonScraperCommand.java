@@ -1,6 +1,6 @@
 package server.application;
 
-public class AmazonScraperCommand extends Command{
+public class AmazonScraperCommand extends ScraperCommand{
 
     public AmazonScraperCommand(String productID, String url, Receiver receiver) {
         super(productID, url, receiver);

@@ -8,6 +8,7 @@ public class databaseConnection{
 	private static String username, password, url;
 	private static Connection connection;
 	
+	//Connections
 	public databaseConnection() {
 		//Default connection 
 		//Login is from server/database/.notes
@@ -31,11 +32,13 @@ public class databaseConnection{
 		this.password = password;
 		this.url 	  = url;
 	}
-		
+	
+	
+	//Connections setups
 	public static Connection Connection() {
 		try	{
 			return connection = DriverManager.getConnection(url,username,password);
-		}	catch(Exception e)	{
+		} catch (Exception e) {
 			System.out.println(e);
 		}
 		
@@ -51,6 +54,18 @@ public class databaseConnection{
 		}
 	}
 	
+	
+	
+	//Gets
+	public Connection getConnection() {
+		return connection;
+	}
+	public String getServerName() {
+		return server;
+	}
+	
+	
+	//Inherited
 	public String toString() {
 		String string = null;
 		try {

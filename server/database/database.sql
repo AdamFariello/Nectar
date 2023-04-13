@@ -267,5 +267,5 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `nectar`;
-INSERT INTO `nectar`.`administration` (`admin_id`, `admin_username`, `admin_password`, `admin_host`) VALUES (0, 'admin', '', NULL);
+INSERT INTO `nectar`.`administration` (`admin_id`, `admin_username`, `admin_password`, `admin_host`) VALUES (0, 'admin', 'password', NULL);
 COMMIT;

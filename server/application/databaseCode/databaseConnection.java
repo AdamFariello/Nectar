@@ -45,20 +45,12 @@ public class databaseConnection{
 										 	localhost, port, server
 									    );
 					String serverArgs = String.format(
-											"?useUnicode=true&useJDBCCompliant"
+											"useUnicode=true&useJDBCCompliant"
 										  + "TimezoneShift=true&useLegacyDatetimeCode=false"
 										  + "&serverTimezone=%s",
 										    timeZone
 									  );
-					url = serverUrl + serverArgs;
-					
-					/*
-					url = "jdbc:mysql://localhost:3306/" + server
-						+ "?useUnicode=true&useJDBCCompliant"
-						+ "TimezoneShift=true&useLegacyDatetimeCode=false"
-						+ "&serverTimezone=" + timeZone
-					;
-					*/
+					url = serverUrl + "?" + serverArgs;
 					break;
 					
 				default:

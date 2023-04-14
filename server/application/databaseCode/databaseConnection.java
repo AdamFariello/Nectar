@@ -4,7 +4,6 @@ import java.sql.*;
 
 public class databaseConnection{
 	private String server   = "Nectar";
-	private String timeZone = "EDT";
 	private static String username, password, url;
 	private static Connection connection;
 	
@@ -28,18 +27,38 @@ public class databaseConnection{
 		init(url);
 	}
 	@SuppressWarnings("deprecation")
-	public void init (String serverLocation) {
+	public void init (String serverLocation) {		
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		
+			//TODO: Figure out what to do with these:
+			//Class.forName("com.mysql.jdbc.Driver").newInstance();
+			//Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			
+			//TODO: Add case to check for bad entries
 			switch (serverLocation) {
-				//TODO: Add case to check for bad entries
 				case "local":
+					String localhost  = "localhost";
+					String port		  = "3306";
+					String timeZone   = "EDT";
+					String serverUrl  = String.format(
+											"jdbc:mysql://%s:%s/%s",
+										 	localhost, port, server
+									    );
+					String serverArgs = String.format(
+											"?useUnicode=true&useJDBCCompliant"
+										  + "TimezoneShift=true&useLegacyDatetimeCode=false"
+										  + "&serverTimezone=%s",
+										    timeZone
+									  );
+					url = serverUrl + serverArgs;
+					
+					/*
 					url = "jdbc:mysql://localhost:3306/" + server
 						+ "?useUnicode=true&useJDBCCompliant"
 						+ "TimezoneShift=true&useLegacyDatetimeCode=false"
 						+ "&serverTimezone=" + timeZone
 					;
+					*/
 					break;
 					
 				default:

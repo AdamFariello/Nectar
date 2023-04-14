@@ -12,31 +12,43 @@ public class databaseConnection{
 	public databaseConnection() {
 		//Default connection 
 		username = "Yocif";
-		password = "1234";		
+		password = "1234";	
+		init("localhost");
 	}
 	@SuppressWarnings("static-access")
 	public databaseConnection(String username, String password) {
 		this.username = username;
 		this.password = password;
+		init("localhost");
 	}
 	@SuppressWarnings("static-access")
 	public databaseConnection(String username, String password, String url) {
 		this.username = username;
 		this.password = password;
-		this.url 	  = url;
+		init(url);
 	}
 	@SuppressWarnings("deprecation")
-	public void init () {
+	public void init (String serverLocation) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		
+			switch (serverLocation) {
+				//TODO: Add case to check for bad entries
+				case "local":
+					url = "jdbc:mysql://localhost:3306/" + server
+						+ "?useUnicode=true&useJDBCCompliant"
+						+ "TimezoneShift=true&useLegacyDatetimeCode=false"
+						+ "&serverTimezone=" + timeZone
+					;
+					break;
+					
+				default:
+					//TODO: Replace with ipaddress/hostname of system
+					url = serverLocation;
+					break;
+			}
 		} catch (Exception e) {
 			System.out.println(e);
-		} finally {
-			url = "jdbc:mysql://localhost:3306/" + server
-				+ "?useUnicode=true&useJDBCCompliant"
-				+ "TimezoneShift=true&useLegacyDatetimeCode=false"
-				+ "&serverTimezone=" + timeZone
-			;
 		}
 	}
 	

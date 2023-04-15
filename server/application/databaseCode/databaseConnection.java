@@ -3,15 +3,14 @@ package databaseCode;
 import java.sql.*;
 
 public class databaseConnection{
-	private String server   = "Nectar";
-	private static String username, password, url;
 	private static Connection connection;
+	private static String username, password, url, server;
 	
 	//Connections
 	public databaseConnection() {
 		//Default connection 
-		username = "Yocif";
-		password = "1234";	
+		username = "admin";
+		password = "password";	
 		init("localhost");
 	}
 	@SuppressWarnings("static-access")
@@ -26,40 +25,32 @@ public class databaseConnection{
 		this.password = password;
 		init(url);
 	}
-	@SuppressWarnings("deprecation")
 	public void init (String serverLocation) {		
-		try {
-			//TODO: Figure out what to do with these:
-			//Class.forName("com.mysql.jdbc.Driver").newInstance();
-			//Class.forName("com.mysql.jdbc.Driver");
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			
-			//TODO: Add case to check for bad entries
-			switch (serverLocation) {
-				case "local":
-					String localhost  = "localhost";
-					String port		  = "3306";
-					String timeZone   = "EDT";
-					String serverUrl  = String.format(
-											"jdbc:mysql://%s:%s/%s",
-										 	localhost, port, server
-									    );
-					String serverArgs = String.format(
-											"useUnicode=true&useJDBCCompliant"
-										  + "TimezoneShift=true&useLegacyDatetimeCode=false"
-										  + "&serverTimezone=%s",
-										    timeZone
-									  );
-					url = serverUrl + "?" + serverArgs;
-					break;
-					
-				default:
-					//TODO: Replace with ipaddress/hostname of system
-					url = serverLocation;
-					break;
-			}
-		} catch (Exception e) {
-			System.out.println(e);
+		//TODO: Add case to check for bad entries
+		
+		server = "nectar";
+		switch (serverLocation) {
+			case "localhost":
+				String localhost  = "localhost";
+				String port		  = "3306";
+				String timeZone   = "EDT";
+				String mysqlURL  = String.format(
+										"jdbc:mysql://%s:%s/%s",
+									 	localhost, port, server
+								    );
+				String mysqlArgs = String.format(
+										"useUnicode=true&useJDBCCompliant"
+									  + "TimezoneShift=true&useLegacyDatetimeCode=false"
+									  + "&serverTimezone=%s",
+									    timeZone
+								  );
+				url = mysqlURL + "?" + mysqlArgs;
+				break;
+				
+			default:
+				//TODO: Replace with ipaddress/hostname of system
+				url = serverLocation;
+				break;
 		}
 	}
 	
@@ -68,7 +59,11 @@ public class databaseConnection{
 	@SuppressWarnings("finally")
 	public static Connection Connection() {
 		try	{
-			return connection = DriverManager.getConnection(url,username,password);
+			//Class.forName("com.mysql.jdbc.Driver").newInstance();
+			//Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			connection = DriverManager.getConnection(url,username,password);
+			return connection;
 		} catch (Exception e) {
 			System.out.println(e);
 		} finally {

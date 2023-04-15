@@ -14,7 +14,5 @@ public class test {
 		rs.next();
 		for (int i = 1; true; i++) 
 			System.out.println(rs.getString(i));
-		
-		
 	}
 }

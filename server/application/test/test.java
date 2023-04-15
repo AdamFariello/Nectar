@@ -1,6 +1,7 @@
 package test;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import databaseCode.*;
 
@@ -10,10 +11,8 @@ public class test {
 		dc.Connection();
 		databaseQueries dq = new databaseQueries(dc);
 		
-		
-		//dq.describeTable("user");
-		ResultSet rs = dq.describeTable("user");
-		while (rs.next() == true)
-			System.out.println(rs.getString(1));
+		String table = "user";
+		ArrayList<String> tableInputs = new ArrayList<String>();
+		dq.insertIntoTable_IncludingPrimaryKey(table, tableInputs);
 	}
 }

@@ -5,45 +5,42 @@ import java.sql.*;
 public class databaseConnection{
 	private static String username  = "admin";
 	private static String password  = "password";
-	private String server    		= "nectar";
-	private String host		 		= "localhost";
-	private static String url;
-	private static Connection connection = null;
 	
+	private static String url;
+	private final String server = "nectar";
+	private final String port   = "3306";
+	private String host			= "localhost";
+	private static Connection connection = null;
 	
 	public databaseConnection() {
 		//Default connection 
-		init();
+		createURL();
 	}
 	@SuppressWarnings("static-access")
 	public databaseConnection(String username, String password) {
 		this.username = username;
 		this.password = password;
-		init();
+		createURL();
 	}
 	@SuppressWarnings("static-access")
 	public databaseConnection(String username, String password, String host) {
 		this.username = username;
 		this.password = password;
 		this.host     = host;
-		init();
+		createURL();
 	}
-	public void init () {
+	private void createURL () {
 		//Setup Url
-		String s 		 = "jdbc:mysql://%s:%s/%s";
-		String port		 = "3306";
-		String mysqlURL  = String.format(s, host, port, server);
+		String s 		  = "jdbc:mysql://%s:%s/%s";
+		String mysqlURL   = String.format(s, host, port, server);
 		
 		//Setting up arguments
 		//TODO: Add back time-zone and other arguments
-		/*
-		s = "?"
-		  + "useUnicode=true&useJDBCCompliant"
-		  + "TimezoneShift=true&useLegacyDatetimeCode=false"
-		  + "&serverTimezone=%s";
-		*/
 		s = "?"
 		  + "verifyServerCertificate=false";
+		  //+ "useUnicode=true&useJDBCCompliant"
+		  //+ "TimezoneShift=true&useLegacyDatetimeCode=false"
+		  //+ "&serverTimezone=%s";
 		String timeZone  = "EDT";
 		String mysqlArgs = String.format(s, timeZone);
 		

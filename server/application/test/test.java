@@ -10,9 +10,10 @@ public class test {
 		dc.Connection();
 		databaseQueries dq = new databaseQueries(dc);
 		
+		
+		//dq.describeTable("user");
 		ResultSet rs = dq.describeTable("user");
-		rs.next();
-		for (int i = 1; true; i++) 
-			System.out.println(rs.getString(i));
+		while (rs.next() == true)
+			System.out.println(rs.getString(1));
 	}
 }

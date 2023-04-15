@@ -3,71 +3,65 @@ package databaseCode;
 import java.sql.*;
 
 public class databaseConnection{
-	private static Connection connection;
-	private static String username, password, url, server;
+	private static String username  = "admin";
+	private static String password  = "password";
+	private String server    		= "nectar";
+	private String host		 		= "localhost";
+	private static String url;
+	private static Connection connection = null;
 	
-	//Connections
+	
 	public databaseConnection() {
 		//Default connection 
-		username = "admin";
-		password = "password";	
-		init("localhost");
+		init();
 	}
 	@SuppressWarnings("static-access")
 	public databaseConnection(String username, String password) {
 		this.username = username;
 		this.password = password;
-		init("localhost");
+		init();
 	}
 	@SuppressWarnings("static-access")
-	public databaseConnection(String username, String password, String url) {
+	public databaseConnection(String username, String password, String host) {
 		this.username = username;
 		this.password = password;
-		init(url);
+		this.host     = host;
+		init();
 	}
-	public void init (String serverLocation) {		
-		//TODO: Add case to check for bad entries
+	public void init () {
+		//Setup Url
+		String s 		 = "jdbc:mysql://%s:%s/%s";
+		String port		 = "3306";
+		String mysqlURL  = String.format(s, host, port, server);
 		
-		server = "nectar";
-		switch (serverLocation) {
-			case "localhost":
-				String localhost  = "localhost";
-				String port		  = "3306";
-				String timeZone   = "EDT";
-				String mysqlURL  = String.format(
-										"jdbc:mysql://%s:%s/%s",
-									 	localhost, port, server
-								    );
-				String mysqlArgs = String.format(
-										"useUnicode=true&useJDBCCompliant"
-									  + "TimezoneShift=true&useLegacyDatetimeCode=false"
-									  + "&serverTimezone=%s",
-									    timeZone
-								  );
-				url = mysqlURL + "?" + mysqlArgs;
-				break;
-				
-			default:
-				//TODO: Replace with ipaddress/hostname of system
-				url = serverLocation;
-				break;
-		}
+		//Setting up arguments
+		//TODO: Add back time-zone and other arguments
+		/*
+		s = "?"
+		  + "useUnicode=true&useJDBCCompliant"
+		  + "TimezoneShift=true&useLegacyDatetimeCode=false"
+		  + "&serverTimezone=%s";
+		*/
+		s = "?"
+		  + "verifyServerCertificate=false";
+		String timeZone  = "EDT";
+		String mysqlArgs = String.format(s, timeZone);
+		
+		//Combine
+		url = mysqlURL + mysqlArgs;
 	}
-	
 	
 	//Connections setups
 	@SuppressWarnings("finally")
 	public static Connection Connection() {
 		try	{
 			//Class.forName("com.mysql.jdbc.Driver").newInstance();
-			//Class.forName("com.mysql.jdbc.Driver");
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection = DriverManager.getConnection(url,username,password);
-			return connection;
 		} catch (Exception e) {
 			System.out.println(e);
 		} finally {
-			return null;	
+			return connection;	
 		}
 	}
 	public void closeConnection() {

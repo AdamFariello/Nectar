@@ -4,14 +4,14 @@ import java.sql.*;
 import java.util.ArrayList;
 
 @SuppressWarnings("serial") 
-class unequalArrayListLengths extends Exception{ 
+class errorUnequalArrayListLengths extends Exception{ 
 	private static String error = "The ArrayList for %s "
 					 			+ "and the amount of columns of %s "
 					 			+ "are different lengths";
-	private static String errorBorders = "\n" + "#".repeat(error.length() * 2);			
+	private static String errorBorders = "\n" + "=".repeat(error.length() * 2);			
 	
-	public unequalArrayListLengths() {}
-	public unequalArrayListLengths(String table) {
+	public errorUnequalArrayListLengths() {}
+	public errorUnequalArrayListLengths(String table) {
 		super (String.format(error + errorBorders, table, table));
 	}
 }
@@ -76,7 +76,7 @@ public class databaseQueries {
 		int connectionStatus = 0;
 		try { 
 			if (tableInputs.size() != tableColumns.size()) {
-				throw new unequalArrayListLengths(table); 
+				throw new errorUnequalArrayListLengths(table); 
 			}
 			
 			//Converting: "[{insert values}]" to "{insert values}" 
@@ -97,6 +97,17 @@ public class databaseQueries {
 			//Sending it to database
 			Connection connection = databaseConnection.getConnection();
 			PreparedStatement ps  = connection.prepareStatement(query);
+			
+			//Replacing each "?" first introduced in the query string
+			//You count from 1 for some reason.
+			for (int i = 1; tableInputs.size() > 0; i++) {
+				//"remove(0)" == pop()
+				ps.setString(i, tableInputs.remove(0));
+				
+				
+				
+				
+			}
 			connectionStatus  = ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

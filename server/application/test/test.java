@@ -12,12 +12,11 @@ public class test {
 		databaseQueries dq = new databaseQueries(dc);
 		
 		String table = "user";
-		ArrayList<Object> tableInputs = new ArrayList<Object>();
-		tableInputs.add("0");
-		tableInputs.add("Garfield_LZanya@gmail.com");
-		tableInputs.add("killThePresident");
-		tableInputs.add("111-222-3333");
+		ArrayList<String> tableInputs = new ArrayList<String>();
+		tableInputs.add("KbToys@gmail.com");
+		tableInputs.add("PrintYourOwnMoney");
+		tableInputs.add("111-222-3390");
 		
-		dq.insertIntoTable_IncludingPrimaryKey(table, tableInputs);
+		dq.insertIntoTable_WithOutPrimaryKey(table, tableInputs);
 	}
 }

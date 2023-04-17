@@ -15,6 +15,10 @@ class errorUnequalArrayListLengths extends Exception{
 		super (String.format(error + errorBorders, table, table));
 	}
 }
+class errorUnequalObjectTypes extends Exception {
+	//TODO: Create functions to catch bad datatypes 
+	//For when inserting into the database
+}
 
 public class databaseQueries {
 	private databaseConnection databaseConnection;
@@ -73,6 +77,76 @@ public class databaseQueries {
 		insertIntoTable(table, tableInputs, tableColumns);
 	}
 	private void insertIntoTable (String table, ArrayList<String> tableInputs, ArrayList<String> tableColumns) {
+		//Values outside for testing
+		int connectionStatus = 0;
+		
+		try { 
+			if (tableInputs.size() != tableColumns.size()) {
+				throw new errorUnequalArrayListLengths(table); 
+			}
+			
+			//Converting: "[{insert values}]" to "{insert values}" 
+			String tableColumnsString = tableColumns.toString(); 
+			tableColumnsString = tableColumnsString.replace('[', ' ');
+			tableColumnsString = tableColumnsString.replace(']', ' ');
+			
+			//Creating multiple "?" and removing the last generated comma
+			String insertValues = "?, ".repeat(tableColumns.size());
+			insertValues = insertValues.substring(0, insertValues.length() - 2);
+			
+			//Making:
+			//"INSERT INTO ({colums1}, {colums2}, {&c.}) Values (?, ?, ?)"
+			String s = " INSERT INTO %s (%s) Values (%s)";
+			String query = String.format(s, table, tableColumnsString, insertValues);			
+			
+			//Sending it to database
+			Connection connection = databaseConnection.getConnection();
+			PreparedStatement ps  = connection.prepareStatement(query);
+			
+			
+			
+			//Replacing each "?" first introduced in the query string
+			//You count from 1 for some reason.
+			/*
+			for (int i = 1; tableInputs.size() > 0; i++) {
+				Object obj = tableInputs.remove(0);
+				
+				try {
+					if (obj instanceof String) {
+						ps.setString(i, (String) obj);
+						
+					} else if (obj instanceof Integer) {
+						ps.setInt(i, (Integer) obj);
+						
+					} else {
+						System.out.println("error");
+					}
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				} 
+			}
+			*/
+			//ps.setInt(1, Integer.parseInt(tableInputs.remove(0)));
+			ps.setString(1, tableInputs.remove(0));
+			ps.setString(2, tableInputs.remove(0));
+			ps.setString(3, tableInputs.remove(0));
+			connectionStatus  = ps.executeUpdate();
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			//TODO: See if this should be removed
+			if (connectionStatus > 0) {
+				System.out.println("Success");
+			} else {
+				System.out.println("Failure");
+			}
+		}
+		
+	}
+
+	/*
+	 private void insertIntoTable (String table, ArrayList<String> tableInputs, ArrayList<String> tableColumns) {
 		int connectionStatus = 0;
 		try { 
 			if (tableInputs.size() != tableColumns.size()) {
@@ -101,12 +175,21 @@ public class databaseQueries {
 			//Replacing each "?" first introduced in the query string
 			//You count from 1 for some reason.
 			for (int i = 1; tableInputs.size() > 0; i++) {
-				//"remove(0)" == pop()
-				ps.setString(i, tableInputs.remove(0));
+				Object obj = tableInputs.remove(0);
 				
-				
-				
-				
+				try {
+					if (obj instanceof String) {
+						ps.setString(i, (String) obj);
+						
+					} else if (obj instanceof Integer) {
+						ps.setInt(i, (Integer) obj);
+						
+					} else {
+						System.out.println("error");
+					}
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				} 
 			}
 			connectionStatus  = ps.executeUpdate();
 		} catch (Exception e) {
@@ -119,10 +202,7 @@ public class databaseQueries {
 				System.out.println("Failure");
 			}
 		}
-	}
-
-	
-	public void writeToAdministration(String admin_username, String admin_password, String admin_host) {
 		
 	}
+	*/
 }

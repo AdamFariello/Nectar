@@ -44,7 +44,7 @@ public class databaseConnection{
 		String timeZone  = "EDT";
 		String mysqlArgs = String.format(s, timeZone);
 		
-		//Combine
+		//TODO: Copy paste format and example of sql line
 		url = mysqlURL + mysqlArgs;
 	}
 	

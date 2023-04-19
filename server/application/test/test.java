@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import databaseCode.*;
 
 public class test {
-	public static void main (String args[]) throws SQLException {
+	public static void main (String args[]) throws SQLException {		
 		databaseConnection dc = new databaseConnection();
-		dc.Connection();
+		dc.startConnection();
 		databaseQueries dq = new databaseQueries(dc);
 		
 		String table = "user";

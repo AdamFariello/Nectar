@@ -8,11 +8,11 @@ class errorUnequalArrayListLengths extends Exception{
 	private static String error = "The ArrayList for %s "
 					 			+ "and the amount of columns of %s "
 					 			+ "are different lengths";
-	private static String errorBorders = "\n" + "=".repeat(error.length() * 2);			
+	private static String errorBorder = "\n" + "=".repeat(error.length() * 2);			
 	
 	public errorUnequalArrayListLengths() {}
 	public errorUnequalArrayListLengths(String table) {
-		super (String.format(error + errorBorders, table, table));
+		super (String.format(error + errorBorder, table, table));
 	}
 }
 class errorUnequalObjectTypes extends Exception {

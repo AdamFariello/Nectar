@@ -8,15 +8,16 @@ import databaseCode.*;
 public class test {
 	public static void main (String args[]) throws SQLException {		
 		databaseConnection dc = new databaseConnection();
-		dc.startConnection();
+		String table = "user";
+		dc.startConnection(table);
 		databaseQueries dq = new databaseQueries(dc);
 		
-		String table = "user";
 		ArrayList<String> tableInputs = new ArrayList<String>();
+		tableInputs.add("0");
 		tableInputs.add("KbToys@gmail.com");
 		tableInputs.add("PrintYourOwnMoney");
 		tableInputs.add("111-222-3390");
 		
-		dq.insertIntoTable_WithOutPrimaryKey(table, tableInputs);
+		dq.insertIntoTable_WithPrimaryKey(table, tableInputs);
 	}
 }

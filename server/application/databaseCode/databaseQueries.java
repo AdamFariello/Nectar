@@ -3,22 +3,6 @@ package databaseCode;
 import java.sql.*;
 import java.util.ArrayList;
 
-@SuppressWarnings("serial") 
-class errorUnequalArrayListLengths extends Exception{ 
-	private static String error = "The ArrayList for %s "
-					 			+ "and the amount of columns of %s "
-					 			+ "are different lengths";
-	private static String errorBorder = "\n" + "=".repeat(error.length() * 2);			
-	
-	public errorUnequalArrayListLengths() {}
-	public errorUnequalArrayListLengths(String table) {
-		super (String.format(error + errorBorder, table, table));
-	}
-}
-class errorUnequalObjectTypes extends Exception {
-	//TODO: Create functions to catch bad datatypes 
-	//For when inserting into the database
-}
 
 public class databaseQueries {
 	private databaseConnection databaseConnection;
@@ -31,7 +15,7 @@ public class databaseQueries {
 	public ResultSet getColumnsOfTable_InResultSet (String table) {		
 		ResultSet rs = null;
 		try { 			
-			Connection connection = databaseConnection.getConnection();
+			Connection connection = databaseConnection.startConnection();
 			
 			//Trying to accomplish:
 			//SELECT `COLUMN_NAME` 
@@ -68,7 +52,7 @@ public class databaseQueries {
 	}
 	
 	
-	public void insertIntoTable_IncludingPrimaryKey(String table, ArrayList<String> tableInputs) {
+	public void insertIntoTable_WithPrimaryKey(String table, ArrayList<String> tableInputs) {
 		insertIntoTable(table, tableInputs, getColumnsOfTable_InStringArrayList(table));
 	}
 	public void insertIntoTable_WithOutPrimaryKey(String table, ArrayList<String> tableInputs) {
@@ -100,7 +84,7 @@ public class databaseQueries {
 			String query = String.format(s, table, tableColumnsString, insertValues);			
 			
 			//Sending it to database
-			Connection connection = databaseConnection.getConnection();
+			Connection connection = databaseConnection.startConnection();
 			PreparedStatement ps  = connection.prepareStatement(query);
 			
 			
@@ -127,9 +111,10 @@ public class databaseQueries {
 			}
 			*/
 			//ps.setInt(1, Integer.parseInt(tableInputs.remove(0)));
-			ps.setString(1, tableInputs.remove(0));
+			ps.setInt(1, Integer.parseInt(tableInputs.remove(0)));
 			ps.setString(2, tableInputs.remove(0));
 			ps.setString(3, tableInputs.remove(0));
+			ps.setString(4, tableInputs.remove(0));
 			connectionStatus  = ps.executeUpdate();
 		
 		} catch (Exception e) {

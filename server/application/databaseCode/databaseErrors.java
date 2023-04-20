@@ -3,6 +3,7 @@ package databaseCode;
 @SuppressWarnings("serial") 
 public abstract class databaseErrors extends Exception {
 	public databaseErrors() {}
+	/*
 	public databaseErrors(String message, String string) {
 		super(String.format(
 			"\n" + message + "\n" + "-".repeat(message.length() + 5), string
@@ -11,6 +12,12 @@ public abstract class databaseErrors extends Exception {
 	public databaseErrors(String message, int borderLength, String string) {
 		super(String.format(
 			"\n" + message + "\n" + "-".repeat(borderLength), string
+		));
+	}
+	*/
+	public databaseErrors(String message, String string) {
+		super(String.format(
+			"\n" + message, string
 		));
 	}
 }
@@ -50,9 +57,15 @@ class errorUnknownDatabase extends databaseErrors {
 								  + "\n\t1) nectarDB_administration"
 								  + "\n\t2) nectarDB_products"
 								  + "\n\t3) nectarDB_user";
+	/*
 	private static int borderLength = "The database %s is not a real database\n"
 									  .length() + 5;
 	public errorUnknownDatabase(String string) {
 		super (message, borderLength, string);
+	}
+	*/
+	
+	public errorUnknownDatabase(String string) {
+		super (message, string);
 	}
 }

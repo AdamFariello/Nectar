@@ -6,9 +6,15 @@ import java.util.ArrayList;
 import databaseCode.*;
 
 public class Main {
-	public static void main (String args[]) throws SQLException {		
+	public static void main (String args[]) throws SQLException {
+		String [] dbs = {
+			"nectarDB_administration", 
+			"nectarDB_products", 
+			"nectarDB_user"
+		};
+		String table = dbs[2];
+		
 		databaseConnection dc = new databaseConnection();
-		String table = "user";
 		dc.startConnection(table);
 		databaseQueries dq = new databaseQueries(dc);
 		

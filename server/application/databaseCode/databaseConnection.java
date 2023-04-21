@@ -36,7 +36,9 @@ public class databaseConnection{
 				Class.forName("com.mysql.cj.jdbc.Driver");
 				setURL(database);
 				return (connection = DriverManager.getConnection(url,username,password));
-			} else { throw new errorUnknownDatabase(database); }
+			} else { 
+				throw new errorUnknownDatabase(database); 
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

@@ -1,20 +1,11 @@
 package databaseCode;
 
 @SuppressWarnings("serial") 
-public abstract class databaseErrors extends Exception {
+public abstract class databaseErrors extends Exception {	
 	public databaseErrors() {}
-	/*
-	public databaseErrors(String message, String string) {
-		super(String.format(
-			"\n" + message + "\n" + "-".repeat(message.length() + 5), string
-		));
+	public databaseErrors(String message) {
+		super(String.format("\n" + message));
 	}
-	public databaseErrors(String message, int borderLength, String string) {
-		super(String.format(
-			"\n" + message + "\n" + "-".repeat(borderLength), string
-		));
-	}
-	*/
 	public databaseErrors(String message, String string) {
 		super(String.format("\n" + message, string));
 	}
@@ -30,24 +21,16 @@ class errorUnequalArrayListLengths extends databaseErrors {
 	}
 }
 
-
-/*
-@SuppressWarnings("serial") 
-class errorUnequalObjectTypes extends databaseErrors {
-	//TODO: Create functions to catch bad data types 
-	//For when inserting into the database
-	public errorUnequalObjectTypes(String string) {
-		super(string);
-		// TODO Auto-generated constructor stub
-	}
-}
-*/
-
+//TODO: DO This
 @SuppressWarnings("serial")
 class errorNullConnection extends databaseErrors {
+	private static String message = "Null connection, call: \n"
+								  + "databaseConnection.startconnection() again "
+								  ;
 	errorNullConnection() { super(); }
 }
 
+//TODO: DO This
 @SuppressWarnings("serial")
 class errorUnknownDatabase extends databaseErrors {
 	private static String message = "The database %s is not a real database\n"
@@ -67,3 +50,17 @@ class errorUnknownDatabase extends databaseErrors {
 		super (message, string);
 	}
 }
+
+
+//TODO: DO This
+/* 
+@SuppressWarnings("serial") 
+class errorUnequalObjectTypes extends databaseErrors {
+	//TODO: Create functions to catch bad data types 
+	//For when inserting into the database
+	public errorUnequalObjectTypes(String string) {
+		super(string);
+		// TODO Auto-generated constructor stub
+	}
+}
+*/

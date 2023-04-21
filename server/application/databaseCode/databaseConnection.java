@@ -28,17 +28,16 @@ public class databaseConnection{
 	}
 
 	
-	public static Connection startConnection() {return startConnection(currentDB);}
+	//public static Connection startConnection() {return startConnection(currentDB);}
 	@SuppressWarnings("finally") 
 	public static Connection startConnection(String database) {
 		try	{			
 			if(checkDatabase(database)) {
 				Class.forName("com.mysql.cj.jdbc.Driver");
 				setURL(database);
-				connection = DriverManager.getConnection(url,username,password);
+				return (connection = DriverManager.getConnection(url,username,password));
 			} else { throw new errorUnknownDatabase(database); }
 		} catch (Exception e) {
-			//System.out.println(e);
 			e.printStackTrace();
 		} finally {
 			return (connection = null);	
@@ -106,19 +105,19 @@ public class databaseConnection{
 	
 	@SuppressWarnings("finally") 
 	public String toString() {
-		String string = null;
+		String stringToPrint = null;
 		try {
-			string = 
-				  "Url: " 		 +url		 +"\n"
-				+ "UserName: "	 +username	 +"\n"
-				+ "Password: "	 +password	 +"\n"
-				+ "Connection: " +connection +"\n"
-			;
+			String s = "UserName: %s\n" 
+					 + "Password: %s\n" 
+					 + "URL: %s\n" 
+					 + "Connection: %s\n" 
+					 + "Current Database: %s\n";
+			stringToPrint = String.format(s, username, password, url, connection, currentDB);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			System.out.println(string);
-			return string;
+			System.out.println(stringToPrint);
+			return stringToPrint;
 		}
 	}
 }

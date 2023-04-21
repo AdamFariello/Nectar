@@ -16,9 +16,7 @@ public abstract class databaseErrors extends Exception {
 	}
 	*/
 	public databaseErrors(String message, String string) {
-		super(String.format(
-			"\n" + message, string
-		));
+		super(String.format("\n" + message, string));
 	}
 }
 

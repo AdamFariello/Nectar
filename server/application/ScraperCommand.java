@@ -12,4 +12,6 @@ public abstract class ScraperCommand {
     }
     
     protected abstract void execute();
+
+    protected abstract ProductVO scrape();
 }

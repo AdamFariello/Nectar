@@ -8,14 +8,7 @@ public class AmazonScraperCommand extends ScraperCommand{
 
     @Override
     protected void execute() {
-        // TODO call s and call receiver.receive(productVO)
-        receiver.receive(scrape());
-    }
-
-    @Override
-    protected ProductVO scrape() {
-        // TODO scrape amazon website, create and return product VO
-        return null;
+        // TODO scrape amazon website, create productVO and call receiver.receive(productVO)
     }
     
 }

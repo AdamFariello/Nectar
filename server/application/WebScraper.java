@@ -20,8 +20,4 @@ public class WebScraper {
     public void scrape(){
         scraperCommands.forEach((k, v) -> v.execute());
     }
-
-    public ProductVO getProductData(String productID){
-        return scraperCommands.get(productID).scrape();
-    }
 }

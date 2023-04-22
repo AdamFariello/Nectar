@@ -5,32 +5,32 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 
-public class databaseConnection{
+public class DBConnetion{
 	private static String username  = "admin";
 	private static String password  = "password"; 
 	private static String host	    = "localhost";
 	private static String currentDB 	 = "nectarDB_user";	
 	private static String url 			 = null;
 	private static Connection connection = null;
-	
-	
-	public databaseConnection() {}
+
+	//Class Functions
+	public DBConnetion() {}
 	@SuppressWarnings("static-access") 
-	public databaseConnection(String username, String password) {
+	public DBConnetion(String username, String password) {
 		this.username = username;
 		this.password = password;
 	}
 	@SuppressWarnings("static-access")
-	public databaseConnection(String username, String password, String host) {
+	public DBConnetion(String username, String password, String host) {
 		this.username = username;
 		this.password = password;
 		this.host     = host;
 	}
 
-	
-	//public static Connection startConnection() {return startConnection(currentDB);}
+	//Connections Methods
+	public static Connection getConnection () {return connection;}
 	@SuppressWarnings("finally") 
-	public static Connection startConnection(String database) {
+	public Connection startConnection(String database) {
 		try	{			
 			if(checkDatabase(database)) {
 				Class.forName("com.mysql.cj.jdbc.Driver");
@@ -53,7 +53,7 @@ public class databaseConnection{
 		}
 	}
 	
-	
+	//URL Methods
 	public String getURL() {return url;}
 	private static String setURL (String server) {
 		//Direct connection
@@ -74,11 +74,11 @@ public class databaseConnection{
 		//TODO: Copy paste format and example of sql line
 		return (url = mysqlURL + mysqlArgs);
 	}
-	
 		
-	public String getCurrentServer() {return currentDB;}
+	//Server Methods
+	public static String getCurrentServer() {return currentDB;}
 	@SuppressWarnings("finally")
-	public String setCurrentServer(String newDatabase) {
+	public static String setCurrentServer(String newDatabase) {
 		try { 
 			if (checkDatabase(newDatabase)) {
 				return (currentDB = newDatabase);
@@ -104,7 +104,7 @@ public class databaseConnection{
 		return false;
 	}
 
-	
+	//Misc.
 	@SuppressWarnings("finally") 
 	public String toString() {
 		String stringToPrint = null;

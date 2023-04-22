@@ -12,14 +12,6 @@ public abstract class databaseErrors extends Exception {
 	}
 }
 
-@SuppressWarnings("serial") 
-class errorUnequalArrayListLengths extends databaseErrors { 
-	private static String message = "The given input ArrayList for, "
-						 		  + "and the amount of columns from %s, "
-						 		  + "are of different lengths";
-	public errorUnequalArrayListLengths(String string) {super(message, string);}
-}
-
 @SuppressWarnings("serial")
 class errorUnknownDatabase extends databaseErrors {
 	private static String message = "The database %s is not a real database\n"
@@ -30,8 +22,13 @@ class errorUnknownDatabase extends databaseErrors {
 	public errorUnknownDatabase(String inputedDatabase) {super (message, inputedDatabase);}
 }
 
-
-//TODO: DO This
+@SuppressWarnings("serial") 
+class errorUnequalArrayListLengths extends databaseErrors { 
+	private static String message = "The given input ArrayList for, "
+						 		  + "and the amount of columns from %s, "
+						 		  + "are of different lengths";
+	public errorUnequalArrayListLengths(String string) {super(message, string);}
+}
 @SuppressWarnings("serial") 
 class errorIncorrectDataTypeForTheTable extends databaseErrors {
 	private static String message = "The datatype of %s is: \n"
@@ -39,12 +36,13 @@ class errorIncorrectDataTypeForTheTable extends databaseErrors {
 								  + "Desired datatype for column %s is: \n"
 								  + "%s \n"
 								  ;
-	//Nicknames: 
-	//	1) String toBeInsertedVariable  := tbIV, 
-	//	2) String toBeInsertedDatatype  := tbD,
-	//	3) String desiredColumn		 	:= dC, 
-	//	4) String desiredColumnDatatype := dCD
-	public errorIncorrectDataTypeForTheTable(String tbIV, String tbD, String dC, String dCD) {
-		super(message, tbIV, tbD, dC, dCD);
+	public errorIncorrectDataTypeForTheTable() {};
+	public errorIncorrectDataTypeForTheTable(String toBeInsertedVariable, 
+	String toBeInsertedDatatype, String desiredColumn, 
+	String desiredColumnDatatype) {
+		super(
+			message, toBeInsertedVariable, toBeInsertedDatatype, 
+			desiredColumn, desiredColumnDatatype
+		);
 	}
 }

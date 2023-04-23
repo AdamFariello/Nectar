@@ -1,0 +1,31 @@
+* User
+[P userID, userEmail, userPassword, userTelephone (default: null)]
+    * UserBrowser (will probably scrap)
+    [FP userID, browserType, browserID, deviceType, deviceID]
+
+    * PurchasingInfo
+    [FP userID, cardType, cardName, cardDate, cardNumber, cardSecurityCode]
+
+    * Wishlist
+    [FP userID, F productID, autoBuyID (default: null)]
+    * autoBuy
+    [P autoBuyID, <autoBuyConditions>]
+
+* Members table
+[Include roles to team]
+[Conisder if these are seperare from being able to purchase items -- assume no, since they'd be given accounts by company]
+
+* Product Item
+[P productID, productType, productURL, productSiteID, productSiteName]
+    * ProductPriceHistory
+    [FP productID, price, date]
+
+    * AmazonProduct
+    [FP productSiteID, amazonProductID, <insert other categories Amazon uses>]
+        * AmazonProductTags
+        [FP amazonProductID, amazonProductTag]
+
+    * EbayPRoduct
+    [FP productSiteID, ebayProductID, <insert other categories Ebay uses>]
+        * EbayProductTags
+        [FP ebayProductID, ebayProductTag]

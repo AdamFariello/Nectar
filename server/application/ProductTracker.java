@@ -8,8 +8,9 @@ public class ProductTracker {
         webScraper = new WebScraper();
     }
 
-    private void addProduct(String productID, String url, Receiver receiver){
+    private void addProduct(String productID, String url, String website, Receiver receiver){
         receivers.put(productID, receiver);
+        webScraper.addProduct(productID, url, website, receiver);
     }
 
     private void removeProduct(String productID){
@@ -17,19 +18,20 @@ public class ProductTracker {
         receivers.remove(productID);
     }
 
-    public void addUser(String userID, UserSubscriber userSubscriber, String productID){
+    public void addUser(String userID, UserSubscriber userSubscriber, String productID, String url, String website){
         if (!receivers.containsKey(productID)){
             Receiver receiver = new Receiver();
             receiver.addUser(userID, userSubscriber);
-            addProduct(productID, productID, receiver);
+            addProduct(productID, url, website, receiver);
         }else{
             receivers.get(productID).addUser(userID, userSubscriber);
         }
     }
-
+    //TODO: make this method accept a value object array for the product info to make command objects for them right now
+    //This isn't functional
     public void addUserWishList(String userID, UserSubscriber userSubscriber, String[] wishlist){
         for(String productID : wishlist){
-            addUser(userID, userSubscriber, productID);
+            addUser(userID, userSubscriber, productID, "Place Holder", "Place Holder");
         }
 
     }

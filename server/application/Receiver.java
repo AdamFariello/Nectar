@@ -48,7 +48,7 @@ public class Receiver {
             //Get user email and phone and tracker settings from database
             //Send message
             try {
-                sendEmailMessage(productVO, "dankedest444@gmail.com");
+                sendEmailMessage(productVO, "rt576@scarletmail.rutgers.com");
                 sendTextMessage(productVO, "9083706809");
             } catch (MessagingException e) {
                 // TODO Auto-generated catch block

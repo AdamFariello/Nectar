@@ -4,12 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
-public class DBInsert extends DBRetrieve{
-	public DBInsert(databaseCode.DBConnetion DBConnetion) {
-		super(DBConnetion);
-		// TODO Auto-generated constructor stub
-	}
-	
+public class DBInsert extends DBRetrieve{	
 	public static void insertIntoTable_WithPrimaryKey(String table, ArrayList<Object> tableInputs) {
 		insertIntoTable(table, tableInputs, getColumnsOfTable_InStringArrayList(table));
 	}
@@ -112,7 +107,10 @@ public class DBInsert extends DBRetrieve{
 				System.out.println("Failure");
 			}
 		}
-		
+	}
+	
+	public String toString() {
+		return "Inside DBQInsert \n";
 	}
 }
 

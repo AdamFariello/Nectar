@@ -11,7 +11,7 @@ public class DBConnetion{
 	private static String host	    = "localhost";
 	private static String currentDB 	 = "nectarDB_user";	
 	private static String url 			 = null;
-	private static Connection connection = null;
+	private static Connection connection;
 
 	//Class Functions
 	public DBConnetion() {}
@@ -42,7 +42,7 @@ public class DBConnetion{
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			return (connection = null);	
+			return null;
 		}
 	}
 	public void endConnection() {
@@ -55,24 +55,18 @@ public class DBConnetion{
 	
 	//URL Methods
 	public String getURL() {return url;}
-	private static String setURL (String server) {
-		//Direct connection
-		String s 		  = "jdbc:mysql://%s:%s/%s";
-		String port   	  = "3306";
-		String mysqlURL   = String.format(s, host, port, server);
-		
-		//Arguments
-		//TODO: Add back time-zone and other arguments
-		//Arguments to bring back:
+	private static String setURL (String server, String timeZone) {
+		//TODO Bring back these arguments:
 		//	1) "useUnicode=true&useJDBCCompliant"
 		//	2) "TimezoneShift=true&useLegacyDatetimeCode=false"
 		//	3) "&serverTimezone=%s"
-		s = "?" + "verifyServerCertificate=false";
-		String timeZone   = "EDT";
-		String mysqlArgs = String.format(s, timeZone);
-		
-		//TODO: Copy paste format and example of sql line
-		return (url = mysqlURL + mysqlArgs);
+		String s = "?" + "verifyServerCertificate=false";
+		return (url = setURL(server) + String.format(s, timeZone));
+	}
+	private static String setURL (String server) {
+		String s 		 = "jdbc:mysql://%s:%s/%s";
+		String port   	 = "3306";
+		return (url = String.format(s, host, port, server));
 	}
 		
 	//Server Methods

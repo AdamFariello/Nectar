@@ -28,8 +28,7 @@ public class DBConnetion{
 	}
 
 	//Connections Methods
-	public static Connection getConnection () {return connection;}
-	@SuppressWarnings("finally") 
+	public Connection getConnection () {return connection;}
 	public Connection startConnection(String database) {
 		try	{			
 			if(checkDatabase(database)) {
@@ -41,9 +40,8 @@ public class DBConnetion{
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			return null;
-		}
+		} 
+		return null;
 	}
 	public void endConnection() {
 		try {
@@ -55,7 +53,7 @@ public class DBConnetion{
 	
 	//URL Methods
 	public String getURL() {return url;}
-	private static String setURL (String server, String timeZone) {
+	private String setURL (String server, String timeZone) {
 		//TODO Bring back these arguments:
 		//	1) "useUnicode=true&useJDBCCompliant"
 		//	2) "TimezoneShift=true&useLegacyDatetimeCode=false"
@@ -63,16 +61,15 @@ public class DBConnetion{
 		String s = "?" + "verifyServerCertificate=false";
 		return (url = setURL(server) + String.format(s, timeZone));
 	}
-	private static String setURL (String server) {
+	private String setURL (String server) {
 		String s 		 = "jdbc:mysql://%s:%s/%s";
 		String port   	 = "3306";
 		return (url = String.format(s, host, port, server));
 	}
 		
 	//Server Methods
-	public static String getCurrentServer() {return currentDB;}
-	@SuppressWarnings("finally")
-	public static String setCurrentServer(String newDatabase) {
+	public String getCurrentServer() {return currentDB;}
+	public String setCurrentServer(String newDatabase) {
 		try { 
 			if (checkDatabase(newDatabase)) {
 				return (currentDB = newDatabase);
@@ -81,9 +78,8 @@ public class DBConnetion{
 			}
 		} catch (Exception e) {
 			System.out.println(e);
-		} finally {
-			return null;
-		}
+		} 
+		return null;
 	}
 	public static Boolean checkDatabase(String database) {		
 		String [] dataBaseList = {
@@ -98,22 +94,17 @@ public class DBConnetion{
 		return false;
 	}
 
-	//Misc.
-	@SuppressWarnings("finally") 
 	public String toString() {
-		String stringToPrint = null;
 		try {
 			String s = "UserName: %s\n" 
 					 + "Password: %s\n" 
 					 + "URL: %s\n" 
 					 + "Connection: %s\n" 
 					 + "Current Database: %s\n";
-			stringToPrint = String.format(s, username, password, url, connection, currentDB);
+			return String.format(s, username, password, url, connection, currentDB);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			System.out.println(stringToPrint);
-			return stringToPrint;
-		}
+		} 
+		return null;
 	}
 }

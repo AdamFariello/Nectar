@@ -7,8 +7,6 @@ import java.util.ArrayList;
 public class DBRetrieve {	
 	protected static DBConnetion dbConnection = null;
 	
-	//public DBRetrieve(databaseCode.DBConnetion DBConnetion) {super(DBConnetion);}
-	
 	@SuppressWarnings("finally")
 	public static ResultSet getColumnsOfTable_InResultSet (String table) {				
 		try { 						
@@ -30,12 +28,8 @@ public class DBRetrieve {
 			return null;
 		}
 	}
-	public static ArrayList<String> getColumnsOfTable_InStringArrayList(String table) {		
-		return convertResultsetToStringArray(getColumnsOfTable_InResultSet (table));
-	}
 
 	
-	@SuppressWarnings("finally")
 	public static ResultSet getDataTypeOfTable_InResultSet(String table) {
 		try { 						
 			//Values of each %s:
@@ -51,20 +45,10 @@ public class DBRetrieve {
 			return ps.executeQuery();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			return null;
-		}
-	}
-	public static ArrayList<String> getDataTypeOfTable_InStringArrayList(String table) {		
-		return convertResultsetToStringArray(getDataTypeOfTable_InResultSet(table));
+		} 	
+		return null;
 	}
 	
-	public static ArrayList<String> getAllInformationFromTable_inStringArray(String table) {
-		ResultSet rs = getAllInformationFromTable_inResultSet(table);
-		System.out.println("test2: " +rs);
-		return convertResultsetToStringArray(rs);
-	}
-	@SuppressWarnings("finally")
 	public static ResultSet getAllInformationFromTable_inResultSet(String table) {
 		try { 						
 			String query = " SELECT * FROM " + table;
@@ -75,21 +59,7 @@ public class DBRetrieve {
 			return rs;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
-			
+		} 	
 		return null;
-	}
-	
-	@SuppressWarnings("finally")
-	public static ArrayList<String> convertResultsetToStringArray(ResultSet rs) {
-		try {
-			ArrayList<String> describeTable = new ArrayList<String>(); 
-			while(rs.next() == true) {describeTable.add(rs.getString(1));}
-			return describeTable;
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			return null;
-		}
 	}
 }

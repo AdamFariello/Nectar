@@ -5,11 +5,9 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 public class DBInsert extends DBRetrieve{	
-	public static void insertIntoTable_WithPrimaryKey(String table, ArrayList<Object> tableInputs) {
-		insertIntoTable(table, tableInputs, getColumnsOfTable_InStringArrayList(table));
-	}
-	public static void insertIntoTable_WithOutPrimaryKey(String table, ArrayList<Object> tableInputs) {
-		ArrayList<String> tableColumns = getColumnsOfTable_InStringArrayList(table);
+	
+	public static void insertIntoTableWithOutPrimaryKey(String table, ArrayList<Object> tableInputs) {
+		ArrayList<String> tableColumns = getColumnsOfTable_InResultSet(table);
 		tableColumns.remove(0);
 		insertIntoTable(table, tableInputs, tableColumns);
 	}
@@ -107,10 +105,6 @@ public class DBInsert extends DBRetrieve{
 				System.out.println("Failure");
 			}
 		}
-	}
-	
-	public String toString() {
-		return "Inside DBQInsert \n";
 	}
 }
 

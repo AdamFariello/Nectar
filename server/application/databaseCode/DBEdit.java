@@ -1,5 +1,5 @@
 package databaseCode;
 
-public class DBModify {
+public class DBEdit {
 
 }

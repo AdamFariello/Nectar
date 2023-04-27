@@ -29,6 +29,13 @@ public class ProductTracker {
         }
     }
 
+    public void addUserWishList(String userID, UserSubscriber userSubscriber, String[] wishlist){
+        for(String productID : wishlist){
+            addUser(userID, userSubscriber, productID);
+        }
+
+    }
+
     public void removeUser(String userID, String productID){
         boolean noUsersLeft = receivers.get(productID).removeUser(userID);
         if (noUsersLeft){
@@ -36,7 +43,17 @@ public class ProductTracker {
         }
     }
 
+    public void removeUserWishList(String userID, String[] wishlist){
+        for(String productID : wishlist){
+            removeUser(userID, productID);
+        }
+    }
+
     public void trackProducts(){
         webScraper.scrape();
+    }
+
+    public ProductVO getProductData(String productID){
+        return webScraper.getProductData(productID);
     }
 }

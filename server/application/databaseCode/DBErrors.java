@@ -1,5 +1,7 @@
 package databaseCode;
 
+//TODO Create a error class for putting a table into the query
+
 @SuppressWarnings("serial") 
 public abstract class DBErrors extends Exception {	
 	public DBErrors() {}

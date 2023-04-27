@@ -1,11 +1,36 @@
 package databaseCode;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.util.ArrayList;
 
-public class DBInsert extends DBRetrieve{	
+public class DBInsert extends DBRetrieve {	
+	public static Boolean insertIntoTable(String table, ArrayList<Object> tableInputs) {
+		try { 
+			String query = "INSERT INTO " + table + " "
+						 + "VALUES (?, ?, ?, ?) "
+						 ;
+			PreparedStatement ps = dbConnetion.getConnection().prepareStatement(query);
+			ps.setInt   (1, (Integer) tableInputs.get(0));
+			ps.setString(2, (String)  tableInputs.get(1));
+			ps.setString(3, (String)  tableInputs.get(2));
+			ps.setString(4, (String)  tableInputs.get(3));
+			//DEBUG System.out.println(ps.toString());
+			
+			//Return success
+			if (ps.executeUpdate() > 0) {
+				//TODO figure if this should be commented out
+				System.out.println("Success");
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+		System.out.println("Failure");
+		return false;
+	}
 	
+	/*
 	public static void insertIntoTableWithOutPrimaryKey(String table, ArrayList<Object> tableInputs) {
 		ArrayList<String> tableColumns = getColumnsOfTable_InResultSet(table);
 		tableColumns.remove(0);
@@ -107,7 +132,8 @@ public class DBInsert extends DBRetrieve{
 		}
 	}
 }
-
+*/
+	
 /*
 	private static void insertIntoTable (String table, ArrayList<String> tableInputs, ArrayList<String> tableColumns) {
 		//Values outside for testing
@@ -181,3 +207,4 @@ public class DBInsert extends DBRetrieve{
 		
 	}
 */
+}

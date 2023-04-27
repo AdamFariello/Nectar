@@ -114,6 +114,8 @@ public class DBRetrieve extends DBCommands {
 				query += columns.remove(0);
 				query += ", ";
 			}
+			
+			//Removing the last comma in the query string
 			query = query.substring(0, query.length() - 2) + " ";
 			query += ("From " + table);
 			

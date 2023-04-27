@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class DBInsert extends DBRetrieve {	
+	/*
 	public static Boolean insertIntoTable(String table, ArrayList<Object> tableInputs) {
 		try { 
 			String query = "INSERT INTO " + table + " "
@@ -29,6 +30,7 @@ public class DBInsert extends DBRetrieve {
 		System.out.println("Failure");
 		return false;
 	}
+	*/
 	
 	/*
 	public static void insertIntoTableWithOutPrimaryKey(String table, ArrayList<Object> tableInputs) {
@@ -36,28 +38,40 @@ public class DBInsert extends DBRetrieve {
 		tableColumns.remove(0);
 		insertIntoTable(table, tableInputs, tableColumns);
 	}
-	private static void insertIntoTable (String table, ArrayList<Object> tableInputs, ArrayList<String> tableColumns) {
-		int connectionStatus = 0;
+	*/
+	
+	private static boolean insertIntoTable (String table, ArrayList<Object> tableInputs) {
+		//TODO
+		//	1) Check for incorrect inputs for columns
+		//	2) Merge checks of inputs and datatype
+		//	3) Account for no primary key when inserting into table
+		
 		try { 
-			//TODO: Merge both of these checks
+			String temp = "?, ".repeat(tableInputs.size());
+			temp = temp.substring(0, temp.length()-2);
+			String query = "INSERT INTO " + table + " VALUES (" + temp + ")";
 			
-			//TODO: Account for no primary key and/or other columns not being used
-			//Checking for equal amount of inputs being used to the table
-			if (tableInputs.size() != tableColumns.size()) {
-				throw new errorUnequalArrayListLengths(table); 
-			}
+			ArrayList< ArrayList<Object> > columnsAndDatatypesOfTable = getColumnsAndTypeOfTable_in2DArrList(table);
 			
-			//Checking for correct datatypes
 			for (int i = 0; !tableColumns.isEmpty(); i++) {
-				String currentColumn = tableColumns.remove(0);
 				Object obj = tableInputs.get(i);
-				switch (currentColumn) {
-					case "varchar": if (obj instanceof String)  {break;}
-					case "int":     if (obj instanceof Integer) {break;}
-					case "double":  if (obj instanceof Double)  {break;}
-					//TODO: case "datetime": if (obj instanceof Date) {}
-					//TODO: case "date": if (obj instanceof Date) {}
-					default: 
+				
+				if (currentColumn.equals("varchar") && obj instanceof String) {
+					//TODO this
+				} else if (currentColumn == "int" && obj instanceof Integer) {
+					//TODO this
+				} else if (currentColumn == "varchar" && obj instanceof Double) {
+					//TODO this
+				} else if (currentColumn == "datetime" && obj instanceof String) {
+					//TODO this
+				} else if (currentColumn == "date" && obj instanceof String) {
+					//TODO this
+				} else {
+					
+				}
+				
+				
+				default: 
 						String toBeInsertedVariable = obj.toString(); 
 						
 						//Null string gives error
@@ -97,7 +111,6 @@ public class DBInsert extends DBRetrieve {
 			String query = String.format(s, table, tableColumns, insertValues);			
 	
 			//Sending it to database
-			Connection connection = getConnection();
 			PreparedStatement ps  = connection.prepareStatement(query);
 			
 			//Replacing each "?" first introduced in the query string
@@ -119,20 +132,21 @@ public class DBInsert extends DBRetrieve {
 					e1.printStackTrace();
 				} 
 			}
-			connectionStatus  = ps.executeUpdate();
+			
+			//Return success
+			if (ps.executeUpdate() > 0) {
+				//TODO figure if this should be commented out
+				System.out.println("Success");
+				return true;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			//TODO: See if this should be removed
-			if (connectionStatus > 0) {
-				System.out.println("Success");
-			} else {
-				System.out.println("Failure");
-			}
 		}
+		
+		System.out.println("Failure");
+		return false;
 	}
 }
-*/
 	
 /*
 	private static void insertIntoTable (String table, ArrayList<String> tableInputs, ArrayList<String> tableColumns) {

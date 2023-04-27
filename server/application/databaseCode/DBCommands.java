@@ -4,9 +4,12 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class DBCommands {
+	//TODO figure out how to abstract this
+	//AKA: replace "<object>" and "<string>" to "<E>"
 	protected static DBConnetion dbConnetion = null;
 	
-	public static ArrayList<Object> convertResultSetOfRowToArrayList(ResultSet rs) {
+	
+	public static ArrayList<Object> convertRow_RSToArrObj(ResultSet rs) {
 		try {
 			rs.next();
 			ArrayList<Object> rowOfTable = new ArrayList<Object>();
@@ -36,7 +39,7 @@ public class DBCommands {
 	}
 	
 	
-	public static ArrayList<Object> convertResultSetOfColumnToArrayList(ResultSet rs) {
+	public static ArrayList<Object> convertColumn_RStoArrObj(ResultSet rs) {
 		try {
 			ArrayList<Object> columnOfTable = new ArrayList<Object>();
 			while (rs.next()) {columnOfTable.add(rs.getObject(1));}
@@ -57,8 +60,8 @@ public class DBCommands {
 		}
 	}
 
-
-	public static ArrayList< ArrayList<Object> > convertResultsetOfTableTo2DArrayList(ResultSet rs) {		
+	
+	public static ArrayList< ArrayList<Object> > convertTable_RSto2DArrObj(ResultSet rs) {		
 		try {
 			ArrayList< ArrayList<Object> > columnOfTable = new ArrayList< ArrayList<Object> >(); 
 			while(rs.next() == true) {

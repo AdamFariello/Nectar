@@ -53,47 +53,46 @@ public class DBInsert extends DBRetrieve {
 			
 			ArrayList< ArrayList<Object> > columnsAndDatatypesOfTable = getColumnsAndTypeOfTable_in2DArrList(table);
 			
-			for (int i = 0; !tableColumns.isEmpty(); i++) {
+			for (int i = 0; !columnsAndDatatypesOfTable.isEmpty(); i++) {
 				Object obj = tableInputs.get(i);
 				
-				if (currentColumn.equals("varchar") && obj instanceof String) {
+				ArrayList<Object> currentRow = columnsAndDatatypesOfTable.remove(0);
+				String rowCurCol	  = (String) currentRow.get(0);
+				String rowCurDataType = (String) currentRow.get(1);
+				
+				
+				//Can't be a switch since switches don't allow functions
+				if (rowCurDataType.equals("varchar")    && obj instanceof String) {
 					//TODO this
-				} else if (currentColumn == "int" && obj instanceof Integer) {
+				} else if (rowCurDataType == "int"      && obj instanceof Integer) {
 					//TODO this
-				} else if (currentColumn == "varchar" && obj instanceof Double) {
+				} else if (rowCurDataType == "varchar"  && obj instanceof Double) {
 					//TODO this
-				} else if (currentColumn == "datetime" && obj instanceof String) {
-					//TODO this
-				} else if (currentColumn == "date" && obj instanceof String) {
-					//TODO this
+				} else if (rowCurDataType == "datetime" && obj instanceof String) {
+					//TODO Later
+				} else if (rowCurDataType == "date"     && obj instanceof String) {
+					//TODO Later
 				} else {
+					//Catching an error
+					//TODO Later
+					String toBeInsertedVariable = obj.toString(); 
 					
+					//Null string gives error
+					String toBeInsertedDatatype; 
+					try {
+						toBeInsertedDatatype = obj.getClass().getSimpleName();
+					}	catch (Exception e) {
+						toBeInsertedDatatype = "undefined";
+					}
+					
+					throw new errorIncorrectDataTypeForTheTable(
+							toBeInsertedVariable, toBeInsertedDatatype, 
+							rowCurCol, rowCurDataType
+					);
 				}
-				
-				
-				default: 
-						String toBeInsertedVariable = obj.toString(); 
-						
-						//Null string gives error
-						String toBeInsertedDatatype; 
-						try {
-							toBeInsertedDatatype = obj.getClass().getSimpleName();
-						}	catch (Exception e) {
-							toBeInsertedDatatype = "undefined";
-						}
-						
-						String desiredColumn = currentColumn; 
-						String desiredColumnDatatype = 
-						getDataTypeOfTable_InStringArrayList(table).get(i);
-						
-						throw new errorIncorrectDataTypeForTheTable(
-								toBeInsertedVariable, toBeInsertedDatatype, 
-								desiredColumn, desiredColumnDatatype
-						);
-				}
-				
 			}
 			
+			/*
 			
 			//Converting: "[{insert values}]" to "{insert values}" 
 			String tableColumnsString = tableColumns.toString(); 
@@ -139,6 +138,8 @@ public class DBInsert extends DBRetrieve {
 				System.out.println("Success");
 				return true;
 			}
+			
+			*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -147,8 +148,10 @@ public class DBInsert extends DBRetrieve {
 		return false;
 	}
 }
-	
+
+
 /*
+	//TODO Figure out what to do with old code
 	private static void insertIntoTable (String table, ArrayList<String> tableInputs, ArrayList<String> tableColumns) {
 		//Values outside for testing
 		int connectionStatus = 0;
@@ -221,4 +224,3 @@ public class DBInsert extends DBRetrieve {
 		
 	}
 */
-}

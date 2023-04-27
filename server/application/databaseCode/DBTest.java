@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class DBTest {
 	public static void main (String args[]) throws SQLException {
+		//General variables
 		String [] dbs = {
 			"nectarDB_administration", 
 			"nectarDB_products", 
@@ -15,15 +16,16 @@ public class DBTest {
 		con.startConnection(db);		
 		
 		
-		/* Testing db_retrieve
+		//Testing db_retrieve
 		ArrayList<String> tableColumns = new ArrayList<String>();
 		tableColumns.add("user_email");
 		tableColumns.add("user_password");
 		DBQuery test = new DBQuery(con);
-		ArrayList< ArrayList<Object> > list = test.getSomeThingFromTable_in2dArrList(table, tableColumns);
+		ArrayList< ArrayList<String> > list = test.getSomeThingFromTable_2DArrStr(table, tableColumns);
 		System.out.println(list);
-		*/
 		
+		/*
+		//Testing Insertions
 		DBQuery test = new DBQuery(con);
 		ArrayList<Object> tableInputs = new ArrayList<Object>();
 		tableInputs.add(5);
@@ -31,5 +33,6 @@ public class DBTest {
 		tableInputs.add("killChelseaClinton");
 		tableInputs.add("11222-3390");
 		System.out.println(test.insertIntoTable(table, tableInputs)); 
+		*/
 	}
 }

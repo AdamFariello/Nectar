@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 public class DBTest {
 	public static void main (String args[]) throws SQLException {
+		/////////////////////////
+		// ONLY A TESTING FILE //
+		/////////////////////////
+		
 		//General variables
 		String [] dbs = {
 			"nectarDB_administration", 
@@ -21,7 +25,7 @@ public class DBTest {
 		tableColumns.add("user_email");
 		tableColumns.add("user_password");
 		DBQuery test = new DBQuery(con);
-		ArrayList< ArrayList<String> > list = test.getSomeThingFromTable_2DArrStr(table, tableColumns);
+		ArrayList< ArrayList<String> > list = test.getSomeFromTable_2DArrStr(table, tableColumns);
 		System.out.println(list);
 		
 		/*

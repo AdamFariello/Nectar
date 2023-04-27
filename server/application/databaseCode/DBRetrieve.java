@@ -114,6 +114,7 @@ public class DBRetrieve extends DBCommands {
 		return null;
 	}
 
+	//TODO: Figure if there can be a better name, (probably not + unimportant).
 	public static ArrayList< ArrayList<Object> > getSomeFromTable_2DArrObj (String table, ArrayList<String> columns) {
 		return convertTable_RSto2DArrObj(getSomeFromTable_RS(table, columns));
 	}

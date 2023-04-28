@@ -50,43 +50,42 @@ public class DBInsert extends DBRetrieve {
 			String temp = "?, ".repeat(tableInputs.size());
 			temp = temp.substring(0, temp.length()-2);
 			String query = "INSERT INTO " + table + " VALUES (" + temp + ")";
+			PreparedStatement ps = dbConnetion.getConnection().prepareStatement(query);
 			
-			ArrayList< ArrayList<Object> > columnsAndDatatypesOfTable = getColumnsAndTypeOfTable_in2DArrList(table);
+			ArrayList< ArrayList<String> > columnsAndDatatypesOfTable = getColumnsAndDatatypeFromTable_2DArrStr(table);
 			
 			for (int i = 0; !columnsAndDatatypesOfTable.isEmpty(); i++) {
-				Object obj = tableInputs.get(i);
+				Object tableInputObj = tableInputs.get(i);
 				
-				ArrayList<Object> currentRow = columnsAndDatatypesOfTable.remove(0);
-				String rowCurCol	  = (String) currentRow.get(0);
-				String rowCurDataType = (String) currentRow.get(1);
+				ArrayList<String> currentRow = columnsAndDatatypesOfTable.remove(0);
+				String rowCurCol	  = currentRow.get(0);
+				String rowCurDataType = currentRow.get(1);
 				
 				
 				//Can't be a switch since switches don't allow functions
-				if (rowCurDataType.equals("varchar")    && obj instanceof String) {
-					//TODO this
-				} else if (rowCurDataType == "int"      && obj instanceof Integer) {
-					//TODO this
-				} else if (rowCurDataType == "varchar"  && obj instanceof Double) {
-					//TODO this
-				} else if (rowCurDataType == "datetime" && obj instanceof String) {
-					//TODO Later
-				} else if (rowCurDataType == "date"     && obj instanceof String) {
-					//TODO Later
+				if (rowCurDataType.equals("varchar")    && tableInputObj instanceof String) {
+					ps.setString(i, (String) tableInputObj);
+				} else if (rowCurDataType == "int"      && tableInputObj instanceof Integer) {
+					ps.setInt(i, (Integer) tableInputObj);
+				} else if (rowCurDataType == "double"   && tableInputObj instanceof Double) {
+					ps.setDouble(i, (Double) tableInputObj);
+				} else if (rowCurDataType == "datetime" && tableInputObj instanceof String) {
+					ps.setDate(i, (java.sql.Date) tableInputObj);
+				} else if (rowCurDataType == "date"     && tableInputObj instanceof String) {
+					ps.setDate(i, (java.sql.Date) tableInputObj);
 				} else {
 					//Catching an error
-					//TODO Later
-					String toBeInsertedVariable = obj.toString(); 
+					String tableInputString = tableInputObj.toString(); 
 					
 					//Null string gives error
-					String toBeInsertedDatatype; 
+					String tableInputDataTypeString; 
 					try {
-						toBeInsertedDatatype = obj.getClass().getSimpleName();
-					}	catch (Exception e) {
-						toBeInsertedDatatype = "undefined";
+						tableInputDataTypeString = tableInputObj.getClass().getSimpleName();
+					}	catch (NullPointerException e) {
+						tableInputDataTypeString = "undefined";
 					}
-					
 					throw new errorIncorrectDataTypeForTheTable(
-							toBeInsertedVariable, toBeInsertedDatatype, 
+							tableInputString, tableInputDataTypeString, 
 							rowCurCol, rowCurDataType
 					);
 				}

@@ -3,7 +3,7 @@ package databaseCode;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class DBCommands {
+public class DBConversions {
 	//TODO figure out how to abstract this
 	//AKA: replace "<object>" and "<string>" to "<E>"
 	protected static DBConnetion dbConnetion = null;
@@ -94,5 +94,12 @@ public class DBCommands {
 			e.printStackTrace();
 		} 
 		return null;
+	}
+
+
+	public static java.sql.Date convertDate_JavaUtilDatetoJavaSqlDate (java.util.Date date) {
+		//java.util.Date format: "MM/DD/YYYY"
+		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+		return sqlDate;
 	}
 }

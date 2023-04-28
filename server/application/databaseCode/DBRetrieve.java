@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 
-public class DBRetrieve extends DBCommands {	
+public class DBRetrieve extends DBConversions {	
 	//Columns and DataTypes
 	public static ArrayList<Object> getColumnsFromTable_2DArrObj (String table) {
 		return convertColumn_RStoArrObj(getColumnsFromTable_RS(table));

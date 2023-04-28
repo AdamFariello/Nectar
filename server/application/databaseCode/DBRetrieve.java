@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 public class DBRetrieve extends DBConversions {	
 	//Columns and DataTypes
-	public static ArrayList<Object> getColumnsFromTable_2DArrObj (String table) {
+	public static ArrayList<Object> getColumnsFromTable_ArrObj (String table) {
 		return convertColumn_RStoArrObj(getColumnsFromTable_RS(table));
 	}
-	public static ArrayList<String> getColumnsFromTable_2DArrStr (String table) {
+	public static ArrayList<String> getColumnsFromTable_ArrStr (String table) {
 		return convertColumn_RStoArrStr(getColumnsFromTable_RS(table));
 	}
 	public static ResultSet getColumnsFromTable_RS (String table) {
@@ -33,10 +33,10 @@ public class DBRetrieve extends DBConversions {
 		return null;
 	}
 	
-	public static ArrayList<Object> getDatatypesOfTable_2DArrObj (String table) {
+	public static ArrayList<Object> getDatatypesOfTable_ArrObj (String table) {
 		return convertColumn_RStoArrObj(getDatatypesFromTable_RS(table));
 	}
-	public static ArrayList<String> getDatatypesOfTable_2DArrStr (String table) {
+	public static ArrayList<String> getDatatypesOfTable_ArrStr (String table) {
 		return convertColumn_RStoArrStr(getDatatypesFromTable_RS(table));
 	}
 	public static ResultSet getDatatypesFromTable_RS (String table) {
@@ -142,4 +142,16 @@ public class DBRetrieve extends DBConversions {
 		return null;
 	}
 
+	
+	public static ResultSet describeTable () {
+		try {
+			String query = "Describe user";
+			PreparedStatement ps = dbConnetion.getConnection().prepareStatement(query);
+			return ps.executeQuery();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 }

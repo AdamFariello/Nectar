@@ -18,6 +18,7 @@ public class DBTest {
 		String table = "user";
 		DBConnetion con = new DBConnetion();
 		con.startConnection(db);		
+		DBQuery test = new DBQuery(con);
 		
 		/*
 		//Testing db_retrieve
@@ -29,13 +30,36 @@ public class DBTest {
 		System.out.println(list);
 		*/
 		
-		//Testing Insertions
-		DBQuery test = new DBQuery(con);
+		/*
+		//Testing Insertions with primary key
 		ArrayList<Object> tableInputs = new ArrayList<Object>();
-		tableInputs.add(5);
-		tableInputs.add("fd");
-		tableInputs.add("killChelseaClinton");
-		tableInputs.add("11222-3390");
-		test.insertIntoTable(table, tableInputs); 
+		tableInputs.add(0);
+		tableInputs.add("f2d");
+		tableInputs.add("ki2llChelseaClinton");
+		tableInputs.add("112222-3390");
+		test.insertIntoTableWithPrimaryKey(table, tableInputs); 
+		
+		//Testing Insertions with primary key
+		test = new DBQuery(con);
+		tableInputs = new ArrayList<Object>();
+		tableInputs.add("BernieSanders");
+		tableInputs.add("Garfield_l'zanya");
+		tableInputs.add("112222-3");
+		test.insertIntoTableWithOutPrimaryKey(table, tableInputs); 
+		*/
+		
+		/*
+		//Testing describing tables
+		ResultSet rs = test.describeTable();
+		while (rs.next()) {
+			try {
+				for (int i = 1; true; i++) {
+					System.out.println(rs.getString(i));
+				}
+			} catch (Exception e) {
+				System.out.println("===================");
+			}
+		}
+		*/
 	}
 }

@@ -19,7 +19,7 @@ public class DBTest {
 		DBConnetion con = new DBConnetion();
 		con.startConnection(db);		
 		
-		
+		/*
 		//Testing db_retrieve
 		ArrayList<String> tableColumns = new ArrayList<String>();
 		tableColumns.add("user_email");
@@ -27,8 +27,8 @@ public class DBTest {
 		DBQuery test = new DBQuery(con);
 		ArrayList< ArrayList<String> > list = test.getSomeFromTable_2DArrStr(table, tableColumns);
 		System.out.println(list);
+		*/
 		
-		/*
 		//Testing Insertions
 		DBQuery test = new DBQuery(con);
 		ArrayList<Object> tableInputs = new ArrayList<Object>();
@@ -36,7 +36,6 @@ public class DBTest {
 		tableInputs.add("fd");
 		tableInputs.add("killChelseaClinton");
 		tableInputs.add("11222-3390");
-		System.out.println(test.insertIntoTable(table, tableInputs)); 
-		*/
+		test.insertIntoTable(table, tableInputs); 
 	}
 }

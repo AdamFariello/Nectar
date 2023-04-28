@@ -48,8 +48,8 @@ public class DBTest {
 		test.insertIntoTableWithOutPrimaryKey(table, tableInputs); 
 		*/
 		
-		/*
 		//Testing describing tables
+		/*
 		ResultSet rs = test.describeTable();
 		while (rs.next()) {
 			try {
@@ -61,5 +61,9 @@ public class DBTest {
 			}
 		}
 		*/
+		
+		//Testing new way of describing tables
+		ArrayList<String> ex = test.getDatatypesOfTable_ArrStr(table);
+		System.out.println(ex);		
 	}
 }

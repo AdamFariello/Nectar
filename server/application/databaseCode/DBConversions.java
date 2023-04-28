@@ -39,27 +39,27 @@ public class DBConversions {
 	}
 	
 	
-	public static ArrayList<Object> convertColumn_RStoArrObj(ResultSet rs) {
+	public static ArrayList<Object> convertColumn_1DRStoArrObj(ResultSet rs) {
+		return convertColumn_2DRStoArrObj(rs, 0);
+	}
+	public static ArrayList<String> convertColumn_1DRStoArrStr(ResultSet rs) {
+		return convertColumn_2DRStoArrStr(rs, 0);
+	}
+	public static ArrayList<String> convertColumn_2DRStoArrStr(ResultSet rs, int columnNumber) {
+		ArrayList<String> temp = new ArrayList<String>();
+		for (Object obj : convertColumn_2DRStoArrObj(rs, columnNumber)) {temp.add( (String) obj);}
+		return temp;
+	}
+	public static ArrayList<Object> convertColumn_2DRStoArrObj(ResultSet rs, int columnNumber) {
 		try {
 			ArrayList<Object> columnOfTable = new ArrayList<Object>();
-			while (rs.next()) {columnOfTable.add(rs.getObject(1));}
+			while (rs.next()) {columnOfTable.add(rs.getObject(columnNumber));}
 			return columnOfTable;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	public static ArrayList<String> convertColumn_RStoArrStr(ResultSet rs) {
-		try { //convertTable_RSto2DArrStr
-			ArrayList<String> columnOfTable = new ArrayList<String>();
-			while (rs.next()) {columnOfTable.add(rs.getString(1));}
-			return columnOfTable;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
 	
 	public static ArrayList< ArrayList<Object> > convertTable_RSto2DArrObj(ResultSet rs) {		
 		try {

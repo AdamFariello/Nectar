@@ -70,9 +70,13 @@ public class DBInsert extends DBRetrieve {
 				} else if (rowCurDataType == "double"   && tableInputObj instanceof Double) {
 					ps.setDouble(i, (Double) tableInputObj);
 				} else if (rowCurDataType == "datetime" && tableInputObj instanceof java.util.Date) {
-					ps.setDate(i, (java.sql.Date) tableInputObj); //java.util.Date format: "MM/DD/YYYY"
+					//TODO: Check if it includes time
+					//java.util.Date format: "MM/DD/YYYY"
+					ps.setDate(i, (java.sql.Date) tableInputObj); 
 				} else if (rowCurDataType == "datetime" && tableInputObj instanceof java.sql.Date) {
-					ps.setDate(i, (java.sql.Date) tableInputObj);
+					//TODO: Check if it includes time
+					//java.util.Date format: "MM/DD/YYYY"
+					ps.setDate(i, (java.sql.Date) tableInputObj); 
 				} else {
 					//Catching an error
 					String tableInputString = tableInputObj.toString(); 
@@ -92,7 +96,6 @@ public class DBInsert extends DBRetrieve {
 			}
 			
 			/*
-			
 			//Converting: "[{insert values}]" to "{insert values}" 
 			String tableColumnsString = tableColumns.toString(); 
 			tableColumnsString = tableColumnsString.replace('[', ' ');

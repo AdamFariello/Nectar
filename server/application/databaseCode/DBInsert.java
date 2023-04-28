@@ -69,9 +69,9 @@ public class DBInsert extends DBRetrieve {
 					ps.setInt(i, (Integer) tableInputObj);
 				} else if (rowCurDataType == "double"   && tableInputObj instanceof Double) {
 					ps.setDouble(i, (Double) tableInputObj);
-				} else if (rowCurDataType == "datetime" && tableInputObj instanceof String) {
-					ps.setDate(i, (java.sql.Date) tableInputObj);
-				} else if (rowCurDataType == "date"     && tableInputObj instanceof String) {
+				} else if (rowCurDataType == "datetime" && tableInputObj instanceof java.util.Date) {
+					ps.setDate(i, (java.sql.Date) tableInputObj); //java.util.Date format: "MM/DD/YYYY"
+				} else if (rowCurDataType == "datetime" && tableInputObj instanceof java.sql.Date) {
 					ps.setDate(i, (java.sql.Date) tableInputObj);
 				} else {
 					//Catching an error

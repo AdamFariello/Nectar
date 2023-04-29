@@ -1,5 +1,3 @@
-package server.application;
-
 import java.util.HashMap;
 
 public class WebScraper {

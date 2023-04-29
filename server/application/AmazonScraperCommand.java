@@ -1,4 +1,3 @@
-package server.application;
 
 public class AmazonScraperCommand extends ScraperCommand{
 

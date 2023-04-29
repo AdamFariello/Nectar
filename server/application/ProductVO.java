@@ -1,5 +1,3 @@
-package server.application;
-
 public class ProductVO extends ValueObject{
     public String productID;
     public boolean available;

@@ -1,5 +1,3 @@
-package server.application;
-
 public class UserSubscriber {
     UserTrackerSettingsVO trackerSettings;
     String emailAddress;

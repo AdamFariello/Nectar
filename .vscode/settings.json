@@ -1,7 +1,7 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "c:\\Users\\danke\\Desktop\\dependencies\\activation.jar",
-        "c:\\Users\\danke\\Desktop\\dependencies\\javax.mail.jar"
+        "server/dependencies/activation.jar",
+        "server/dependencies/javax.mail.jar"
     ]
 }

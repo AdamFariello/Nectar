@@ -33,10 +33,14 @@ public class AmazonScraperCommand extends ScraperCommand{
             boolean available = false;
             double price = -1.0; 
             int amtInStock = -2;
+            String title = "";
             
             String line;
             while((line = r.readLine()) != null){
-                if (line.startsWith("Product Price")){
+                if(line.startsWith("Product Title")){
+                    title = line.substring(line.indexOf("=") + 2);
+
+                }else if (line.startsWith("Product Price")){
                     price = Double.parseDouble(line.replaceAll("\\D+", ""));
 
                 }else if(line.startsWith("Availability")){
@@ -52,7 +56,7 @@ public class AmazonScraperCommand extends ScraperCommand{
                     }
                 }
             }
-            return new ProductVO(productID, available, price, amtInStock);
+            return new ProductVO(title, productID, available, price, amtInStock);
         } catch (IOException e) {
             return null;
         }

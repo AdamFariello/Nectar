@@ -18,20 +18,20 @@ public class ProductTracker {
         receivers.remove(productID);
     }
 
-    public void addUser(String userID, UserSubscriber userSubscriber, String productID, String url, String website){
+    public void addUser(String userID, String productID, String url, String website){
         if (!receivers.containsKey(productID)){
             Receiver receiver = new Receiver();
-            receiver.addUser(userID, userSubscriber);
+            receiver.addUser(userID);
             addProduct(productID, url, website, receiver);
         }else{
-            receivers.get(productID).addUser(userID, userSubscriber);
+            receivers.get(productID).addUser(userID);
         }
     }
     //TODO: make this method accept a value object array for the product info to make command objects for them right now
     //This isn't functional
-    public void addUserWishList(String userID, UserSubscriber userSubscriber, String[] wishlist){
+    public void addUserWishList(String userID, String[] wishlist){
         for(String productID : wishlist){
-            addUser(userID, userSubscriber, productID, "Place Holder", "Place Holder");
+            addUser(userID, productID, "Place Holder", "Place Holder");
         }
 
     }

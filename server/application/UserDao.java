@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+package server.application;
+
+import java.util.ArrayList;
+>>>>>>> 60d4e37 (Implemented text message sending and email sendign)
 import java.util.HashMap;
 
 public class UserDao {
@@ -13,6 +19,14 @@ public class UserDao {
 
     //Get product ID based off matching url 
     public String getProductIDByUrl(String url){
+        return null;
+    }
+
+    public ArrayList<String> getUserByUserID(String userID){
+        return null;
+    }
+
+    public ArrayList<String> getUserByEmailAddress(String userID){
         return null;
     }
 

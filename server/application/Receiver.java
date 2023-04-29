@@ -1,8 +1,11 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.util.HashMap;
 =======
 package server.application;
 
+=======
+>>>>>>> 83223f9 (fixed package error)
 import java.util.ArrayList;
 import java.util.Properties;
 

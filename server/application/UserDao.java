@@ -1,7 +1,10 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 package server.application;
 
+=======
+>>>>>>> 83223f9 (fixed package error)
 import java.util.ArrayList;
 >>>>>>> 60d4e37 (Implemented text message sending and email sendign)
 import java.util.HashMap;

@@ -6,7 +6,5 @@ import java.util.ArrayList;
 
 public class DBQuery extends DBInsert {
 	@SuppressWarnings("static-access")
-	public DBQuery(DBConnetion dbConnetion) {
-		super.dbConnetion = dbConnetion;
-	}
+	public DBQuery(DBConnetion dbConnetion) {super.dbConnetion = dbConnetion;}
 }

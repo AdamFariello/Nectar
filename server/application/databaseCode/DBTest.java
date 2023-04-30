@@ -63,7 +63,7 @@ public class DBTest {
 		*/
 		
 		//Testing new way of describing tables
-		ArrayList<String> ex = test.getDatatypesOfTable_ArrStr(table);
+		ArrayList<String> ex = test.getColumnsFromTable_ArrStr(table);
 		System.out.println(ex);		
 	}
 }

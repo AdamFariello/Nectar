@@ -2,6 +2,7 @@
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
         "server/dependencies/activation.jar",
-        "server/dependencies/javax.mail.jar"
+        "server/dependencies/javax.mail.jar",
+        "server/dependencies/junit-4.13.2.jar"
     ]
 }

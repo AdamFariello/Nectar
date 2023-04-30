@@ -1,19 +1,9 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-import java.util.HashMap;
-=======
-package server.application;
-
-=======
->>>>>>> 83223f9 (fixed package error)
 import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
->>>>>>> 60d4e37 (Implemented text message sending and email sendign)
 
 public class Receiver {
     private static String sender = "nectarupdates@outlook.com";
@@ -47,7 +37,6 @@ public class Receiver {
         if (previousProductVO == null){
             previousProductVO = productVO;
         } else if (previousProductVO != productVO){
-            //userSubscribers.forEach((k, v) -> v.notify(productVO, previousProductVO));
             //Get user email and phone and tracker settings from database
             //Send message
             try {

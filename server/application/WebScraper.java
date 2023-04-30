@@ -8,6 +8,10 @@ public class WebScraper {
             case "Amazon": 
                 scraperCommands.put(productID, new AmazonScraperCommand(productID, url, receiver));
                 break;
+            case "Stub":
+                scraperCommands.put(productID, new StubScraperCommand(productID, url, receiver));
+                break;
+
         }
     }
 

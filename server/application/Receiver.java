@@ -5,8 +5,6 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
->>>>>>> 60d4e37 (Implemented text message sending and email sendign)
-
 public class Receiver {
     private static String sender = "nectarupdates@outlook.com";
     private static String senderPassword = "*qSdFCG641#G";

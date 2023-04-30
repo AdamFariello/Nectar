@@ -1,5 +1,3 @@
-package server.application;
-
 public class test {
     public static void main(String[] args) {
         ProductVO prev = new ProductVO("Beats Studio3 Wireless Noise Cancelling Over-Ear Headphones", "0", false, 10, 0);

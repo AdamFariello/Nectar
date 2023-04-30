@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import databaseCode;
 
 public class UserDao {
     String [] dbs = {
@@ -25,16 +24,7 @@ public class UserDao {
     }
 
     public ArrayList<String> getUserByUserID(String userID){
-        String db = dbs[2];
-        String table = "user";
-        DBConnetion con = new DBConnetion();
-        con.startConnection(db);
-        ArrayList<String> tableColumns = new ArrayList<String>();
-		tableColumns.add("user_email");
-		tableColumns.add("user_password");
-		DBQuery test = new DBQuery(con);
-		ArrayList< ArrayList<String> > list = test.getSomeFromTable_2DArrStr(table, tableColumns);
-        return list;
+        return null;
     }
 
     public ArrayList<String> getUserByEmailAddress(String userID){

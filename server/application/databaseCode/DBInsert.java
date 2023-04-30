@@ -39,7 +39,7 @@ public class DBInsert extends DBRetrieve {
 		insertIntoTable(table, tableInputs, tableColumns);
 	}
 	*/
-	
+	/*
 	private static boolean insertIntoTable (String table, ArrayList<Object> tableInputs) {
 		//TODO
 		//	1) Check for incorrect inputs for columns
@@ -91,7 +91,7 @@ public class DBInsert extends DBRetrieve {
 					);
 				}
 			}
-			
+			*/
 			/*
 			
 			//Converting: "[{insert values}]" to "{insert values}" 
@@ -140,13 +140,13 @@ public class DBInsert extends DBRetrieve {
 			}
 			
 			*/
-		} catch (Exception e) {
+		/*} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		System.out.println("Failure");
 		return false;
-	}
+	}*/
 }
 
 

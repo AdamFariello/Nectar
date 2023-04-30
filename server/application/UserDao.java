@@ -1,7 +1,14 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import databaseCode;
 
 public class UserDao {
+    String [] dbs = {
+        "nectarDB_administration", 
+        "nectarDB_products", 
+        "nectarDB_user"
+    };
+
     //TODO: Return a hashmap of userIds mapped to a string array of the productIDs in their wishlist
     public HashMap<String, String[]> getAllUserWishLists(){
         return null;
@@ -18,7 +25,16 @@ public class UserDao {
     }
 
     public ArrayList<String> getUserByUserID(String userID){
-        return null;
+        String db = dbs[2];
+        String table = "user";
+        DBConnetion con = new DBConnetion();
+        con.startConnection(db);
+        ArrayList<String> tableColumns = new ArrayList<String>();
+		tableColumns.add("user_email");
+		tableColumns.add("user_password");
+		DBQuery test = new DBQuery(con);
+		ArrayList< ArrayList<String> > list = test.getSomeFromTable_2DArrStr(table, tableColumns);
+        return list;
     }
 
     public ArrayList<String> getUserByEmailAddress(String userID){

@@ -8,6 +8,9 @@ public abstract class DBErrors extends Exception {
 	public DBErrors(String message, String string) {
 		super(String.format("\n" + message, string));
 	}
+	public DBErrors(String message, String string1, String string2) {
+		super(String.format("\n" + message, string1, string2));
+	}
 	public DBErrors(String message, String string1, String string2, 
 						  String string3, String string4) {
 		super(String.format("\n" + message, string1, string2, string3, string4));
@@ -24,6 +27,7 @@ class errorUnknownDatabase extends DBErrors {
 	public errorUnknownDatabase(String inputedDatabase) {super (message, inputedDatabase);}
 }
 
+/*
 @SuppressWarnings("serial") 
 class errorUnequalArrayListLengths extends DBErrors { 
 	private static String message = "The given input ArrayList for, "
@@ -31,6 +35,18 @@ class errorUnequalArrayListLengths extends DBErrors {
 						 		  + "are of different lengths";
 	public errorUnequalArrayListLengths(String string) {super(message, string);}
 }
+*/
+@SuppressWarnings("serial") 
+class errorUnequalArrayListLengths extends DBErrors { 
+	private static String message = "ArrayList 1: %s \n"
+								  + "ArrayList 2: %s \n"
+								  + "Are not equal in length"
+								  ;
+	public errorUnequalArrayListLengths(String list1, String list2) {
+		super(message, list1, list2);
+	}
+}
+
 @SuppressWarnings("serial") 
 class errorIncorrectDataTypeForTheTable extends DBErrors {
 	private static String message = "The datatype of %s is: \n"

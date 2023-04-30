@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class DBConversions <E> {
 	//TODO: Figure if scrap code should be removed
 	
-	public ArrayList<E> convertRow(ResultSet rs) {return convertRow(rs, 0);}	
+	public ArrayList<E> convertRow(ResultSet rs) {return convertRow(rs, 1);}	
 	@SuppressWarnings("unchecked")
 	public ArrayList<E> convertRow(ResultSet rs, int rowNumber) {
 		try {
@@ -48,7 +48,7 @@ public class DBConversions <E> {
 		}
 	}
 	
-	public ArrayList<E> convertColumn(ResultSet rs) {return convertColumn(rs, 0);}
+	public ArrayList<E> convertColumn(ResultSet rs) {return convertColumn(rs, 1);}
 	@SuppressWarnings("unchecked")
 	public ArrayList<E> convertColumn(ResultSet rs, int columnNumber) {
 		try {

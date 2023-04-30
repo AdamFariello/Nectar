@@ -1,0 +1,27 @@
+h1 {
+    font-size: 50px;
+    font-weight: bolder;
+    -webkit-text-stroke: black;
+    -webkit-text-stroke-width: 3px;
+    color: yellow;
+}
+
+.tabs button {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+label {
+    font-size: 25px;
+    font-weight: bolder;
+    -webkit-text-stroke: black;
+    -webkit-text-stroke-width: 1.5px;
+    color: white;
+}
+
+body {
+    background-image: linear-gradient(to right, #08409a, #000000);
+    width: 400px;
+    height: 400px;
+}

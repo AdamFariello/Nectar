@@ -7,11 +7,12 @@ import java.util.List;
 import java.util.HashMap;
 
 
-public class DBRetrieve extends DBConversions {	
+public class DBRetrieve {
 	//TODO: Add hash-table, macro, or whatever
 	//		Just something to explain specific numbers used in method	
+	//TODO: Include DBRetrieve in this class
 	
-	
+	protected static DBConnetion dbConnetion = null;
 	
 	public static ArrayList<String> getColumnsOfTable_ArrStr (String table) {
 		return convertColumn_RStoArrStr(getDescriptionOfTable_RS(table), 1);

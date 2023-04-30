@@ -1,6 +1,6 @@
 import databaseCode;
 
-public class UnitTests {
+public class IntegrationTests {
     public void testNotifyUserOnProductChange(){
         ProductTracker tracker = new ProductTracker();
         //add user with user id to db

@@ -2,34 +2,42 @@ package databaseCode;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.HashMap;
 
+
 public class DBRetrieve extends DBConversions {	
-	//TODO: Add hashtable, macro, or whatever -- to explain numbers used in method
+	//TODO: Add hash-table, macro, or whatever
+	//		Just something to explain specific numbers used in method	
 	
 	
-	public static ArrayList<Object> getColumnsFromTable_ArrObj (String table) {
-		return convertColumn_2DRStoArrObj(getDescriptionOfTable_RS(table), 1);
-	}
-	public static ArrayList<String> getColumnsFromTable_ArrStr (String table) {
-		return convertColumn_2DRStoArrStr(getDescriptionOfTable_RS(table), 1);
+	
+	public static ArrayList<String> getColumnsOfTable_ArrStr (String table) {
+		return convertColumn_RStoArrStr(getDescriptionOfTable_RS(table), 1);
 	}	
-	
-	public static ArrayList<Object> getDatatypesOfTable_ArrObj (String table) {
-		return convertColumn_2DRStoArrObj(getDescriptionOfTable_RS(table), 2);
+	public static ArrayList<Object> getColumnsOfTable_ArrObj (String table) {
+		return convertColumn_RStoArrObj(getDescriptionOfTable_RS(table), 1);
 	}
 	public static ArrayList<String> getDatatypesOfTable_ArrStr (String table) {
-		return convertColumn_2DRStoArrStr(getDescriptionOfTable_RS(table), 2);
+		return convertColumn_RStoArrStr(getDescriptionOfTable_RS(table), 2);
+	}
+	public static ArrayList<Object> getDatatypesOfTable_ArrObj (String table) {
+		return convertColumn_RStoArrObj(getDescriptionOfTable_RS(table), 2);
+	}
+	
+	public static ArrayList< ArrayList<String> > getColumnsAndDatatypeFromTable_2DArrStr (String table) {
+		ArrayList<Integer> tempCol = new ArrayList<Integer>(); 
+		tempCol.add(1); tempCol.add(2);
+		return convertRows_RStoArrStr(getDescriptionOfTable_RS(table), tempCol);
+	}
+	public static ArrayList< ArrayList<Object> > getColumnsAndDatatypeFromTable_2DArrObj (String table) {
+		ArrayList<Integer> tempCol = new ArrayList<Integer>(); 
+		tempCol.add(1); tempCol.add(2);
+		return convertRows_RStoArrObj(getDescriptionOfTable_RS(table), tempCol);
 	}
 
-	/*
-	public static ArrayList< ArrayList<Object> > getColumnsAndDatatypeFromTable_2DArrObj (String table) {
-		return convertColumn_2DRStoArrObj(getDescriptionOfTable_RS(table), 1);
-	}
-	public static ArrayList< ArrayList<String> > getColumnsAndDatatypeFromTable_2DArrStr (String table) {
-		return convertColumn_2DRStoArrStr(getDescriptionOfTable_RS(table), 1);
-	}
-	*/
+
 	
 	public static ResultSet getDescriptionOfTable_RS (String table) {
 		try {
@@ -44,17 +52,7 @@ public class DBRetrieve extends DBConversions {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/*
 	//Getting contents from the table
 	public static ArrayList< ArrayList<Object> > getAllFromTable_2DArrObj (String table) {
 		return convertTable_RSto2DArrObj(getAllFromTable_RS(table));
@@ -108,5 +106,5 @@ public class DBRetrieve extends DBConversions {
 		}
 		return null;
 	}
-
+	*/
 }

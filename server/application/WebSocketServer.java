@@ -4,12 +4,8 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.websocket.server.config.JettyWebSocketServletContainerInitializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class WebSocketServer {
-
-    private static final Logger LOG = LoggerFactory.getLogger(WebSocketServer.class);
 
     public static void main(String[] args) throws Exception
     {
@@ -67,7 +63,7 @@ public class WebSocketServer {
 
     public void join() throws InterruptedException
     {
-        LOG.info("Use Ctrl+C to stop server");
+        System.out.println("Use Ctrl+C to stop server");
         server.join();
     }
 }

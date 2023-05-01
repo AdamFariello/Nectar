@@ -1,3 +1,4 @@
+package server.app;
 class UserTrackerSettingsVO extends ValueObject{
     public boolean automaticPurchase;
     public boolean price;

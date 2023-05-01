@@ -1,3 +1,4 @@
+package server.app;
 import java.net.URI;
 
 import org.eclipse.jetty.server.Server;

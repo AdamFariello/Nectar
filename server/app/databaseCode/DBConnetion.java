@@ -1,4 +1,4 @@
-package databaseCode;
+package server.app.databaseCode;
 
 import java.sql.*;
 import java.util.Arrays;

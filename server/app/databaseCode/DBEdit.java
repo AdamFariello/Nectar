@@ -1,4 +1,4 @@
-package databaseCode;
+package server.app.databaseCode;
 
 public class DBEdit {
 	//TODO 

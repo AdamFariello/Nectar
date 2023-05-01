@@ -18,6 +18,7 @@
         "server/dependencies/websocket-core-server-10.0.15.jar",
         "server/dependencies/websocket-jetty-common-10.0.15.jar",
         "server/dependencies/websocket-core-common-10.0.15.jar",
-        "server/dependencies/websocket-servlet-10.0.15.jar"
+        "server/dependencies/websocket-servlet-10.0.15.jar",
+        "server/dependencies/websocket-jetty-client-10.0.15.jar"
     ]
 }

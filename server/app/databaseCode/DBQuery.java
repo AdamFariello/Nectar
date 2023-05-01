@@ -1,4 +1,4 @@
-package databaseCode;
+package server.app.databaseCode;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

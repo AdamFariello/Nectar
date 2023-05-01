@@ -1,3 +1,4 @@
+package server.app;
 import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
 

@@ -1,3 +1,4 @@
+package server.app;
 import java.util.ArrayList;
 import java.util.Properties;
 

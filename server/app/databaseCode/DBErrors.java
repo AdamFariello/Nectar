@@ -1,4 +1,4 @@
-package databaseCode;
+package server.app.databaseCode;
 
 //TODO Create a error class for putting a table into the query
 

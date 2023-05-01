@@ -1,3 +1,4 @@
+package server.app;
 public class ProductVO extends ValueObject{
     public String title;
     public String productID;

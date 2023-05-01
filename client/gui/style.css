@@ -23,6 +23,22 @@ h1 {
     color: rgb(255, 174, 0);
 }
 
+#settings {
+    font-size: 20px;
+    font-weight: bolder;
+    -webkit-text-stroke: rgb(0, 0, 0);
+    /* -webkit-text-stroke-width: 3px; */
+    color: rgb(255, 174, 0);
+}
+
+#home {
+    font-size: 20px;
+    font-weight: bolder;
+    -webkit-text-stroke: rgb(0, 0, 0);
+    /* -webkit-text-stroke-width: 3px; */
+    color: rgb(255, 174, 0);
+}
+
 .tabs button {
     overflow: hidden;
     border: 1px solid rgb(255, 153, 0);

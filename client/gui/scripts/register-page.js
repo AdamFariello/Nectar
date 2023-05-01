@@ -11,7 +11,7 @@ registerButton.addEventListener("click", (e) => {
 
     if (username === username2 && password === password2) {
         alert("You have successfully registered.");
-        location.reload();
+        location.href = "../pages/home.html";
     } else {
         registerErrorMsg.style.opacity = 1;
     }

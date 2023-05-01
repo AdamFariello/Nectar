@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="application/src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/yocif/Work/school/Rutgers/term7/198_431.Software_Engineering/semesterProject/Nectar/server/dependencies/mysql-connector-j-8.0.32/mysql-connector-j-8.0.32.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/yocif/Work/school/Rutgers/term7/198_431.Software_Engineering/semesterProject/Nectar/server/dependencies/activation.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/yocif/Work/school/Rutgers/term7/198_431.Software_Engineering/semesterProject/Nectar/server/dependencies/javax.mail.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="application/bin"/>
+</classpath>

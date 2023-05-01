@@ -1,5 +1,3 @@
-package server.application;
-
 public abstract class ScraperCommand {
     protected Receiver receiver;
     protected String productID;

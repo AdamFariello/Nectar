@@ -1,5 +1,3 @@
-package server.application;
-
 import java.util.HashMap;
 
 public class ProductTracker {
@@ -10,8 +8,9 @@ public class ProductTracker {
         webScraper = new WebScraper();
     }
 
-    private void addProduct(String productID, String url, Receiver receiver){
+    private void addProduct(String productID, String url, String website, Receiver receiver){
         receivers.put(productID, receiver);
+        webScraper.addProduct(productID, url, website, receiver);
     }
 
     private void removeProduct(String productID){
@@ -19,19 +18,20 @@ public class ProductTracker {
         receivers.remove(productID);
     }
 
-    public void addUser(String userID, UserSubscriber userSubscriber, String productID){
+    public void addUser(String userID, String productID, String url, String website){
         if (!receivers.containsKey(productID)){
             Receiver receiver = new Receiver();
-            receiver.addUser(userID, userSubscriber);
-            addProduct(productID, productID, receiver);
+            receiver.addUser(userID);
+            addProduct(productID, url, website, receiver);
         }else{
-            receivers.get(productID).addUser(userID, userSubscriber);
+            receivers.get(productID).addUser(userID);
         }
     }
-
-    public void addUserWishList(String userID, UserSubscriber userSubscriber, String[] wishlist){
+    //TODO: make this method accept a value object array for the product info to make command objects for them right now
+    //This isn't functional
+    public void addUserWishList(String userID, String[] wishlist){
         for(String productID : wishlist){
-            addUser(userID, userSubscriber, productID);
+            addUser(userID, productID, "Place Holder", "Place Holder");
         }
 
     }

@@ -80,7 +80,7 @@ public class DBInsert extends DBRetrieve {
 					);
 				}
 			}
-			
+
 			if (ps.executeUpdate() > 0) {
 				System.out.println("Success");
 				return true;

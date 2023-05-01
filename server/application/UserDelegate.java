@@ -1,10 +1,7 @@
-package server.application;
-
 import java.util.HashMap;
 
 public class UserDelegate {
     private ProductTracker productTracker;
-    private HashMap<String, UserSubscriber> userSubscribers;
     private UserDao userDao;
 
     public UserDelegate(ProductTracker productTracker, UserDao userDao){

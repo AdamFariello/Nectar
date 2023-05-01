@@ -1,4 +1,3 @@
-package server.application;
 import java.util.Arrays;
 
 public abstract class ValueObject {

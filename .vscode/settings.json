@@ -22,5 +22,8 @@
         "server/dependencies/websocket-jetty-client-10.0.15.jar",
         "server/dependencies/hamcrest-core-1.3.jar",
         "server/dependencies/junit-4.13.2.jar"
+    ],
+    "java.project.sourcePaths": [
+        ""
     ]
 }

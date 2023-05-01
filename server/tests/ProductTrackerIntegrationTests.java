@@ -2,12 +2,19 @@ package server.tests;
 
 import server.app.*;
 
+import org.junit.Test;
+
+import junit.framework.*;
+
 public class ProductTrackerIntegrationTests {
+    
+    @Test
     public void testNotifyUserOnProductChange() throws Exception{
-        ProductVO prev = new ProductVO("Beats Studio3 Wireless Noise Cancelling Over-Ear Headphones", "0", false, 10, 0);
-        ProductVO curr = new ProductVO("Beats Studio3 Wireless Noise Cancelling Over-Ear Headphones", "0", true, 200, 15);
-        Receiver receiver = new Receiver();
-        receiver.receive(prev);
-        receiver.receive(curr);
+        ProductTracker tracker = new ProductTracker();
+        //add user with user id to db
+        //databaseCode.DBInsert.insertIntoTable()
+        tracker.addUser("1", "1", "testurl", "Stub");
+        tracker.trackProducts();
+        tracker.trackProducts();
     }
 }

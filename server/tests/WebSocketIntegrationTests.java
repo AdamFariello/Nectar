@@ -3,12 +3,14 @@ package server.tests;
 import java.net.URI;
 import server.app.*;
 import org.eclipse.jetty.websocket.api.util.WSURI;
-//import junit.framework.*;
+import org.junit.Test;
+
+import junit.framework.*;
 
 public class WebSocketIntegrationTests {
     private WebSocketServer server;
-    
-    //@Test
+
+    @Test
     public void testWebSocketServer() throws Exception{
         URI destUri = server.getURI().resolve("/nectar/");
         URI wsUri = WSURI.toWebsocket(destUri);

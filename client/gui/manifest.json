@@ -10,6 +10,12 @@
         "default_popup": "view/login.html"
     },
     "permissions": [
+        "experimental",
         "activeTab"
-    ]
+    ],
+    "sockets": {
+        "tcp": {
+            "connect": "127.0.0.1:8999"
+        }
+    }
 }

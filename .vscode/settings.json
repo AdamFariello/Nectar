@@ -4,6 +4,14 @@
         "server/dependencies/activation.jar",
         "server/dependencies/javax.mail.jar",
         "server/dependencies/javax.websocket-client-api-1.1.jar",
-        "server/dependencies/javax.websocket-api-1.1.jar"
+        "server/dependencies/javax.websocket-api-1.1.jar",
+        "server/dependencies/apache-tomcat-9.0.74-embed/annotations-api.jar",
+        "server/dependencies/apache-tomcat-9.0.74-embed/ecj-4.20.jar",
+        "server/dependencies/apache-tomcat-9.0.74-embed/tomcat-dbcp.jar",
+        "server/dependencies/apache-tomcat-9.0.74-embed/tomcat-embed-core.jar",
+        "server/dependencies/apache-tomcat-9.0.74-embed/tomcat-embed-el.jar",
+        "server/dependencies/apache-tomcat-9.0.74-embed/tomcat-embed-jasper.jar",
+        "server/dependencies/apache-tomcat-9.0.74-embed/tomcat-embed-programmatic.jar",
+        "server/dependencies/apache-tomcat-9.0.74-embed/tomcat-embed-websocket.jar"
     ]
 }

@@ -7,6 +7,8 @@ public class DBRetrieve {
 	//TODO: Add hash-table, macro, or whatever
 	//		Just something to explain specific numbers used in method	
 	//TODO: Include DBRetrieve in this class
+	//TODO: Theorize if this class can, and should, use <E>
+	//TODO: Include more checks
 	
 	protected static DBConnetion dbConnetion = null;
 	
@@ -56,20 +58,19 @@ public class DBRetrieve {
 	}
 	
 	
-	
-	
-	
-	
-	//Getting all contents from the table
-	public static ArrayList<ArrayList<String>> getAllFromTable_2DArrStr(String table) {
+	//Calling from table using: table
+	public static ArrayList<ArrayList<String>> getFromTable_2DArrStr
+	(String table) {
 		DBConversions<String> dbc = new DBConversions<String>();
-		return dbc.convertEntireTable(getAllFromTable_RS(table));
+		return dbc.convertEntireTable(getFromTable_RS(table));
 	}
-	public static ArrayList<ArrayList<Object>> getAllFromTable_2DArrObj(String table) {
+	public static ArrayList<ArrayList<Object>> getFromTable_2DArrObj
+	(String table) {
 		DBConversions<Object> dbc = new DBConversions<Object>();
-		return dbc.convertEntireTable(getAllFromTable_RS(table));
+		return dbc.convertEntireTable(getFromTable_RS(table));
 	}
-	public static ResultSet getAllFromTable_RS(String table) {
+	public static ResultSet getFromTable_RS
+	(String table) {
 		try {			
 			String queryFormat   = "SELECT * FROM %s";
 			String query 		 = String.format(queryFormat, table);
@@ -80,9 +81,9 @@ public class DBRetrieve {
 		}
 		return null;
 	}
-
 	
-	//Getting certain columns from the table
+	
+	//Calling from table using: table, and columns
 	public static ArrayList<ArrayList<String>> getFromTable_2DArrStr
 	(String table, ArrayList<String> columns) {
 		DBConversions<String> dbc = new DBConversions<String>();
@@ -96,16 +97,12 @@ public class DBRetrieve {
 	public static ResultSet getFromTable_RS
 	(String table, ArrayList<String> columns) {
 		try {			
-			String queryInserts = "?, ".repeat(columns.size()); 
-			queryInserts 	 	= queryInserts.substring(0, queryInserts.length()-2);
-			
-			String queryFormat   = "SELECT (%s) FROM %s";
-			String query 		 = String.format(queryFormat, queryInserts, table);
-			PreparedStatement ps = dbConnetion.getConnection().prepareStatement(query);
-			for (int i = 1; !columns.isEmpty(); i++) {
-				ps.setString(1, columns.get(0));
-			}
-			return ps.executeQuery();
+			String queryColumns = columns.toString();
+			queryColumns = queryColumns.replace("[", "");
+			queryColumns = queryColumns.replace("]", "");
+			String queryFormat  = "SELECT %s FROM %s";
+			String query 		= String.format(queryFormat, queryColumns, table);
+			return dbConnetion.getConnection().prepareStatement(query).executeQuery();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -113,29 +110,79 @@ public class DBRetrieve {
 	}
 	
 	
-	//Getting certain entries from the table
+	//Calling from table using: table, and where values
+	public static ArrayList<ArrayList<String>> getFromTable_2DArrStr
+	(String table, ArrayList<String> wheres, ArrayList<String> wheresValues) {
+		DBConversions<String> dbc = new DBConversions<String>();
+		return dbc.convertEntireTable(getFromTable_RS(table, wheres, wheresValues));
+	}
+	public static ArrayList<ArrayList<Object>> getFromTable_2DArrObj
+	(String table, ArrayList<String> wheres, ArrayList<String> wheresValues) {
+		DBConversions<Object> dbc = new DBConversions<Object>();
+		return dbc.convertEntireTable(getFromTable_RS(table, wheres, wheresValues));
+	}
+	public static ResultSet getFromTable_RS 
+	(String table, ArrayList<String> wheres, ArrayList<String> wheresValues) {
+		try {
+			if (wheres.size() != wheresValues.size()) {
+				throw new errorUnequalArrayListLengths("wheres", "wheresValues");
+			}
+			String queryWheres = wheres.toString().replace(",", "= ? AND ");
+			queryWheres = queryWheres.replace("[","");
+			queryWheres = queryWheres.replace("]"," = ?");
+			
+			String queryFormat = "SELECT * FROM %s WHERE %s ";
+			String query 	   = String.format(queryFormat, table, queryWheres);
+			PreparedStatement ps = dbConnetion.getConnection().prepareStatement(query);
+			for (int i = 1; !wheresValues.isEmpty(); i++) {
+				ps.setString(i, wheresValues.remove(0));
+			}
+			return ps.executeQuery();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		//TODO: Fill in with actual stuff
+		return null;
+	}
+	
+	
+	//Calling from table using: table, columns, and where values
+	public static ArrayList<ArrayList<String>> getFromTable_2DArrStr
+	(String table, ArrayList<String> columns, 
+	 ArrayList<String> wheres, ArrayList<String> wheresValues) {
+		DBConversions<String> dbc = new DBConversions<String>();
+		return dbc.convertEntireTable(getFromTable_RS(table, columns, wheres, wheresValues));
+	}
+	public static ArrayList<ArrayList<Object>> getFromTable_2DArrObj
+	(String table, ArrayList<String> columns, 
+	 ArrayList<String> wheres, ArrayList<String> wheresValues) {
+		DBConversions<Object> dbc = new DBConversions<Object>();
+		return dbc.convertEntireTable(getFromTable_RS(table, columns, wheres, wheresValues));
+	}
 	public static ResultSet getFromTable_RS
 	(String table, ArrayList<String> columns, 
-	 ArrayList<String> wheres, ArrayList<Object> wheresValues) {
+	 ArrayList<String> wheres, ArrayList<String> wheresValues) {
 		try {		
 			if (wheres.size() != wheresValues.size()) {
 				throw new errorUnequalArrayListLengths("wheres", "wheresValues");
 			}
 			
-			String queryInserts = "?, ".repeat(columns.size()); 
-			queryInserts 	 	= queryInserts.substring(0, queryInserts.length()-2);
+			String queryColumns = columns.toString()
+					 					 .substring(1, columns.toString().length()-1);
 			
-			String queryWheres = "? = ? AND ".repeat(wheres.size());
-			queryWheres 	   = queryWheres.substring(0, queryInserts.length()-5);
+			String queryWheres = wheres.toString().replace(",", "= ? AND ");
+			queryWheres = queryWheres.replace("[","");
+			queryWheres = queryWheres.replace("]"," = ?");
 			
-			String queryFormat = "SELECT (%s) FROM %s WHERE %s";
+			String queryFormat = "SELECT %s FROM %s WHERE %s ";
 			String query 	   = String.format(
 									queryFormat, 
-									queryInserts, table, queryWheres
+									queryColumns, table, queryWheres
 						 	   );
 			PreparedStatement ps = dbConnetion.getConnection().prepareStatement(query);
-			for (int i = 1; !columns.isEmpty(); i++) {
-				ps.setString(1, columns.get(0));
+			for (int i = 1; !wheresValues.isEmpty(); i++) {
+				ps.setString(i, wheresValues.remove(0));
 			}
 			return ps.executeQuery();
 		} catch (Exception e) {
@@ -143,4 +190,5 @@ public class DBRetrieve {
 		}
 		return null;
 	}
+	
 }

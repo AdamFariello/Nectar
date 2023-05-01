@@ -6,17 +6,17 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/yocif/Work/school/Rutgers/term7/198_431.Software_Engineering/semesterProject/Nectar/server/dependencies/mysql-connector-j-8.0.32/mysql-connector-j-8.0.32.jar">
+	<classpathentry kind="lib" path="dependencies/mysql-connector-j-8.0.32/mysql-connector-j-8.0.32.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/yocif/Work/school/Rutgers/term7/198_431.Software_Engineering/semesterProject/Nectar/server/dependencies/activation.jar">
+	<classpathentry kind="lib" path="dependencies/activation.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/yocif/Work/school/Rutgers/term7/198_431.Software_Engineering/semesterProject/Nectar/server/dependencies/javax.mail.jar">
+	<classpathentry kind="lib" path="dependencies/javax.mail.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>

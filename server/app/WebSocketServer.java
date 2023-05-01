@@ -38,7 +38,7 @@ public class WebSocketServer {
             wsContainer.setMaxTextMessageSize(65535);
 
             // Add websockets
-            wsContainer.addMapping("/events/*", new EventEndpointCreator());
+            wsContainer.addMapping("/nectar/*", new EventEndpointCreator());
         });
     }
 

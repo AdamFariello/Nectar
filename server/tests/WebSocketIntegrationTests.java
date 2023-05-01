@@ -10,7 +10,7 @@ public class WebSocketIntegrationTests {
     
     //@Test
     public void testWebSocketServer() throws Exception{
-        URI destUri = server.getURI().resolve("/events/");
+        URI destUri = server.getURI().resolve("/nectar/");
         URI wsUri = WSURI.toWebsocket(destUri);
         TestWebSocketClient client = new TestWebSocketClient();
         client.run(wsUri);

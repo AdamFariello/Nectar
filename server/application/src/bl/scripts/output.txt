@@ -1,0 +1,42 @@
+Product ASIN = B08528YFM
+Product Title = Beats Studio3 Wireless Noise Cancelling Over-Ear Headphones - Apple W1 Headphone Chip, Class 1 Bluetooth, 22 Hours of Listening Time, Built-in Microphone - Shadow Gray (Latest Model)
+Product Price = $156.39
+Product Rating = 4.7 out of 5 stars
+Number of Product Reviews = 23,860 ratings
+Availability = In Stock
+
+Product ASIN = B0BHC395W
+Product Title = PlayStation PS5 Console � God of War Ragnar�k Bundle
+Product Price = $509.00
+Product Rating = 4.8 out of 5 stars
+Number of Product Reviews = 7,575 ratings
+Availability = In Stock
+
+Product ASIN = B0BN72FYF
+Product Title = Apple iPhone 14, 128GB, Midnight - Unlocked (Renewed)
+Product Price = $639.99
+Product Rating = 4.4 out of 5 stars
+Number of Product Reviews = 175 ratings
+Availability = Only 15 left in stock - order soon.
+
+Product ASIN = B0BLP45GY
+Product Title = SAMSUNG Galaxy S23 Ultra Cell Phone, Factory Unlocked Android Smartphone, 256GB Storage, 200MP Camera, Night Mode, Long Battery Life, S Pen, US Version, 2023, Phantom Black
+Product Price = $1,199.99
+Product Rating = 4.5 out of 5 stars
+Number of Product Reviews = 44 ratings
+Availability = In Stock
+
+Product ASIN = B09YZXLYG
+Product Title = Nintendo Switch Mario Choose One Bundle
+Product Price = $299.00
+Product Rating = 4.8 out of 5 stars
+Number of Product Reviews = 2,275 ratings
+Availability = In Stock
+
+Product ASIN = B092VT1JG
+Product Title = Nintendo Switch Lite - Blue
+Product Price = $199.00
+Product Rating = 4.8 out of 5 stars
+Number of Product Reviews = 47,961 ratings
+Availability = In Stock
+

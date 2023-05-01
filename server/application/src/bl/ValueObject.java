@@ -1,3 +1,4 @@
+package bl;
 import java.util.Arrays;
 
 public abstract class ValueObject {

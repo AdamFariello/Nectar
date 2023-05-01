@@ -1,3 +1,4 @@
+package bl;
 import java.util.HashMap;
 
 public class WebScraper {

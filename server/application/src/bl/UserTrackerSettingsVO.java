@@ -1,3 +1,4 @@
+package bl;
 class UserTrackerSettingsVO extends ValueObject{
     public boolean automaticPurchase;
     public boolean price;

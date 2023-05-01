@@ -56,6 +56,10 @@ public class DBRetrieve {
 	}
 	
 	
+	
+	
+	
+	
 	//Getting all contents from the table
 	public static ArrayList<ArrayList<String>> getAllFromTable_2DArrStr(String table) {
 		DBConversions<String> dbc = new DBConversions<String>();
@@ -139,33 +143,4 @@ public class DBRetrieve {
 		}
 		return null;
 	}
-	
-	/*
-	public static ArrayList< ArrayList<Object> > getSomeFromTable_2DArrObj (String table, ArrayList<String> columns) {
-		return convertTable_RSto2DArrObj(getSomeFromTable_RS(table, columns));
-	}
-	public static ArrayList< ArrayList<String> > getSomeFromTable_2DArrStr (String table, ArrayList<String> columns) {
-		return convertTable_RSto2DArrStr(getSomeFromTable_RS(table, columns));
-	}
-	public static ResultSet getSomeFromTable_RS (String table, ArrayList<String> columns) {
-		try {
-			//TODO Change to use string format
-			String query = "SELECT "; 
-			while (! columns.isEmpty()) {
-				query += columns.remove(0);
-				query += ", ";
-			}
-			
-			//Removing the last comma in the query string
-			query = query.substring(0, query.length() - 2) + " ";
-			query += ("From " + table);
-			
-			PreparedStatement ps = dbConnetion.getConnection().prepareStatement(query);
-			return ps.executeQuery();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	*/
 }

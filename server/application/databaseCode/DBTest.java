@@ -84,7 +84,10 @@ public class DBTest {
 		System.out.println(s);		
 		*/
 		
+		
+		//Calling whole table
 		System.out.println(test.getAllFromTable_2DArrStr(table));
 		
+		//Calling parts of a table
 	}
 }

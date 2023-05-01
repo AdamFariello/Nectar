@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../style.css">
+    <script defer src="../scripts/login-page.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Nectar</h1>
+    </header>
+
+
+    <main id="main-holder">
+        <img src="..\images\logo4-Transparent.png" class="center">
+        <h1 id="login">Welcome, Please Log In</h1>
+
+        <div id="login-error-msg-holder">
+            <p id="login-error-msg">Invalid username <span id="error-msg-second-line">and/or password</span></p>
+        </div>
+
+        <form id="login-form">
+            <!-- <label>Username:<br></label>    -->
+            <input type="text" name="username" id="username-field" class="login-form-field" placeholder="Username">
+            <!-- <label><br>Password:<br></label>    -->
+            <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
+            <input type="submit" value="Login" id="login-form-submit">
+        </form>
+    </main>
+
+    <!-- <div class="tabs">
+        <button class="tablinks" onclick="open('Login')">Login</button>
+        <button class="tablinks" onclick="open('Register')">Register</button>
+    </div> -->
+    <!-- <script src="script.js"></script> -->
+    <footer>
+        <a id="registerButton" href="register.html">Register</a>
+
+    </footer>
+</body>
+
+</html>

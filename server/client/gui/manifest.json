@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+    "name": "Nectar",
+    "description": "Helping users track and save prices on products!",
+    "version": "1.0",
+    "icons": {
+        "128": "view/images/logo4-Transparent.png"
+    },
+    "browser_action": {
+        "default_popup": "view/login.html"
+    },
+    "permissions": [
+        "experimental",
+        "activeTab"
+    ],
+    "sockets": {
+        "tcp": {
+            "connect": "127.0.0.1:8999"
+        }
+    }
+}

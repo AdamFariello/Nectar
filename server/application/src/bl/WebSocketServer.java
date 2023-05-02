@@ -11,7 +11,7 @@ public class WebSocketServer {
     public static void main(String[] args) throws Exception
     {
         WebSocketServer server = new WebSocketServer();
-        server.setPort(8090);
+        server.setPort(8000);
         server.start();
         server.join();
     }

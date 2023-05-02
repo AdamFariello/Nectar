@@ -16,5 +16,5 @@ loginButton.addEventListener("click", (e) => {
 
 window.onload = function() {
     alert("You started up");
-    ws = new WebSocket("ws://localhost:8090/events/");
+    ws = new WebSocket("ws://localhost:8000/nectar/");
 }

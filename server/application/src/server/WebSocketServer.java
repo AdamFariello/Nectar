@@ -1,4 +1,4 @@
-package bl;
+package server;
 import java.net.URI;
 
 import org.eclipse.jetty.server.Server;

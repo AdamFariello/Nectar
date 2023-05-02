@@ -10,20 +10,23 @@ public class DBInsert extends DBRetrieve {
 	//		(Insert error catch to stop this)
 	//TODO: Account for no primary key when inserting into table
 	//TODO: Check for error of using primary key method and not giving a primary key
-	//		(Possible un-needed since I already check for incorrect lengths...)
+	//		(Possible not needed since I already check for incorrect lengths...)
+	//TODO: Check if setDate() in insertIntoTable includes the time
 	
+	//Why I don't use method overload in this file:
+	//https://stackoverflow.com/questions/17053774/java-overloading-for-arraylist-data-types
+
 	
-	public static boolean insertIntoTableWithPrimaryKey
+	public static boolean insertIntoTableWithPrimaryKey_ArrObj
 	(String table, ArrayList<Object> tableInputs) {			
 		ArrayList<ArrayList<Object>> temp = new ArrayList<ArrayList<Object>>();
 		temp.add(tableInputs);
-		return insertIntoTableWithPrimaryKey(table, tableInputs);
+		return insertIntoTableWithPrimaryKey_2DArrObj(table, temp);
 	}
-	public static boolean insertIntoTableWithPrimaryKey 
-	(String table, ArrayList<ArrayList<Object>> tableInputs) {					
+	public static boolean insertIntoTableWithPrimaryKey_2DArrObj
+	(String table, ArrayList< ArrayList<Object> > tableInputs) {					
 		ArrayList<String> columnsOfTable   = getColumnsOfTable_ArrStr(table);
 		ArrayList<String> datatypesOfTable = getDatatypesOfTable_ArrStr(table);
-		
 		
 		String queryColumns = columnsOfTable.toString()
 											.replace("[", "")
@@ -48,14 +51,13 @@ public class DBInsert extends DBRetrieve {
 		return insertIntoTable (query, tableInputs, columnsOfTable, datatypesOfTable);
 	}
 	
-
-	public static boolean insertIntoTableWithOutPrimaryKey
+	public static boolean insertIntoTableWithOutPrimaryKey_ArrObj
 	(String table, ArrayList<Object> tableInputs) {
 		ArrayList<ArrayList<Object>> temp = new ArrayList<ArrayList<Object>>();
 		temp.add(tableInputs);
-		return insertIntoTableWithOutPrimaryKey(table, tableInputs);
+		return insertIntoTableWithOutPrimaryKey_2DArrObj(table, temp);
 	}
-	public static boolean insertIntoTableWithOutPrimaryKey
+	public static boolean insertIntoTableWithOutPrimaryKey_2DArrObj
 	(String table, ArrayList<ArrayList<Object>> tableInputs) {
 		ArrayList<String> columnsOfTable = getColumnsOfTable_ArrStr(table);
 		columnsOfTable.remove(0);
@@ -66,6 +68,7 @@ public class DBInsert extends DBRetrieve {
 		String queryColumns = columnsOfTable.toString()
 											.replace("[", "")
 											.replace("]", "");
+		
 		
 		//Create "?" for each given argument, and remove final ", " in string
 		String queryInserts = "?, ".repeat(tableInputs.size()); 
@@ -82,11 +85,9 @@ public class DBInsert extends DBRetrieve {
 		
 		String queryFormat = "INSERT INTO %s (%s) VALUES (%s)";
 		String query 	   = String.format(queryFormat, table, queryColumns, queryInserts);
+		System.out.println(query);
 		return insertIntoTable (query, tableInputs, columnsOfTable, datatypesOfTable);
 	}
-	
-	
-	
 	
 	private static boolean insertIntoTable 
 	(String query, ArrayList<ArrayList<Object>> tableInputs, 
@@ -94,42 +95,39 @@ public class DBInsert extends DBRetrieve {
 		try { 
 			PreparedStatement ps = dbConnetion.getConnection().prepareStatement(query);		 
 			
-			for ()
-			
-			for (int i = 1; !columnsOfTable.isEmpty(); i++) {
-				//Either i - 1, or all else is i + 1
-				//Object tableInputObj  = tableInputs.get(i - 1); 
-				Object tableInputObj   = tableInputs.remove(0); 
-				String currRowCol	   = columnsOfTable.remove(0);
-				String currRowDataType = datatypesOfTable.remove(0);
-				
-				//Can't be a switch since switches don't allow functions
-				if (currRowDataType.contains("varchar")    	  && tableInputObj instanceof String) {
-					ps.setString(i, (String) tableInputObj);
-				} else if (currRowDataType.equals("int")      && tableInputObj instanceof Integer) {
-					ps.setInt(i, (Integer) tableInputObj);
-				} else if (currRowDataType.equals("double")   && tableInputObj instanceof Double) {
-					ps.setDouble(i, (Double) tableInputObj);
-				} else if (currRowDataType.equals("datetime") && 
-						  (tableInputObj instanceof java.util.Date || tableInputObj instanceof java.sql.Date)) { 
-					//TODO: Check if it includes time
-					ps.setDate(i, (java.sql.Date) tableInputObj); //Format: "MM/DD/YYYY"
-				} else {
-					String tableInputString = tableInputObj.toString(); 
-					String tableInputDataTypeString; 
-					try {
-						tableInputDataTypeString = tableInputObj.getClass().getSimpleName();
-					}	catch (NullPointerException e) {
-						tableInputDataTypeString = "undefined";
-					}
+			for (ArrayList<Object> ArrObj: tableInputs) {
+				for (int i = 1; !columnsOfTable.isEmpty(); i++) {
+					//Either i - 1, or all else is i + 1
+					//Object tableInputObj  = tableInputs.get(i - 1); 
+					Object tableInputObj   = ArrObj.remove(0); 
+					String currRowCol	   = columnsOfTable.remove(0);
+					String currRowDataType = datatypesOfTable.remove(0);
 					
-					throw new errorIncorrectDataTypeForTheTable(
-							tableInputString, tableInputDataTypeString, 
-							currRowCol, currRowDataType
-					);
+					//Can't be a switch since switches don't allow functions
+					if (currRowDataType.contains("varchar") && tableInputObj instanceof String) {
+						ps.setString(i, (String) tableInputObj);
+					} else if (currRowDataType.equals("int") && tableInputObj instanceof Integer) {
+						ps.setInt(i, (Integer) tableInputObj);
+					} else if (currRowDataType.equals("double") && tableInputObj instanceof Double) {
+						ps.setDouble(i, (Double) tableInputObj);
+					} else if (currRowDataType.equals("datetime") && 
+							  (tableInputObj instanceof java.util.Date || tableInputObj instanceof java.sql.Date)) { 
+						ps.setDate(i, (java.sql.Date) tableInputObj); //Format: "MM/DD/YYYY"
+					} else {
+						String tableInputString = tableInputObj.toString(); 
+						String tableInputDataTypeString; 
+						try {
+							tableInputDataTypeString = tableInputObj.getClass().getSimpleName();
+						}	catch (NullPointerException e) {
+							tableInputDataTypeString = "undefined";
+						}
+						throw new errorIncorrectDataTypeForTheTable(
+								tableInputString, tableInputDataTypeString, 
+								currRowCol, currRowDataType
+						);
+					}
 				}
 			}
-
 			if (ps.executeUpdate() > 0) {
 				System.out.println("Success");
 				return true;

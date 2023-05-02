@@ -20,20 +20,13 @@ public class DBTest {
 		con.startConnection(db);		
 		DBQuery test = new DBQuery(con);
 		
-		//Testing db_retrieve
-		ArrayList<String> tableColumns = new ArrayList<String>();
-		tableColumns.add("user_email");
-		tableColumns.add("user_password");
-		ArrayList< ArrayList<String> > list = test.getFromTable_2DArrStr(table, tableColumns);
-		System.out.println(list);
-		
 		//Testing insertIntoTableWithOutPrimaryKey
 		ArrayList<Object> tableInputs = new ArrayList<Object>();
-		tableInputs.add(9);
-		tableInputs.add("h");
-		tableInputs.add("h");
-		tableInputs.add("h");
-		test.insertIntoTableWithPrimaryKey(table, tableInputs);
+		//tableInputs.add(12);
+		tableInputs.add("r");
+		tableInputs.add("r");
+		tableInputs.add("r");
+		test.insertIntoTableWithOutPrimaryKey_ArrObj(table, tableInputs);
 		System.out.println(test.getFromTable_2DArrStr(table));
 	}
 }

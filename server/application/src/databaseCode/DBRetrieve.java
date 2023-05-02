@@ -110,7 +110,7 @@ public class DBRetrieve {
 	}
 	
 	
-	//Calling from table using: table, and where values
+	//Calling from table using: table, and where values (plus where columns)
 	public static ArrayList<ArrayList<String>> getFromTable_2DArrStr
 	(String table, ArrayList<String> wheres, ArrayList<String> wheresValues) {
 		DBConversions<String> dbc = new DBConversions<String>();
@@ -147,7 +147,7 @@ public class DBRetrieve {
 	}
 	
 	
-	//Calling from table using: table, columns, and where values
+	//Calling from table using: table, columns, and where values (plus where columns)
 	public static ArrayList<ArrayList<String>> getFromTable_2DArrStr
 	(String table, ArrayList<String> columns, 
 	 ArrayList<String> wheres, ArrayList<String> wheresValues) {

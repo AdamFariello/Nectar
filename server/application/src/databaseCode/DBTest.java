@@ -20,13 +20,29 @@ public class DBTest {
 		con.startConnection(db);		
 		DBQuery test = new DBQuery(con);
 		
-		//Testing insertIntoTableWithOutPrimaryKey
-		ArrayList<Object> tableInputs = new ArrayList<Object>();
-		//tableInputs.add(12);
-		tableInputs.add("r");
-		tableInputs.add("r");
-		tableInputs.add("r");
-		test.insertIntoTableWithOutPrimaryKey_ArrObj(table, tableInputs);
+		//Testing 1D insertion
+		ArrayList<Object> temp = new ArrayList<Object>();
+		temp.add("lq");
+		temp.add("lq");
+		temp.add("lq");
+		test.insertIntoTableWithOutPrimaryKey_ArrObj(table, temp);
+		System.out.println(test.getFromTable_2DArrStr(table));
+		
+		//Testing 2D insertion
+		ArrayList<ArrayList<Object>> tableInputs = new ArrayList<ArrayList<Object>>();
+		temp = new ArrayList<Object>();
+		temp.add("yq");
+		temp.add("yq");
+		temp.add("yq");
+		tableInputs.add(temp);
+		
+		temp = new ArrayList<Object>();
+		temp.add("qq");
+		temp.add("qq");
+		temp.add("qq");
+		tableInputs.add(temp);
+		
+		test.insertIntoTableWithOutPrimaryKey_2DArrObj(table, tableInputs);
 		System.out.println(test.getFromTable_2DArrStr(table));
 	}
 }

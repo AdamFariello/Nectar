@@ -8,10 +8,21 @@ import org.eclipse.jetty.websocket.api.WebSocketAdapter;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 
+import bl.ProductTracker;
+import bl.UserDelegate;
+
 public class EventEndpoint extends WebSocketAdapter
 {
     //private static final Logger LOG = LoggerFactory.getLogger(EventEndpoint.class);
     private final CountDownLatch closureLatch = new CountDownLatch(1);
+    private ProductTracker tracker;
+	private UserDelegate delegate;
+    
+    public EventEndpoint(ProductTracker tracker, UserDelegate delegate) {
+    	super();
+    	this.tracker = tracker;
+		this.delegate = delegate;
+    }
 
     @Override
     public void onWebSocketConnect(Session sess)
@@ -29,6 +40,10 @@ public class EventEndpoint extends WebSocketAdapter
         if (message.toLowerCase(Locale.US).contains("bye"))
         {
             getSession().close(StatusCode.NORMAL, "Thanks");
+        }
+        if (message.toLowerCase(Locale.US).contains("add"))
+        {
+        	//tracker.addUser("1", "1", testUrl, "Amazon");
         }
     }
 

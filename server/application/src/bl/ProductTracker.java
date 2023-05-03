@@ -1,12 +1,14 @@
 package bl;
 import java.util.HashMap;
 
-public class ProductTracker {
+public class ProductTracker implements Runnable{
+	private Thread t;
     private WebScraper webScraper;
     HashMap<String, Receiver> receivers;
 
     public ProductTracker(){
         webScraper = new WebScraper();
+        receivers = new HashMap<String, Receiver>();
     }
 
     private void addProduct(String productID, String url, String website, Receiver receiver){
@@ -57,4 +59,25 @@ public class ProductTracker {
     public ProductVO getProductData(String productID){
         return webScraper.getProductData(productID);
     }
+
+	@Override
+	synchronized public void run() {
+		while(!Thread.currentThread().isInterrupted()) {
+			try {
+				System.out.println("Tracking");
+				trackProducts();
+				wait(1000);	
+			} catch (InterruptedException ex) {
+		        Thread.currentThread().interrupt();
+		    }
+		}
+	}
+	
+	public void start() {
+		//System.out.println("Starting");
+	     if (t == null) {
+	    	 t = new Thread (this, "tracker");
+	         t.start ();
+	     }
+	}
 }

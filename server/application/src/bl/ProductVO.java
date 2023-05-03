@@ -16,8 +16,18 @@ public class ProductVO extends ValueObject{
 
     @Override
     protected String[] getEqualityComponents() {
-        String[] s = {productID, Boolean.toString(available), Double.toString(price)};
+        String[] s = {title, productID, Boolean.toString(available), Double.toString(price), Integer.toString(amtInStock)};
         return s;    
+    }
+    
+    @Override
+    public String toString() {
+    	String res = "";
+    	for (String s: getEqualityComponents()){
+    		res = res + s;
+    		res = res + "\n";
+    	}
+    	return res;
     }
     
 }

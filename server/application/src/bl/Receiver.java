@@ -15,6 +15,10 @@ public class Receiver {
 
     ArrayList<String> userSubscribers;
     ProductVO previousProductVO;
+    
+    public Receiver() {
+    	userSubscribers = new ArrayList<String>();
+    }
 
     public void addUser(String userID){
         userSubscribers.add(userID);
@@ -38,16 +42,17 @@ public class Receiver {
         if (previousProductVO == null){
             previousProductVO = productVO;
         } else if (previousProductVO != productVO){
+        	//System.out.println(productVO.toString());
             //userSubscribers.forEach((k, v) -> v.notify(productVO, previousProductVO));
             //Get user email and phone and tracker settings from database
             //Send message
-            try {
+            /*try {
                 sendEmailMessage(productVO, "dankedest444@gmail.com");
                 //sendTextMessage(productVO, "9083706809");
             } catch (MessagingException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-            }
+            }*/
         }
     }
     

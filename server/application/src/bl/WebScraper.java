@@ -4,6 +4,9 @@ import java.util.HashMap;
 public class WebScraper {
     HashMap<String, ScraperCommand> scraperCommands;
 
+    public WebScraper(){
+    	scraperCommands = new HashMap<String, ScraperCommand>();
+    }
     public void addProduct(String productID, String url, String website, Receiver receiver){
         switch (website) {
             case "Amazon": 

@@ -5,22 +5,7 @@ import java.text.*;
 import java.util.ArrayList;
 
 public class DBInsert extends DBRetrieve {			
-	//TODO: Check for incorrect inputs for columns
-	//TODO: java.sql.SQLException: Column count doesn't match value 
-	//		count at row 1 
-	//		(Insert error catch to stop this)
-	//TODO: Account for no primary key when inserting into table
-	//TODO: Check for error of using primary key method and not giving a primary key
-	//		(Possible not needed since I already check for incorrect lengths...)
-	//TODO: Check if setDate() in insertIntoTable includes the time
-	//TODO: Add string debugs 
-	//		(unsure, maybe I'll include debug macro for compiling either 
-	//		last minute, or after the project is done)
-	//TODO: Merge 2d and 1d array methods by using instanceof to check for which 
-	//		ArrayList size it is 
-	//		(Probable will do after project is over...)
-	//TODO: Add proper checks to cross reference methods
-	
+	//Strong table insertions
 	public static boolean insertIntoTableWithPrimaryKey_ArrObj
 	(String table, ArrayList<Object> tableInputs) {			
 		ArrayList<ArrayList<Object>> temp = new ArrayList<ArrayList<Object>>();
@@ -51,7 +36,6 @@ public class DBInsert extends DBRetrieve {
 					   );
 		return insertIntoTable (query, tableInputs, columnsOfTable, datatypesOfTable);
 	}
-	
 	public static boolean insertIntoTableWithOutPrimaryKey_ArrObj
 	(String table, ArrayList<Object> tableInputs) {
 		ArrayList<ArrayList<Object>> temp = new ArrayList<ArrayList<Object>>();
@@ -87,43 +71,43 @@ public class DBInsert extends DBRetrieve {
 	}
 	
 	
-	public static boolean insertIntoTableAndCrossReferenceWeakTable
-	(String strongTable1, Object strongTable1Input, 
-	 String strongTable2, Object strongTable2Input,
+	//Weak table insertions
+	public static boolean insertIntoWeakTable_ArrObj
+	(String weakTable, ArrayList<Object> strongTablePrimaryKeys) {
+		return insertIntoTableWithPrimaryKey_ArrObj(weakTable, strongTablePrimaryKeys);
+	}
+	public static boolean insertIntoWeakTable_2DArrObj
+	(ArrayList< ArrayList<Object> > strongTablePrimaryKeys, String weakTable) {
+		return insertIntoTableWithPrimaryKey_2DArrObj(weakTable, strongTablePrimaryKeys);
+	}
+	public static boolean insertIntoWeakTableWithLastStrongTableInsertedInto_ArrObj
+	(ArrayList<Object> strongTablePrimaryKeysExceptLastTable,
+	 String lastStrongTableName, ArrayList<Object> lastStrongTableInputs, 		
 	 String weakTable) {
-		//THIS METHODS CAN ONLY BE DONE WITH INSERTS WITH A PRIMARY KEY
-		ArrayList<Object> weakTableInputs = new ArrayList<Object>();
-		weakTableInputs.add(strongTable1Input);
-		weakTableInputs.add(strongTable2Input);
+		ArrayList<Object> weakTableInputs = strongTablePrimaryKeysExceptLastTable;
+		weakTableInputs.add(weakTableInputs.get(0));
+		
+		Boolean bool = insertIntoTableWithPrimaryKey_ArrObj(
+							lastStrongTableName, lastStrongTableInputs
+					   );
+		if (!bool) {return false;}
 		return insertIntoTableWithPrimaryKey_ArrObj(weakTable, weakTableInputs);
 	}
-	public static boolean insertIntoTableAndCrossReferenceWeakTable
-	(String strongTable1, Object strongTable1Input, 
-	 String strongTable2, ArrayList<Object> strongTable2Inputs,
+	public static boolean insertIntoWeakTableWithLastStrongTableInsertedInto_2DArrObj
+	(ArrayList<Object> strongTablePrimaryKeysExceptLastTable,
+	 String lastStrongTableName, ArrayList<ArrayList<Object>> lastStrongTableInputs, 		
 	 String weakTable) {
-		//THIS METHODS CAN ONLY BE DONE WITH INSERTS WITH A PRIMARY KEY
-		if (! insertIntoTableWithPrimaryKey_ArrObj(strongTable2, strongTable2Inputs))
-			return false;
-		
-		ArrayList<Object> weakTableInputs = new ArrayList<Object>();
-		weakTableInputs.add(strongTable1Input);
-		weakTableInputs.add(strongTable2Inputs.get(0));
-		return insertIntoTableWithPrimaryKey_ArrObj(weakTable, weakTableInputs);
-	}
-	public static boolean insertIntoTwoTablesAndCrossReferenceWeakTable
-	(String strongTable1, ArrayList<Object> strongTable1Inputs, 
-	 String strongTable2, ArrayList<Object> strongTable2Inputs,
-	 String weakTable) {
-		//THIS METHODS CAN ONLY BE DONE WITH INSERTS WITH A PRIMARY KEY
-		if(! insertIntoTableWithPrimaryKey_ArrObj(strongTable1, strongTable1Inputs))
-			return false;
-		if(! insertIntoTableWithPrimaryKey_ArrObj(strongTable2, strongTable2Inputs))
-			return false;
-		
-		ArrayList<Object> weakTableInputs = new ArrayList<Object>();
-		weakTableInputs.add(strongTable1Inputs.get(0));
-		weakTableInputs.add(strongTable2Inputs.get(0));
-		return insertIntoTableWithPrimaryKey_ArrObj(weakTable, weakTableInputs);
+		ArrayList<ArrayList<Object>> weakTableInputs = new ArrayList<ArrayList<Object>>();
+		for (ArrayList<Object> lastStringTableInput: lastStrongTableInputs) {
+			ArrayList<Object> temp = strongTablePrimaryKeysExceptLastTable;
+			temp.add(lastStringTableInput.get(0));
+			weakTableInputs.add(temp);
+		}	
+		Boolean bool = insertIntoTableWithPrimaryKey_2DArrObj(
+							lastStrongTableName, lastStrongTableInputs
+					   );
+		if (!bool) {return false;}
+		return insertIntoTableWithPrimaryKey_2DArrObj(weakTable, weakTableInputs);
 	}
 	
 	
@@ -166,8 +150,7 @@ public class DBInsert extends DBRetrieve {
 							java.sql.Date mysqlDate = new java.sql.Date (javaDate.getTime());
 							ps.setDate(i, mysqlDate);
 						} else if (tableInputObj instanceof java.sql.Date) {
-							java.sql.Date mysqlDate = (java.sql.Date) tableInputObj;
-							ps.setDate(i, mysqlDate);
+							ps.setDate(i, (java.sql.Date) tableInputObj);
 						}
 					} else if (currRowDataType.contains("datetime") 
 								|| (currRowDataType.contains("timestamp")) ){
@@ -177,21 +160,21 @@ public class DBInsert extends DBRetrieve {
 							String format = "yyyy-MM-dd HH:mm:ss";
 							DateFormat dateFormat = new SimpleDateFormat(format);
 							java.util.Date javaDate = dateFormat.parse(date);
-							
 							java.sql.Date sqlDate = new java.sql.Date(javaDate.getTime());
 							Timestamp timeStamp = new Timestamp(sqlDate.getTime());
 							ps.setTimestamp(i, timeStamp); 	
 						} else if (tableInputObj instanceof java.util.Date) { 
 							java.util.Date javaDate = (java.util.Date) tableInputObj;
-							java.sql.Timestamp sqlDate = new java.sql.Timestamp(javaDate.getTime());
-							ps.setTimestamp(i, sqlDate); 	
+							java.sql.Date sqlDate = new java.sql.Date(javaDate.getTime());
+							Timestamp timeStamp = new Timestamp(sqlDate.getTime());
+							ps.setTimestamp(i, timeStamp); 
 						} else if (tableInputObj instanceof java.sql.Date) { 
-							java.sql.Timestamp sqlDate = (java.sql.Timestamp) tableInputObj;
-							ps.setTimestamp(i, sqlDate); 		
+							java.sql.Date sqlDate = (java.sql.Date) tableInputObj;
+							Timestamp timeStamp = new Timestamp(sqlDate.getTime());
+							ps.setTimestamp(i, timeStamp); 		
+						} else if (tableInputObj instanceof Timestamp) { 
+							ps.setTimestamp(i, (Timestamp) tableInputObj); 		
 						} 
-						
-						//java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime());
-						
 					} else {
 						String tableInputString = tableInputObj.toString(); 
 						String tableInputDataTypeString; 

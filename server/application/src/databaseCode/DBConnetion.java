@@ -11,7 +11,7 @@ public class DBConnetion{
 	private static String host	    = "localhost";
 	private static String currentDB 	 = "nectarDB_user";	
 	private static String url 			 = null;
-	private static Connection connection;
+	private static Connection connection = null;
 
 	//Class Functions
 	public DBConnetion() {}
@@ -72,6 +72,9 @@ public class DBConnetion{
 	public String setCurrentServer(String newDatabase) {
 		try { 
 			if (checkDatabase(newDatabase)) {
+				if (connection != null) {
+					connection.setCatalog(newDatabase);
+				}
 				return (currentDB = newDatabase);
 			} else {
 				throw new errorUnknownDatabase(newDatabase);

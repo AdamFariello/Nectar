@@ -1,6 +1,7 @@
 package databaseCode;
 
 import java.sql.*;
+import java.text.*;
 import java.util.ArrayList;
 
 public class DBInsert extends DBRetrieve {			
@@ -15,6 +16,10 @@ public class DBInsert extends DBRetrieve {
 	//TODO: Add string debugs 
 	//		(unsure, maybe I'll include debug macro for compiling either 
 	//		last minute, or after the project is done)
+	//TODO: Merge 2d and 1d array methods by using instanceof to check for which 
+	//		ArrayList size it is 
+	//		(Probable will do after project is over...)
+	//TODO: Add proper checks to cross reference methods
 	
 	public static boolean insertIntoTableWithPrimaryKey_ArrObj
 	(String table, ArrayList<Object> tableInputs) {			
@@ -81,6 +86,47 @@ public class DBInsert extends DBRetrieve {
 		return insertIntoTable (query, tableInputs, columnsOfTable, datatypesOfTable);
 	}
 	
+	
+	public static boolean insertIntoTableAndCrossReferenceWeakTable
+	(String strongTable1, Object strongTable1Input, 
+	 String strongTable2, Object strongTable2Input,
+	 String weakTable) {
+		//THIS METHODS CAN ONLY BE DONE WITH INSERTS WITH A PRIMARY KEY
+		ArrayList<Object> weakTableInputs = new ArrayList<Object>();
+		weakTableInputs.add(strongTable1Input);
+		weakTableInputs.add(strongTable2Input);
+		return insertIntoTableWithPrimaryKey_ArrObj(weakTable, weakTableInputs);
+	}
+	public static boolean insertIntoTableAndCrossReferenceWeakTable
+	(String strongTable1, Object strongTable1Input, 
+	 String strongTable2, ArrayList<Object> strongTable2Inputs,
+	 String weakTable) {
+		//THIS METHODS CAN ONLY BE DONE WITH INSERTS WITH A PRIMARY KEY
+		if (! insertIntoTableWithPrimaryKey_ArrObj(strongTable2, strongTable2Inputs))
+			return false;
+		
+		ArrayList<Object> weakTableInputs = new ArrayList<Object>();
+		weakTableInputs.add(strongTable1Input);
+		weakTableInputs.add(strongTable2Inputs.get(0));
+		return insertIntoTableWithPrimaryKey_ArrObj(weakTable, weakTableInputs);
+	}
+	public static boolean insertIntoTwoTablesAndCrossReferenceWeakTable
+	(String strongTable1, ArrayList<Object> strongTable1Inputs, 
+	 String strongTable2, ArrayList<Object> strongTable2Inputs,
+	 String weakTable) {
+		//THIS METHODS CAN ONLY BE DONE WITH INSERTS WITH A PRIMARY KEY
+		if(! insertIntoTableWithPrimaryKey_ArrObj(strongTable1, strongTable1Inputs))
+			return false;
+		if(! insertIntoTableWithPrimaryKey_ArrObj(strongTable2, strongTable2Inputs))
+			return false;
+		
+		ArrayList<Object> weakTableInputs = new ArrayList<Object>();
+		weakTableInputs.add(strongTable1Inputs.get(0));
+		weakTableInputs.add(strongTable2Inputs.get(0));
+		return insertIntoTableWithPrimaryKey_ArrObj(weakTable, weakTableInputs);
+	}
+	
+	
 	private static boolean insertIntoTable 
 	(String query, ArrayList<ArrayList<Object>> tableInputs, 
 	 ArrayList<String> columnsOfTable, ArrayList<String> datatypesOfTable) {		
@@ -99,16 +145,53 @@ public class DBInsert extends DBRetrieve {
 					String currRowDataType = datatypesOfTable.get((i - 1) % size);
 					
 					//Can't be a switch since switches don't allow functions
-					if (currRowDataType.contains("varchar")    	  && tableInputObj instanceof String) {
+					if (currRowDataType.contains("varchar")    	  
+						&& tableInputObj instanceof String) {
 						ps.setString(i, (String) tableInputObj);
-					} else if (currRowDataType.equals("int")      && tableInputObj instanceof Integer) {
+					} else if (currRowDataType.equals("int")      
+							   && tableInputObj instanceof Integer) {
 						ps.setInt(i, (Integer) tableInputObj);
-					} else if (currRowDataType.equals("double")   && tableInputObj instanceof Double) {
+					} else if (currRowDataType.equals("double")   
+							   && tableInputObj instanceof Double) {
 						ps.setDouble(i, (Double) tableInputObj);
-					} else if (currRowDataType.equals("datetime") && 
-							  (tableInputObj instanceof java.util.Date || tableInputObj instanceof java.sql.Date)) { 
-						//Format: "MM/DD/YYYY"
-						ps.setDate(i, (java.sql.Date) tableInputObj); 
+					} else if (currRowDataType.equals("date")) { 
+						if (tableInputObj instanceof String) {
+							//String Format: "MM/DD/YYYY"
+							String date = (String) tableInputObj;
+							java.util.Date javaDate = new java.util.Date(date);
+							java.sql.Date mysqlDate = new java.sql.Date(javaDate.getTime());
+							ps.setDate(i, mysqlDate);
+						} else if (tableInputObj instanceof java.util.Date) {
+							java.util.Date javaDate = (java.util.Date) tableInputObj;
+							java.sql.Date mysqlDate = new java.sql.Date (javaDate.getTime());
+							ps.setDate(i, mysqlDate);
+						} else if (tableInputObj instanceof java.sql.Date) {
+							java.sql.Date mysqlDate = (java.sql.Date) tableInputObj;
+							ps.setDate(i, mysqlDate);
+						}
+					} else if (currRowDataType.contains("datetime") 
+								|| (currRowDataType.contains("timestamp")) ){
+						if (tableInputObj instanceof String) { 
+							String date = (String) tableInputObj;
+							//String format = "YYYY-MM-DD HH:MM:SS";
+							String format = "yyyy-MM-dd HH:mm:ss";
+							DateFormat dateFormat = new SimpleDateFormat(format);
+							java.util.Date javaDate = dateFormat.parse(date);
+							
+							java.sql.Date sqlDate = new java.sql.Date(javaDate.getTime());
+							Timestamp timeStamp = new Timestamp(sqlDate.getTime());
+							ps.setTimestamp(i, timeStamp); 	
+						} else if (tableInputObj instanceof java.util.Date) { 
+							java.util.Date javaDate = (java.util.Date) tableInputObj;
+							java.sql.Timestamp sqlDate = new java.sql.Timestamp(javaDate.getTime());
+							ps.setTimestamp(i, sqlDate); 	
+						} else if (tableInputObj instanceof java.sql.Date) { 
+							java.sql.Timestamp sqlDate = (java.sql.Timestamp) tableInputObj;
+							ps.setTimestamp(i, sqlDate); 		
+						} 
+						
+						//java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime());
+						
 					} else {
 						String tableInputString = tableInputObj.toString(); 
 						String tableInputDataTypeString; 
@@ -117,7 +200,6 @@ public class DBInsert extends DBRetrieve {
 						}	catch (NullPointerException e) {
 							tableInputDataTypeString = "undefined";
 						}
-						
 						throw new errorIncorrectDataTypeForTheTable(
 								tableInputString, tableInputDataTypeString, 
 								currRowCol, currRowDataType
@@ -136,4 +218,5 @@ public class DBInsert extends DBRetrieve {
 		System.out.println("Failure");
 		return false;
 	}
+
 }

@@ -77,7 +77,7 @@ public class DBInsert extends DBRetrieve {
 		return insertIntoTableWithPrimaryKey_ArrObj(weakTable, strongTablePrimaryKeys);
 	}
 	public static boolean insertIntoWeakTable_2DArrObj
-	(ArrayList< ArrayList<Object> > strongTablePrimaryKeys, String weakTable) {
+	(String weakTable, ArrayList< ArrayList<Object> > strongTablePrimaryKeys) {
 		return insertIntoTableWithPrimaryKey_2DArrObj(weakTable, strongTablePrimaryKeys);
 	}
 	public static boolean insertIntoWeakTableWithLastStrongTableInsertedInto_ArrObj

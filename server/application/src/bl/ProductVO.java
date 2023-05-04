@@ -1,5 +1,8 @@
 package bl;
-public class ProductVO extends ValueObject{
+
+import org.json.simple.JSONObject;
+
+public class ProductVO extends JSONEncodeableValueObject{
     public String title;
     public String productID;
     public boolean available;
@@ -12,12 +15,24 @@ public class ProductVO extends ValueObject{
         this.available = available;
         this.price = price;
         this.amtInStock = amtInStock;
+        this.type = "ProductVO";
     }
 
     @Override
     protected String[] getEqualityComponents() {
-        String[] s = {title, productID, Boolean.toString(available), Double.toString(price), Integer.toString(amtInStock)};
+        String[] s = {title, productID, Boolean.toString(available), Double.toString(price), Integer.toString(amtInStock), type};
         return s;    
+    }
+    
+    @Override
+    protected String encode() {
+    	JSONObject obj = new JSONObject();
+		obj.put("title", title);
+		obj.put("productID", productID);
+		obj.put("available", available);
+		obj.put("price", price);
+		obj.put("amtInStock", amtInStock);
+		return obj.toString();
     }
     
     @Override

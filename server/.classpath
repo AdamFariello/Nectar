@@ -32,5 +32,7 @@
 	<classpathentry kind="lib" path="dependencies/websocket-jetty-common-10.0.15.jar"/>
 	<classpathentry kind="lib" path="dependencies/websocket-jetty-server-10.0.15.jar"/>
 	<classpathentry kind="lib" path="dependencies/websocket-servlet-10.0.15.jar"/>
+	<classpathentry kind="lib" path="dependencies/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="dependencies/json-20230227.jar"/>
 	<classpathentry kind="output" path="application/bin"/>
 </classpath>

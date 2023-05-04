@@ -3,6 +3,7 @@ import java.util.Arrays;
 
 public abstract class ValueObject {
 
+	protected String type;
     protected abstract String[] getEqualityComponents();
 
     @Override
@@ -31,5 +32,9 @@ public abstract class ValueObject {
             hash *= s.hashCode();
         }
         return hash;
+    }
+    
+    public String getType() {
+    	return type;
     }
 }

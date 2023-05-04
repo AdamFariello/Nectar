@@ -1,0 +1,4 @@
+INDEX VERSION 1.132+/home/yocif/Work/school/Rutgers/term7/198:431.Software-Engineering/semesterProject/Nectar/server/scraperCode/.metadata/.plugins/org.eclipse.jdt.core
+2023741373.index
+1865797976.index
+2245001677.index

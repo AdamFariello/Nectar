@@ -16,9 +16,9 @@ public class WebSocketServer {
 	public static void main(String[] args) throws Exception
     {     
         WebSocketServer server = new WebSocketServer();
-        server.tracker.addUser("1", "1", testUrl, "Amazon");
-        server.tracker.start();
-        server.setPort(8080);
+        //server.tracker.addUser("1", "1", testUrl, "Amazon");
+        //server.tracker.start();
+        server.setPort(8994);
         server.start();
         server.join();
     }

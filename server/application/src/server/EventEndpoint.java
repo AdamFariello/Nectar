@@ -1,4 +1,5 @@
 package server;
+import java.io.IOException;
 import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
 
@@ -10,11 +11,12 @@ import org.eclipse.jetty.websocket.api.WebSocketAdapter;
 
 import bl.ProductTracker;
 import bl.UserDelegate;
+import org.json.*;
 
 public class EventEndpoint extends WebSocketAdapter
 {
     //private static final Logger LOG = LoggerFactory.getLogger(EventEndpoint.class);
-    private final CountDownLatch closureLatch = new CountDownLatch(1);
+    private final CountDownLatch closureLatch = new CountDownLatch(10000);
     private ProductTracker tracker;
 	private UserDelegate delegate;
     
@@ -35,15 +37,23 @@ public class EventEndpoint extends WebSocketAdapter
     public void onWebSocketText(String message)
     {
         super.onWebSocketText(message);
-        System.out.println("Received TEXT message: " + message);
+        if(isValidJSON(message)) {
+        	System.out.println("Received JSON message: " + message);
+        	JSONObject obj = new JSONObject(message);
+            JSONMessage request = new JSONMessage(obj.get("message").toString(), obj.get("data").toString());
+			JSONMessage result = delegate.handleJSONRequest(request);     
+			try {
+				getSession().getRemote().sendString(result.encode());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
 
         if (message.toLowerCase(Locale.US).contains("bye"))
         {
+        	//getSession().getRemote().sendString("Hello");
             getSession().close(StatusCode.NORMAL, "Thanks");
-        }
-        if (message.toLowerCase(Locale.US).contains("add"))
-        {
-        	//tracker.addUser("1", "1", testUrl, "Amazon");
         }
     }
 
@@ -66,5 +76,14 @@ public class EventEndpoint extends WebSocketAdapter
     {
         System.out.println("Awaiting closure from remote");
         closureLatch.await();
+    }
+    
+    private boolean isValidJSON(String json) {
+        try {
+            new JSONObject(json);
+        } catch (JSONException e) {
+            return false;
+        }
+        return true;
     }
 }

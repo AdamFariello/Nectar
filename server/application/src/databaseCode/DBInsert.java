@@ -111,6 +111,7 @@ public class DBInsert extends DBRetrieve {
 	}
 	
 	
+	//Insertion
 	private static boolean insertIntoTable 
 	(String query, ArrayList<ArrayList<Object>> tableInputs, 
 	 ArrayList<String> columnsOfTable, ArrayList<String> datatypesOfTable) {		

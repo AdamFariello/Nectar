@@ -3,21 +3,18 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class DBTest {
-	public static void main (String args[]) throws SQLException {
-		/////////////////////////
-		// ONLY A TESTING FILE //
-		/////////////////////////
-		
-		//General variables
-		String [] dbs = {
-			"nectarDB_administration", 
-			"nectarDB_products", 
-			"nectarDB_user"
-		};
-		DBConnetion con = new DBConnetion();
-		con.startConnection(dbs[2]);		
-		DBQuery test = new DBQuery(con);
-		
+	private static String [] dbs = {
+		"nectarDB_administration", 
+		"nectarDB_products", 
+		"nectarDB_user"
+	};
+	private static DBConnetion con = null;
+	private static DBQuery test = null;
+	
+	private static ArrayList<Object> tableInputs = null;
+	private static String table = null;
+	
+	public static void testInsertions_StrongTable () {
 		/*
 		//Testing 1D insertion
 		String table = "user";
@@ -45,10 +42,8 @@ public class DBTest {
 		
 		test.insertIntoTableWithOutPrimaryKey_2DArrObj(table, tableInputs);
 		System.out.println(test.getFromTable_2DArrStr(table));
-		*/
 		
 		//Testing cross reference inserts
-		/*
 		String table1 = "user";
 		ArrayList<Object> user = new ArrayList<Object>();
 		user.add(30);
@@ -56,9 +51,7 @@ public class DBTest {
 		user.add("qwer");
 		user.add("qwer");
 		test.insertIntoTableWithPrimaryKey_ArrObj(table1, user);
-		*/
 		
-		/*
 		String table2 = "userPurchasingProfileDetails";
 		ArrayList<Object> userProfile = new ArrayList<Object>();
 		userProfile.add(2);
@@ -71,20 +64,57 @@ public class DBTest {
 		userProfile.add("111");
 		userProfile.add("Discover");
 		test.insertIntoTableWithPrimaryKey_ArrObj(table2, userProfile);
-		*/
 		
-		test.setCurrentServer(dbs[1]);
 		String table = "amazonProductPriceHistoryDetails";
 		ArrayList<Object> list = new ArrayList<Object>();
 		list.add(0);
 		list.add(16.00);
 		list.add("2023-05-02 05:04:22");
 		test.insertIntoTableWithPrimaryKey_ArrObj(table, list);
-		System.out.println(test.getFromTable_2DArrStr(table));
-		
-		/*
-		String tableWeak = "userPurchasingProfile";
-		System.out.println("");
+		System.out.println(test.getFromTable_2DArrStr(table)); 
 		*/
+	}
+	public static void testInsertions_WeakTables () {
+		//Testing weak tables (Meant to fail)
+		/*
+		String table = "userPurchasingProfile";
+		ArrayList<Object> tableInputs = new ArrayList<Object>();
+		tableInputs.add(0);
+		tableInputs.add(0);
+		test.insertIntoWeakTable_ArrObj(table,tableInputs);
+		*/
+		
+		//Testing weak tables (Meant to succeed)
+		table = "user";
+		tableInputs = new ArrayList<Object>();
+		tableInputs.add(0);
+		tableInputs.add("kbtoys@gmail.com");
+		tableInputs.add("bernieSanders");
+		tableInputs.add("111-1111-1211");
+		test.insertIntoWeakTable_ArrObj(table,tableInputs);
+		
+		table = "userPurchasingProfileDetails";
+		tableInputs = new ArrayList<Object>();
+		tableInputs.add(0);
+		tableInputs.add("kb Joseph toys");
+		tableInputs.add("10/20/3000");
+		tableInputs.add("1111111111111");
+		tableInputs.add("123");
+		tableInputs.add("Discover");
+		test.insertIntoWeakTable_ArrObj(table,tableInputs);
+		
+		table = "userPurchasingProfile";
+		tableInputs = new ArrayList<Object>();
+		tableInputs.add(0);
+		tableInputs.add(0);
+		test.insertIntoWeakTable_ArrObj(table,tableInputs);
+	}
+	
+	public static void main (String args[]) throws SQLException {
+		con = new DBConnetion();
+		con.startConnection(dbs[2]);		
+		test = new DBQuery(con);
+		
+		testInsertions_WeakTables();
 	}
 }

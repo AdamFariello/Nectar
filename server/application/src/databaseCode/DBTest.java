@@ -243,7 +243,7 @@ public class DBTest {
 		}
 	}
 	
-	public static void main (String args[]) throws SQLException {\
+	public static void main (String args[]) throws SQLException {
 		String [] dbs = {
 				"nectarDB_administration", 
 				"nectarDB_products", 

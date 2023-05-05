@@ -2,6 +2,9 @@ package bl;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import databaseCode.DBConnetion;
+import databaseCode.DBQuery;
+
 public class UserDao {
     String [] dbs = {
         "nectarDB_administration", 
@@ -11,7 +14,9 @@ public class UserDao {
 
     public HashMap<String, ArrayList<String>> getAllUserWishLists(){
     	//return a hashmap mapping user ids to a list of all the product ids they track
-        return null;
+        
+    	
+    	return null;
     }
     
     public ProductVO getProductInfoByProductID() {
@@ -26,10 +31,31 @@ public class UserDao {
 
     public boolean addProductToUserWishlist(String userID, ProductVO product){
     	//add product to user's wishlist and return if its successful or not 
-        return false;
+    	DBConnetion con = new DBConnetion();
+		con.startConnection(dbs[1]);		
+		DBQuery test = new DBQuery(con);
+		
+		ArrayList<Object> inputs = new ArrayList<Object>();
+	
+		String table = "user";
+		ArrayList<String> columns = new ArrayList<String>();
+		columns.add("user_id");
+		ArrayList<String> wheres = new ArrayList<String>();
+		wheres.add("user_id");
+		ArrayList<Object> wheresValues
+		test.getFromTable_2DArrStr(table, columns, wheres, wheresValues);
+		
+		
+		
+		
+		
+		test.insertIntoStrongTable_WithPrimaryKey_ArrObj();
+		
+		con.endConnection();
+        return true;
     }
     
-    public boolean removeProductToUserWishlist(String userID, String productID){
+    public boolean removeProductFromUserWishlist(String userID, String productID){
     	//remove product to user's wishlist and return if its successful or not
         return false;
     }

@@ -14,6 +14,11 @@ public class UserDao {
         return null;
     }
     
+    public ArrayList<String> getUserWishList(String userID){
+    	//return a list of all the product ids a user tracks
+    	return null;
+    }
+    
     public ProductVO getProductInfoByProductID() {
     	//reeturn product url, sitename and make a product vo setting the public variables with what you got
     	return null;

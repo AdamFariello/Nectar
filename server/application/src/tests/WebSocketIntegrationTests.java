@@ -6,6 +6,7 @@ import org.eclipse.jetty.websocket.api.util.WSURI;
 import org.junit.Test;
 
 import junit.framework.*;
+import server.WebSocketServer;
 
 public class WebSocketIntegrationTests {
     private WebSocketServer server;

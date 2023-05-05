@@ -6,7 +6,7 @@ import java.util.concurrent.Future;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.client.WebSocketClient;
 
-import bl.EventEndpoint;
+import server.EventEndpoint;
 
 public class TestWebSocketClient {
     public void run(URI uri) throws Exception
@@ -16,7 +16,7 @@ public class TestWebSocketClient {
         try
         {
             client.start();
-            EventEndpoint socket = new EventEndpoint();
+            EventEndpoint socket = new EventEndpoint(null, null);
             Future<Session> future = client.connect(socket, uri);
             Session session = future.get();
             socket.awaitClosure();

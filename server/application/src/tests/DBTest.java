@@ -1,6 +1,9 @@
-package databaseCode;
+package tests;
 import java.sql.*;
 import java.util.ArrayList;
+
+import databaseCode.DBConnetion;
+import databaseCode.DBQuery;
 
 public class DBTest {
 	private static String [] dbs = {
@@ -254,7 +257,7 @@ public class DBTest {
 		con.startConnection(dbs[2]);		
 		DBQuery test = new DBQuery(con);
 	
-		System.out.println(test.initServer());
+		
 	}
 
 }

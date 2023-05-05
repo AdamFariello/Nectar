@@ -8,7 +8,10 @@ public class UserDao {
         "nectarDB_products", 
         "nectarDB_user"
     };
-
+    
+    public void initializeDatabaseWithSampleUsers() {
+    	//Add sample users with username and password here 
+    }
     public HashMap<String, ArrayList<String>> getAllUserWishLists(){
     	//return a hashmap mapping user ids to a list of all the product ids they track
         return null;

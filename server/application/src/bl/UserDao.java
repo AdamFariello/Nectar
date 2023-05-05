@@ -15,22 +15,22 @@ public class UserDao {
     }
     
     public ProductVO getProductInfoByProductID() {
-    	//reeturn product url, sitename and make a product vo setting the public variables in the productvo object
+    	//reeturn product url, sitename and make a product vo setting the public variables with what you got
     	return null;
     }
 
-    public ArrayList<String> getUserByEmailAdress(String emailAddress){
-    	//return user id, user email, user password
+    public UserVO getUserByEmailAdress(String emailAddress){
+    	//return user id, user email, user password and make a user vo by setting the public variables with what you got
         return null;
     }
 
     public boolean addProductToUserWishlist(String userID, ProductVO product){
-    	//add product to user's wishlist 
+    	//add product to user's wishlist and return if its successful or not 
         return false;
     }
     
     public boolean removeProductToUserWishlist(String userID, String productID){
-    	//remove product to user's wishlist 
+    	//remove product to user's wishlist and return if its successful or not
         return false;
     }
 

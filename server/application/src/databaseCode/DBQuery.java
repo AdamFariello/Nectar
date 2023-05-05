@@ -2,6 +2,7 @@ package databaseCode;
 
 import java.io.*;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -18,7 +19,7 @@ public class DBQuery extends DBInsert {
 	
 	public DBQuery(DBConnetion dbConnetion, String dataBaseFile) {
 		super.dbConnetion = dbConnetion;
-		activateScript();
+		initServer();
 	}
 	
 	public String setCurrentServer(String newdatabase) {
@@ -28,61 +29,37 @@ public class DBQuery extends DBInsert {
 	
 	
 	//Script Methods
-	public boolean initServer() {		
-		//Testing System.getProperty("user.dir") in jshell
-		//Will give user home directory since that's where java is setup
-		//You can only test this in a test file in the project
-		final String scriptName = "database.sql";
-		final String workingDirectory = System.getProperty("user.dir");
-		
-		String scriptLocation;
-		String operatingSystem = System.getProperty("os.name");
-		
-		//Script Location:
-		//	Windows:
-		//		C:\...\Nectar\server\database\database.sql
-		//	Every other OS:
-		//		/.../Nectar/server/database/database.sql
-		if (operatingSystem.contains("Windows")) {	
-			scriptLocation = System.getProperty("user.dir") + "\\" + scriptName;
-			
-			scriptLocation = String.format("source %s", sciptLocation);
-		} else if (operatingSystem.contains("Mac")) {
-			scriptLocation = String.format("source %s", sciptLocation);
+	public boolean initServer() { return initServer("database.sql");}
+	public boolean initServer(String scriptName) {
+		//Working Directory Location using System.getProperty("user.dir"):
+		//	Windows: "C:\...\Nectar\server"
+		//	Every other OS: "/.../Nectar/server"
+		String workingDir = System.getProperty("user.dir");
+		if (System.getProperty("os.name").toLowerCase().contains("windows")) {	
+			return executeScript(String.format("source %s\\database\\%s", workingDir, scriptName));			
 		} else {
-			scriptLocation = String.format("source %s", sciptLocation);
+			System.out.println(workingDir);
+			String command = String.format("source %s/database/%s", workingDir, scriptName);
+			System.out.println(command);
+			return executeScript(command);			
 		}
-		
-		
-		return activateScript(sciptLocation);
 	}
-	public boolean activateSqlScript(String scriptName) {
-		
-				
-		return false;
+	public boolean initServer(String dirOfScript, String scriptName) {
+		//Just going to assume the slash at the end is given
+		return executeScript(String.format("source %s%s", dirOfScript, scriptName));
 	}
-	public boolean activateSqlScript(String scriptName, String scriptDirectory) {
-		
-		
-		return false;
-	}
+	
 	private boolean executeScript(String command) {
 		try {
-			Process process = Runtime.getRuntime().exec(command);
-
-			BufferedReader reader = new BufferedReader(
-										new InputStreamReader(
-											process.getInputStream()
-									));
-			
-			String line;
-			while ((line = reader.readLine()) != null) {System.out.println(line);}
-			
-			reader.close();
-			return true;
-		} catch (IOException e) {
+			PreparedStatement ps = dbConnetion.getConnection()
+											  .prepareStatement(command);	
+			if (ps.executeUpdate() > 0) {
+				System.out.println("Success");
+				return true;
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
 		}
+		return false;
 	}
 }

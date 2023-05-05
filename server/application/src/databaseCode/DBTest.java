@@ -248,8 +248,7 @@ public class DBTest {
 		con.startConnection(dbs[2]);		
 		test = new DBQuery(con);
 	
-		
-		
+		System.out.println(test.initServer());
 	}
 
 }

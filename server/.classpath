@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="application/src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-20">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
@@ -32,5 +32,7 @@
 	<classpathentry kind="lib" path="dependencies/websocket-jetty-common-10.0.15.jar"/>
 	<classpathentry kind="lib" path="dependencies/websocket-jetty-server-10.0.15.jar"/>
 	<classpathentry kind="lib" path="dependencies/websocket-servlet-10.0.15.jar"/>
+	<classpathentry kind="lib" path="dependencies/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="dependencies/json-20230227.jar"/>
 	<classpathentry kind="output" path="application/bin"/>
 </classpath>

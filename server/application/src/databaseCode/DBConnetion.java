@@ -11,8 +11,14 @@ public class DBConnetion{
 	private static String host	    = "localhost";
 	private static String currentDB 	 = "nectarDB_user";	
 	private static String url 			 = null;
-	private static Connection connection;
-
+	
+	private static Connection connection = null;
+	private final static String [] dbs = {
+		"nectarDB_administration", 
+		"nectarDB_products", 
+		"nectarDB_user"
+	};
+	
 	//Class Functions
 	public DBConnetion() {}
 	@SuppressWarnings("static-access") 
@@ -72,6 +78,9 @@ public class DBConnetion{
 	public String setCurrentServer(String newDatabase) {
 		try { 
 			if (checkDatabase(newDatabase)) {
+				if (connection != null) {
+					connection.setCatalog(newDatabase);
+				}
 				return (currentDB = newDatabase);
 			} else {
 				throw new errorUnknownDatabase(newDatabase);
@@ -81,16 +90,10 @@ public class DBConnetion{
 		} 
 		return null;
 	}
-	public static Boolean checkDatabase(String database) {		
-		String [] dataBaseList = {
-			"nectarDB_administration", 
-			"nectarDB_products", 
-			"nectarDB_user"
-		};
-		
-		for (int i = 0; i < dataBaseList.length; i++)
-			if (dataBaseList[i] == database)
-				return true;
+	public static Boolean checkDatabase(String database) {			
+		for (String s: dbs) {
+			if (s == database) {return true;}
+		}
 		return false;
 	}
 

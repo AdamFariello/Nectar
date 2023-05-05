@@ -1,0 +1,24 @@
+ws = new WebSocket("ws://localhost:8994/nectar/");
+
+
+ws.onopen = function(){
+    alert("Connection Established");
+}
+
+ws.onmessage = function(event){
+    alert(event.data);
+}
+
+var sendJSONRequest = function (request){
+    ws.send(JSON.stringify(request));
+}
+
+
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse){
+        alert("received");
+        sendJSONRequest(request);
+        //alert(request);
+        sendResponse({result: "received"});
+    }
+)

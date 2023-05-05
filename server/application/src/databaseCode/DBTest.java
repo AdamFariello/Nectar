@@ -3,115 +3,152 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class DBTest {
-	public static void main (String args[]) throws SQLException {
-		/////////////////////////
-		// ONLY A TESTING FILE //
-		/////////////////////////
-		
-		//General variables
-		String [] dbs = {
-			"nectarDB_administration", 
-			"nectarDB_products", 
-			"nectarDB_user"
-		};
-		String db = dbs[2];
-		String table = "user";
-		DBConnetion con = new DBConnetion();
-		con.startConnection(db);		
-		DBQuery test = new DBQuery(con);
-		
-		
-		//Testing db_retrieve
-		ArrayList<String> tableColumns = new ArrayList<String>();
-		tableColumns.add("user_email");
-		tableColumns.add("user_password");
-		ArrayList< ArrayList<String> > list = test.getFromTable_2DArrStr(table, tableColumns);
-		System.out.println(list);
-		
+	private static String [] dbs = {
+		"nectarDB_administration", 
+		"nectarDB_products", 
+		"nectarDB_user"
+	};
+	private static DBConnetion con = null;
+	private static DBQuery test = null;
+	
+	private static ArrayList<Object> tableInputs = null;
+	private static String table = null;
+	
+	public static void testInsertions_StrongTable () {
 		/*
-		//Testing Insertions with primary key
+		//Testing 1D insertion
+		String table = "user";
+		ArrayList<Object> temp = new ArrayList<Object>();
+		temp.add("lq");
+		temp.add("lq");
+		temp.add("lq");
+		test.insertIntoTableWithOutPrimaryKey_ArrObj(table, temp);
+		System.out.println(test.getFromTable_2DArrStr(table));
+		
+		//Testing 2D insertion
+		String table = "user";
+		ArrayList<ArrayList<Object>> tableInputs = new ArrayList<ArrayList<Object>>();
+		temp = new ArrayList<Object>();
+		temp.add("yq");
+		temp.add("yq");
+		temp.add("yq");
+		tableInputs.add(temp);
+		
+		temp = new ArrayList<Object>();
+		temp.add("qq");
+		temp.add("qq");
+		temp.add("qq");
+		tableInputs.add(temp);
+		
+		test.insertIntoTableWithOutPrimaryKey_2DArrObj(table, tableInputs);
+		System.out.println(test.getFromTable_2DArrStr(table));
+		
+		//Testing cross reference inserts
+		String table1 = "user";
+		ArrayList<Object> user = new ArrayList<Object>();
+		user.add(30);
+		user.add("qwer");
+		user.add("qwer");
+		user.add("qwer");
+		test.insertIntoTableWithPrimaryKey_ArrObj(table1, user);
+		
+		String table2 = "userPurchasingProfileDetails";
+		ArrayList<Object> userProfile = new ArrayList<Object>();
+		userProfile.add(2);
+		userProfile.add("Joseph");
+		
+		java.util.Date date = new java.util.Date("05/02/2023");
+		userProfile.add(date);
+		
+		userProfile.add("999999999999999");
+		userProfile.add("111");
+		userProfile.add("Discover");
+		test.insertIntoTableWithPrimaryKey_ArrObj(table2, userProfile);
+		
+		String table = "amazonProductPriceHistoryDetails";
+		ArrayList<Object> list = new ArrayList<Object>();
+		list.add(0);
+		list.add(16.00);
+		list.add("2023-05-02 05:04:22");
+		test.insertIntoTableWithPrimaryKey_ArrObj(table, list);
+		System.out.println(test.getFromTable_2DArrStr(table)); 
+		*/
+	}
+	public static void testInsertions_WeakTables () {
+		//Testing weak tables (Meant to fail)
+		/*
+		String table = "userPurchasingProfile";
 		ArrayList<Object> tableInputs = new ArrayList<Object>();
 		tableInputs.add(0);
-		tableInputs.add("f2d");
-		tableInputs.add("ki2llChelseaClinton");
-		tableInputs.add("112222-3390");
-		test.insertIntoTableWithPrimaryKey(table, tableInputs); 
+		tableInputs.add(0);
+		test.insertIntoWeakTable_ArrObj(table,tableInputs);
+		*/
 		
-		//Testing Insertions with primary key
-		test = new DBQuery(con);
+		//Testing weak tables (Meant to succeed)
+		table = "user";
+		ArrayList<ArrayList<Object>> tableInputss = new ArrayList<ArrayList<Object>>();
 		tableInputs = new ArrayList<Object>();
-		tableInputs.add("BernieSanders");
-		tableInputs.add("Garfield_l'zanya");
-		tableInputs.add("112222-3");
-		test.insertIntoTableWithOutPrimaryKey(table, tableInputs); 
-		*/
+			tableInputs.add("k2toys@gmail.com");
+			tableInputs.add("bernieSanders");
+			tableInputs.add("121-1111-1311");
+			tableInputss.add(tableInputs);
+			
+			tableInputs = new ArrayList<Object>();
+			tableInputs.add("kbtoys@gmail.com");
+			tableInputs.add("bernieSanders");
+			tableInputs.add("111-1111-1311");
+			tableInputss.add(tableInputs);
+			
+			tableInputs = new ArrayList<Object>();
+			tableInputs.add("kgtoys@gmail.com");
+			tableInputs.add("bernieSanders");
+			tableInputs.add("211-1111-1311");
+			tableInputss.add(tableInputs);
+		test.insertIntoTableWithOutPrimaryKey_2DArrObj(table,tableInputss);
 		
 		
-		/*
-		//Testing new way of describing tables
-		test.getColumnsOfTable_ArrStr(table);
-		String format = "getColumnsOfTable_ArrStr: \t%s\n"
-					  + "getColumnsOfTable_ArrObj: \t%s\n"
-					  + "getDatatypesOfTable_ArrStr \t%s\n"
-				  	  + "getDatatypesOfTable_ArrObj \t%s\n"
-					  + "getColumnsAndDatatypeFromTable_2DArrObj \t%s\n"
-					  + "getColumnsAndDatatypeFromTable_2DArrStr \t\n%s\n"
-					  ;
-		String s = String.format(
-						format, 
-						test.getColumnsOfTable_ArrStr(table),
-						test.getColumnsOfTable_ArrObj(table),
-						test.getDatatypesOfTable_ArrStr(table),
-						test.getDatatypesOfTable_ArrObj(table),
-						test.getColumnsAndDatatypeFromTable_2DArrObj(table),
-						test.getColumnsAndDatatypeFromTable_2DArrStr(table)
-					);
-		System.out.println(s);		
-		*/
+		table = "userPurchasingProfileDetails";
+		tableInputss = new ArrayList<ArrayList<Object>>();
+			tableInputs = new ArrayList<Object>();
+			tableInputs.add("kb Joseph toys");
+			tableInputs.add("10/20/3000");
+			tableInputs.add("1111111111311");
+			tableInputs.add("123");
+			tableInputss.add(tableInputs);
+			
+			tableInputs = new ArrayList<Object>();
+			tableInputs.add("kb Joseph toys");
+			tableInputs.add("10/20/3000");
+			tableInputs.add("2111111111311");
+			tableInputs.add("123");
+			tableInputss.add(tableInputs);
+			
+			tableInputs = new ArrayList<Object>();
+			tableInputs.add("kb Joseph toys");
+			tableInputs.add("10/20/3000");
+			tableInputs.add("2111111111312");
+			tableInputs.add("123");
+			tableInputss.add(tableInputs);
+		test.insertIntoTableWithOutPrimaryKey_2DArrObj(table,tableInputss);
 		
+		table = "userPurchasingProfile";
+		tableInputss = new ArrayList<ArrayList<Object>>();
+			for (int i = 1; i < 4; i++) {
+				for (int j = 1; j < 4; j++) {
+					tableInputs = new ArrayList<Object>();
+					tableInputs.add(i);
+					tableInputs.add(j);
+					tableInputss.add(tableInputs);
+				}
+			}
+		test.insertIntoWeakTable_2DArrObj(table,tableInputss);
+	}
+	
+	public static void main (String args[]) throws SQLException {
+		con = new DBConnetion();
+		con.startConnection(dbs[2]);		
+		test = new DBQuery(con);
 		
-		//Calling whole table
-		/*
-		System.out.println("=".repeat(40));
-		System.out.println("test.getFromTable_2DArrStr(table)");
-		System.out.println(test.getFromTable_2DArrStr(table));
-		System.out.println("-".repeat(40));
-		*/
-		
-		//Calling columns of a table
-		/*
-		ArrayList<String> columns = new ArrayList<String>();
-		columns.add("user_id");
-		columns.add("user_email");
-		System.out.println("~".repeat(75));
-		System.out.println("test.getFromTable_2DArrStr(table, columns)");
-		System.out.println(test.getFromTable_2DArrStr(table, columns));
-		System.out.println("~".repeat(75));
-		*/
-		
-		
-		//Calling Where of a table
-		/*
-		ArrayList<String> wheres = new ArrayList<String>();
-		wheres.add("user_email");
-		ArrayList<String> wheresValues = new ArrayList<String>();
-		wheresValues.add("a");
-		System.out.println(test.getFromTable_2DArrStr(table, wheres, wheresValues));
-		*/
-		
-		//Calling Columns and Wheres of a table
-		/*
-		ArrayList<String> columns = new ArrayList<String>();
-		columns.add("user_id");
-		columns.add("user_password");
-		ArrayList<String> wheres = new ArrayList<String>();
-		wheres.add("user_email");
-		ArrayList<String> wheresValues = new ArrayList<String>();
-		wheresValues.add("a");
-		System.out.println("=".repeat(10));
-		System.out.println("test.getFromTable_2DArrStr(table, columns, wheres, wheresValues)");
-		System.out.println(test.getFromTable_2DArrStr(table, columns, wheres, wheresValues));
-		System.out.println("-".repeat(10));
-		*/
+		testInsertions_WeakTables();
 	}
 }

@@ -29,7 +29,7 @@ public class UserDao {
         return false;
     }
     
-    public boolean removeProductToUserWishlist(String userID, String productID){
+    public boolean removeProductFromUserWishlist(String userID, String productID){
     	//remove product to user's wishlist and return if its successful or not
         return false;
     }

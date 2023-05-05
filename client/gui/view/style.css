@@ -15,6 +15,30 @@ h1 {
     color: rgb(255, 174, 0);
 }
 
+#register {
+    font-size: 20px;
+    font-weight: bolder;
+    -webkit-text-stroke: rgb(0, 0, 0);
+    /* -webkit-text-stroke-width: 3px; */
+    color: rgb(255, 174, 0);
+}
+
+#settings {
+    font-size: 20px;
+    font-weight: bolder;
+    -webkit-text-stroke: rgb(0, 0, 0);
+    /* -webkit-text-stroke-width: 3px; */
+    color: rgb(255, 174, 0);
+}
+
+#home {
+    font-size: 20px;
+    font-weight: bolder;
+    -webkit-text-stroke: rgb(0, 0, 0);
+    /* -webkit-text-stroke-width: 3px; */
+    color: rgb(255, 174, 0);
+}
+
 .tabs button {
     overflow: hidden;
     border: 1px solid rgb(255, 153, 0);
@@ -76,7 +100,29 @@ footer {
     align-items: center;
 }
 
+#register-error-msg-holder {
+    /* width: 10%;
+    height: 10%; */
+    display: grid;
+    justify-items: center;
+    align-items: center;
+}
+
 #login-error-msg {
+    width: 100%;
+    text-align: center;
+    margin: 0px 0px;
+    /* padding: 5px; */
+    font-size: 12px;
+    font-weight: bold;
+    color: #8a0000;
+    border: 1px solid #8a0000;
+    background-color: #e58f8f;
+    border-radius: 5px;
+    opacity: 0;
+}
+
+#register-error-msg {
     width: 100%;
     text-align: center;
     margin: 0px 0px;
@@ -101,6 +147,13 @@ footer {
     align-items: center;
 }
 
+#register-form {
+    align-self: flex-start;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+}
+
 .login-form-field {
     width: 96.5%;
     background: rgb(246, 255, 116);
@@ -113,7 +166,31 @@ footer {
     padding: 7px;
 }
 
+.register-form-field {
+    width: 96.5%;
+    background: rgb(246, 255, 116);
+    /* border: 2px solid rgb(255, 153, 0); */
+    /* border-bottom: 1px solid #3a3a3a; */
+    /* margin-bottom: 10px; */
+    border-radius: 5px;
+    outline: none;
+    padding: 0px 0px 5px 5px;
+    padding: 7px;
+}
+
 #login-form-submit {
+    width: 100%;
+    padding: 7px;
+    border: none;
+    border-radius: 5px;
+    color: rgb(255, 174, 0);
+    font-weight: bold;
+    background-color: #3a3a3a;
+    cursor: pointer;
+    outline: none;
+}
+
+#register-form-submit {
     width: 100%;
     padding: 7px;
     border: none;

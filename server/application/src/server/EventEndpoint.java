@@ -19,6 +19,7 @@ public class EventEndpoint extends WebSocketAdapter
     private final CountDownLatch closureLatch = new CountDownLatch(10000);
     private ProductTracker tracker;
 	private UserDelegate delegate;
+	private String currentSessionUserID;
     
     public EventEndpoint(ProductTracker tracker, UserDelegate delegate) {
     	super();
@@ -41,13 +42,12 @@ public class EventEndpoint extends WebSocketAdapter
         	System.out.println("Received JSON message: " + message);
         	JSONObject obj = new JSONObject(message);
             JSONMessage request = new JSONMessage(obj.get("message").toString(), obj.get("data").toString());
-			JSONMessage result = delegate.handleJSONRequest(request);     
-			try {
-				getSession().getRemote().sendString(result.encode());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			JSONMessage result = delegate.handleJSONRequest(request); 
+			if(result.data.has("UserID")) {
+				currentSessionUserID = result.data.get("UserID").toString();
+				tracker.setEndpoint(this, currentSessionUserID);
+			}	
+			sendJSONMessageToSession(result);
         }
 
         if (message.toLowerCase(Locale.US).contains("bye"))
@@ -61,6 +61,10 @@ public class EventEndpoint extends WebSocketAdapter
     public void onWebSocketClose(int statusCode, String reason)
     {
         super.onWebSocketClose(statusCode, reason);
+        if(currentSessionUserID != null) {
+        	currentSessionUserID = null;
+        	tracker.closeEndpoint();
+        }
         System.out.printf("Socket Closed: [%d] " + reason, statusCode);
         closureLatch.countDown();
     }
@@ -76,6 +80,15 @@ public class EventEndpoint extends WebSocketAdapter
     {
         System.out.println("Awaiting closure from remote");
         closureLatch.await();
+    }
+    
+    public void sendJSONMessageToSession(JSONMessage msg) {
+    	try {
+			getSession().getRemote().sendString(msg.encode());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     private boolean isValidJSON(String json) {

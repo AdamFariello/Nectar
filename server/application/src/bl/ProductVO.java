@@ -45,4 +45,32 @@ public class ProductVO extends JSONEncodeableValueObject{
     	return res;
     }
     
+    public String createMessageOfProductChange(ProductVO curr) {
+    	String msg = "The product named: ";
+        double diff = curr.price - this.price;
+        if (curr.title.indexOf(",") > 0){
+            msg += curr.title.substring(0, curr.title.indexOf(","));
+        }else{
+            msg += curr.title;
+        }
+        if (diff < 0){
+            msg += "price has gone down";
+        }else if (diff > 0){
+            msg += "price has gone up";
+        }
+        msg += "\n Price: $" + curr.price;
+        
+        if (!this.available && curr.available){
+            if (curr.amtInStock == -1){
+                msg += "\n is now in stock";
+            }else{
+                msg += "\n is now in stock and only " + curr.amtInStock + " are available";
+            }
+        }else if (this.available && !curr.available){
+            msg += "\n is not in stock anymore";
+        }
+        return msg;
+    	
+    }
+    
 }

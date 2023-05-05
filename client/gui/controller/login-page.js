@@ -1,10 +1,10 @@
-ws = new WebSocket("ws://localhost:8994/nectar/");
-
 const loginForm = document.getElementById("login-form");
 const loginButton = document.getElementById("login-form-submit");
 const loginErrorMsg = document.getElementById("login-error-msg");
 
 loginButton.addEventListener("click", (e) => {
+    
+    alert("message sent");
     e.preventDefault();
     const username = loginForm.username.value;
     const password = loginForm.password.value;
@@ -17,17 +17,8 @@ loginButton.addEventListener("click", (e) => {
     }*/
     var loginInfo = {Username:username, Password:password}
     var request = {message:"login", data:loginInfo}
-    ws.send(JSON.stringify(request));
+    chrome.runtime.sendMessage(request, function(response) {
+        console.log(response);
+    });
+    
 })
-
-ws.onopen = function(){
-    alert("Connection Established");
-}
-
-ws.onmessage = function(event){
-    alert(event.data);
-}
-
-window.onbeforeunload = function(){
-    ws.close();
-}

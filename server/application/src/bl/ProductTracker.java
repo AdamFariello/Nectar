@@ -1,6 +1,8 @@
 package bl;
 import java.util.HashMap;
 
+import server.EventEndpoint;
+
 public class ProductTracker implements Runnable{
 	private Thread t;
     private WebScraper webScraper;
@@ -37,6 +39,14 @@ public class ProductTracker implements Runnable{
             addUser(userID, productID, "Place Holder", "Place Holder");
         }
 
+    }
+    
+    public void setEndpoint(EventEndpoint endpoint, String userID) {
+    	receivers.forEach((k, v) -> v.setEndpoint(endpoint, userID));
+    }
+    
+    public void closeEndpoint() {
+    	receivers.forEach((k, v) -> v.closeEndpoint());
     }
 
     public void removeUser(String userID, String productID){

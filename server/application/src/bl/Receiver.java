@@ -6,6 +6,11 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.json.JSONObject;
+
+import server.EventEndpoint;
+import server.JSONMessage;
+
 public class Receiver {
     private static String sender = "nectarupdates@outlook.com";
     private static String senderPassword = "*qSdFCG641#G";
@@ -13,7 +18,12 @@ public class Receiver {
     private static String[] carrierEmails = {"@tmomail.com", "@vmobl.com", "@cingularme.com", "@messaging.sprintpcs.com",
         "@vtext.com", "@messaging.nextel.com"};
 
-    ArrayList<String> userSubscribers;
+    private ArrayList<String> userSubscribers;
+    private ArrayList<String> phoneNumbers;
+    private ArrayList<String> emailAddresses;
+    private EventEndpoint endpoint;
+    private String currentEndPointUserID;
+    
     ProductVO previousProductVO;
     
     public Receiver() {
@@ -24,6 +34,15 @@ public class Receiver {
         userSubscribers.add(userID);
     }
 
+    public void setEndpoint(EventEndpoint endpoint, String userID) {
+    	this.endpoint = endpoint;
+    	this.currentEndPointUserID = userID;
+    }
+    public void closeEndpoint() {
+    	this.endpoint = null;
+    	this.currentEndPointUserID = null;
+    }
+    
     //Returns if there are no more users left to notify
     public boolean removeUser(String userID){
         if (userSubscribers.size() == 0){
@@ -46,6 +65,31 @@ public class Receiver {
             //userSubscribers.forEach((k, v) -> v.notify(productVO, previousProductVO));
             //Get user email and phone and tracker settings from database
             //Send message
+        	if(currentEndPointUserID != null) {
+        		if(userSubscribers.contains(currentEndPointUserID)){
+        			JSONObject result = new JSONObject();
+            		result.put("previousProductInfo", previousProductVO.encode());
+            		result.put("currentProductInfo", productVO.encode());
+    		
+            		endpoint.sendJSONMessageToSession(new JSONMessage("Product Change", result.toString()));  	
+        		}
+        	}     		
+        	for (String number : phoneNumbers) {
+        		try {
+					sendTextMessage(productVO, number);
+				} catch (MessagingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        	}
+        	for (String email : emailAddresses) {
+        		try {
+					sendEmailMessage(productVO, email);
+				} catch (MessagingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        	}
             /*try {
                 sendEmailMessage(productVO, "dankedest444@gmail.com");
                 //sendTextMessage(productVO, "9083706809");
@@ -91,30 +135,7 @@ public class Receiver {
             message.setFrom(new InternetAddress(sender));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailAddress));
             message.setSubject("Update for " + productVO.title);
-
-            String msg = "The product named: ";
-            double diff = productVO.price - previousProductVO.price;
-            if (productVO.title.indexOf(",") > 0){
-                msg += productVO.title.substring(0, productVO.title.indexOf(","));
-            }else{
-                msg += productVO.title;
-            }
-            if (diff < 0){
-                msg += "price has gone down";
-            }else if (diff > 0){
-                msg += "price has gone up";
-            }
-            msg += "\n Price: $" + productVO.price;
-            
-            if (!previousProductVO.available && productVO.available){
-                if (productVO.amtInStock == -1){
-                    msg += "\n is now in stock";
-                }else{
-                    msg += "\n is now in stock and only " + productVO.amtInStock + " are available";
-                }
-            }else if (previousProductVO.available && !productVO.available){
-                msg += "\n is not in stock anymore";
-            }
+            String msg = previousProductVO.createMessageOfProductChange(productVO);
 
             message.setText(msg);
             //transport.connect(host, smtpUserName, smtpPassword);

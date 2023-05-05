@@ -1,6 +1,8 @@
 package bl;
 import java.util.HashMap;
 
+import server.EventEndpoint;
+
 public class ProductTracker {
     private WebScraper webScraper;
     HashMap<String, Receiver> receivers;
@@ -43,11 +45,12 @@ public class ProductTracker {
 
     }
 
-    public void removeUser(String userID, String productID){
+    public boolean removeUser(String userID, String productID){
         boolean noUsersLeft = receivers.get(productID).removeUser(userID);
         if (noUsersLeft){
             removeProduct(productID);
         }
+        return true;
     }
 
     public void removeUserWishList(String userID, String[] wishlist){
@@ -60,7 +63,15 @@ public class ProductTracker {
         webScraper.scrape();
     }
 
-    public ProductVO getProductData(String productID){
+    public ScrapedProductVO getProductData(String productID){
         return webScraper.getProductData(productID);
     }
+
+	public void setEndpoint(EventEndpoint eventEndpoint, String currentSessionUserID) {
+		receivers.forEach((k, v) -> v.setEndpoint(eventEndpoint, currentSessionUserID));		
+	}
+
+	public void closeEndpoint() {
+		receivers.forEach((k, v) -> v.closeEndpoint());
+	}
 }

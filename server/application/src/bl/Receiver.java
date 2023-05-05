@@ -24,7 +24,7 @@ public class Receiver {
     private EventEndpoint endpoint;
     private String currentEndPointUserID;
     
-    ProductVO previousProductVO;
+    ScrapedProductVO previousProductVO;
     
     public Receiver() {
     	userSubscribers = new ArrayList<String>();
@@ -57,7 +57,7 @@ public class Receiver {
         }
     }
 
-    public void receive(ProductVO productVO){
+    public void receive(ScrapedProductVO productVO){
         if (previousProductVO == null){
             previousProductVO = productVO;
         } else if (previousProductVO != productVO){
@@ -100,7 +100,7 @@ public class Receiver {
         }
     }
     
-    private void sendTextMessage(ProductVO productVO, String number) throws MessagingException{
+    private void sendTextMessage(ScrapedProductVO productVO, String number) throws MessagingException{
         //carriers accept email so send email to all carrier providers
         for(String carrier : carrierEmails){
             String address = number.replaceAll("\\D+", "") + carrier;
@@ -108,7 +108,7 @@ public class Receiver {
         }
     }
 
-    private void sendEmailMessage(ProductVO productVO, String emailAddress) throws MessagingException{
+    private void sendEmailMessage(ScrapedProductVO productVO, String emailAddress) throws MessagingException{
         //int PORT = 587;
         int PORT = 587;
         Properties properties = System.getProperties();

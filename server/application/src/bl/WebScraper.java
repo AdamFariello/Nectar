@@ -39,7 +39,7 @@ public class WebScraper {
         scraperCommands.forEach((k, v) -> v.execute());
     }
 
-    public ProductVO getProductData(String productID){
+    public ScrapedProductVO getProductData(String productID){
         return scraperCommands.get(productID).scrape();
     }
 }

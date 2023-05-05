@@ -18,7 +18,7 @@ public class AmazonScraperCommand extends ScraperCommand{
     }
 
     @Override
-    protected ProductVO scrape() {
+    protected ScrapedProductVO scrape() {
         // TODO scrape amazon website, create and return product VO
         File file = new File("scripts/scraper.py");
         String path = file.getAbsolutePath();
@@ -56,7 +56,7 @@ public class AmazonScraperCommand extends ScraperCommand{
                     }
                 }
             }
-            return new ProductVO(title, productID, available, price, amtInStock);
+            return new ScrapedProductVO(title, productID, available, price, amtInStock);
         } catch (IOException e) {
             return null;
         }

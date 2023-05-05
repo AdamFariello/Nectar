@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Register</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../style.css">
+    <script defer src="../controller/register-page.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Nectar</h1>
+    </header>
+
+
+    <main id="main-holder">
+        <img src="images\logo4-Transparent.png" class="center">
+        <h1 id="register">Welcome, Please Register</h1>    
+
+        <div id="register-error-msg-holder">
+            <p id="register-error-msg">Invalid username and/or password!<span id="error-msg-second-line">Make sure the usernames and passwords are the same</span></p>
+        </div>
+
+        <form id="register-form">
+            <!-- <label>Username:<br></label>    -->
+            <input type="text" name="username" id="username-field" class="register-form-field" placeholder="Username">
+            <input type="text" name="usernameTwo" id="username-field-2" class="register-form-field" placeholder="Retype Username">
+            <!-- <label><br>Password:<br></label>    -->
+            <input type="password" name="password" id="password-field" class="register-form-field" placeholder="Password">
+            <input type="password" name="passwordTwo" id="password-field-2" class="register-form-field" placeholder="Retype Password">
+            <input type="submit" value="Register" id="register-form-submit">
+        </form>
+    </main>
+
+    <!-- <div class="tabs">
+        <button class="tablinks" onclick="open('Login')">Login</button>
+        <button class="tablinks" onclick="open('Register')">Register</button>
+    </div> -->
+    <!-- <script src="script.js"></script> -->
+    <footer>
+        <a id="loginButton" href="login.html">Login</a>
+
+    </footer>
+</body>
+
+</html>

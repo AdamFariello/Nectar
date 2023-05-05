@@ -15,7 +15,9 @@ public class WebSocketServer {
     
 	public static void main(String[] args) throws Exception
     {     
-        WebSocketServer server = new WebSocketServer();
+		ProductTracker tracker = new ProductTracker();
+        UserDelegate delegate = new UserDelegate(tracker, new UserDao());
+        WebSocketServer server = new WebSocketServer(tracker, delegate);
         //server.tracker.addUser("1", "1", testUrl, "Amazon");
         //server.tracker.start();
         server.setPort(8994);
@@ -26,14 +28,14 @@ public class WebSocketServer {
     private final Server server;
     private final ServerConnector connector;
 
-    public WebSocketServer()
+    public WebSocketServer(ProductTracker tracker, UserDelegate delegate)
     {
         server = new Server();
         connector = new ServerConnector(server);
         server.addConnector(connector);
 
-        tracker = new ProductTracker();
-        delegate = new UserDelegate(tracker, new UserDao());
+        this.tracker = tracker;
+        this.delegate = delegate;
         // Setup the basic application "context" for this application at "/"
         // This is also known as the handler tree (in jetty speak)
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);

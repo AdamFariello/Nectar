@@ -13,9 +13,8 @@
         "experimental",
         "activeTab"
     ],
-    "sockets": {
-        "tcp": {
-            "connect": "127.0.0.1:8999"
-        }
+    "background": {
+        "scripts": ["model/socketclient.js"],
+        "persistent": false
     }
 }

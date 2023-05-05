@@ -9,27 +9,29 @@ public class UserDao {
         "nectarDB_user"
     };
 
-    //TODO: Return a hashmap of userIds mapped to a string array of the productIDs in their wishlist
-    public HashMap<String, String[]> getAllUserWishLists(){
+    public HashMap<String, ArrayList<String>> getAllUserWishLists(){
+    	//return a hashmap mapping user ids to a list of all the product ids they track
+        return null;
+    }
+    
+    public ProductVO getProductInfoByProductID() {
+    	//reeturn product url, sitename and make a product vo setting the public variables with what you got
+    	return null;
+    }
+
+    public UserVO getUserByEmailAdress(String emailAddress){
+    	//return user id, user email, user password and make a user vo by setting the public variables with what you got
         return null;
     }
 
-    //TODO: Adds a product ID with its url to a user's wishlist, If the product is not in database add it
-    public void addProductToUserWishList(String userID, String productID, String productUrl){
-
+    public boolean addProductToUserWishlist(String userID, ProductVO product){
+    	//add product to user's wishlist and return if its successful or not 
+        return false;
     }
-
-    //Get product ID based off matching url 
-    public String getProductIDByUrl(String url){
-        return null;
-    }
-
-    public ArrayList<String> getUserByUserID(String userID){
-        return null;
-    }
-
-    public ArrayList<String> getUserByEmailAddress(String userID){
-        return null;
+    
+    public boolean removeProductToUserWishlist(String userID, String productID){
+    	//remove product to user's wishlist and return if its successful or not
+        return false;
     }
 
     //TODO: We can decide on more later on

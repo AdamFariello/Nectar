@@ -201,34 +201,54 @@ public class DBTest {
 		);
 		System.out.println(test.getFromTable_2DArrStr(weakTable));
 	}
-	public static void success_insertIntoWeakTable_AndLastStrongTable_WithPrimaryKey() {
-		//Strong table 1: user                         
-		//Strong table 2: userPurchasingProfileDetails
-		//Weak table: userPurchasingProfile        
-		String weakTable = "userPurchasingProfile";
-		
-		ArrayList<Object> strongTablePrimaryKeysExceptLastTable = new ArrayList<Object>();
-		strongTablePrimaryKeysExceptLastTable.add(1);
-		
-		String lastStrongTableName = "userPurchasingProfileDetails"; 
-		ArrayList<Object> lastStrongTableInputs = new ArrayList<Object>();
-		lastStrongTableInputs.add(2);
-		lastStrongTableInputs.add("Kg toys");
-		lastStrongTableInputs.add("10/20/3000");
-		lastStrongTableInputs.add("2111111111311");
-		lastStrongTableInputs.add("123");
-		
-		test.insertIntoWeakTable_AndLastStrongTable_WithPrimaryKey(
-			weakTable, strongTablePrimaryKeysExceptLastTable,
-			lastStrongTableName, lastStrongTableInputs
-		);
-		System.out.println(test.getFromTable_2DArrStr(weakTable));
+	protected static Boolean insertIntoWeakTable_AndLastStrongTable_WithPrimaryKey() {
+		try {
+			//Strong table 1: user                         
+			//Strong table 2: userPurchasingProfileDetails
+			//Weak table: userPurchasingProfile        
+			String weakTable = "userPurchasingProfile";
+			
+			ArrayList<Object> strongTablePrimaryKeysExceptLastTable = new ArrayList<Object>();
+			strongTablePrimaryKeysExceptLastTable.add(1);
+			
+			String lastStrongTableName = "userPurchasingProfileDetails"; 
+			ArrayList<Object> lastStrongTableInputs = new ArrayList<Object>();
+			lastStrongTableInputs.add(2);
+			lastStrongTableInputs.add("Kg toys");
+			lastStrongTableInputs.add("10/20/3000");
+			lastStrongTableInputs.add("2111111111311");
+			lastStrongTableInputs.add("123");
+			
+			test.insertIntoWeakTable_AndLastStrongTable_WithPrimaryKey(
+				weakTable, strongTablePrimaryKeysExceptLastTable,
+				lastStrongTableName, lastStrongTableInputs
+			);
+			System.out.println(test.getFromTable_2DArrStr(weakTable));
+			
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	protected static boolean WorkingDirectory() {
+		try {
+			final String workingDir = System.getProperty("user.dir");
+			System.out.println("Working Directory = " + workingDir);
+			return true;
+		} catch (Exception e) { 
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	public static void main (String args[]) throws SQLException {
 		con = new DBConnetion();
 		con.startConnection(dbs[2]);		
 		test = new DBQuery(con);
+	
+		
 		
 	}
 

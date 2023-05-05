@@ -29,7 +29,7 @@ public class DBConnetion{
 		this.password = password;
 		this.host     = host;
 	}
-
+	
 	//Connections Methods
 	public Connection getConnection () {return connection;}
 	public Connection startConnection(String database) {

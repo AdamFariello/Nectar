@@ -1,6 +1,7 @@
 package bl;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import org.json.*;
 
@@ -18,10 +19,14 @@ public class UserDelegate {
         this.productTracker = productTracker;
         this.userDao = userDao;
     }
-
-    public void addProductToUserWishList(String userID, String url, UserTrackerSettingsVO settings){
-        //Add product to wishlist in database, if product is not in database add it and get productID, 
-        ///with product id add to product tracker
+    
+    public void initializeTracker() {
+    	HashMap<String, ArrayList<String>> wishlists = userDao.getAllUserWishLists();
+    	for (Entry<String, ArrayList<String>> entry : wishlists.entrySet()) {
+            String userID = entry.getKey();
+            ArrayList<String> wishlist = entry.getValue();
+            productTracker.addUserWishList(userID, wishlist.toArray(new String[wishlist.size()]));
+        }
     }
 
     public JSONMessage handleGetProductData(JSONObject data){
@@ -60,8 +65,21 @@ public class UserDelegate {
     		String userID = data.get("UserID").toString();
         	String productID = data.get("ProductID").toString();
         	String url = data.getString("Url").toString();
-        	String website = data.getString("Website").toString();
-        	boolean success = productTracker.addUser(userID, productID, url, website);
+    		String website = data.getString("Website").toString();
+    		boolean success = true;
+        	if(productID.isEmpty()) {      		
+        		ProductVO productVO = new ProductVO();
+            	productVO.url = data.getString("Url").toString();
+            	productVO.siteName = website;
+            	productVO.title = productTracker.getProductDataFromUrl(url, website).title;
+            	
+            	productID = userDao.addProductToUserWishlist(userID, productVO);
+        	}else {
+        		success = userDao.addProductToUserWishlist(userID, productID);
+        	}
+        	if(success) {
+        		success = productTracker.addUser(userID, productID, url, website);
+        	}	
         	JSONObject result = new JSONObject();
     		result.put("result", success);
         	return new JSONMessage("Add Product Result", result.toString());
@@ -69,8 +87,7 @@ public class UserDelegate {
     		JSONObject obj = new JSONObject();
     		obj.put("Error Message", "Invalid Add Product Request Data");
 			return new JSONMessage("Add Product Error", obj.toString());
-    	}
-    	
+    	}	
     }
     
     private JSONMessage handleRemoveProductRequest(JSONObject data) {

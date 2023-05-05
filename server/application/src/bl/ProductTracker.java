@@ -66,6 +66,10 @@ public class ProductTracker {
     public ScrapedProductVO getProductData(String productID){
         return webScraper.getProductData(productID);
     }
+    
+    public ScrapedProductVO getProductDataFromUrl(String url, String website){
+        return webScraper.getProductDataFromUrl(url, website);
+    }
 
 	public void setEndpoint(EventEndpoint eventEndpoint, String currentSessionUserID) {
 		receivers.forEach((k, v) -> v.setEndpoint(eventEndpoint, currentSessionUserID));		

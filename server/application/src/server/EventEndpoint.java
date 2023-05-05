@@ -85,6 +85,7 @@ public class EventEndpoint extends WebSocketAdapter
     public void sendJSONMessageToSession(JSONMessage msg) {
     	try {
 			getSession().getRemote().sendString(msg.encode());
+			System.out.println("Sending:" + msg.encode());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

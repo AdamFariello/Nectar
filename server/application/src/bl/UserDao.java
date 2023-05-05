@@ -31,6 +31,11 @@ public class UserDao {
     	//return user id, user email, user password and make a user vo by setting the public variables with what you got
         return null;
     }
+    
+    public UserVO getUserByUserID(String userID) {
+    	//return user id, user email, user password and make a user vo by setting the public variables with what you got
+        return null;
+    }
 
     public String addProductToUserWishlist(String userID, ProductVO product){
     	//add new product to user's wishlist and return its productID

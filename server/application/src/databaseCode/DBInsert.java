@@ -5,6 +5,8 @@ import java.text.*;
 import java.util.ArrayList;
 
 public class DBInsert extends DBRetrieve {			
+	//TODO: Add Batching to inserttable
+	
 	//Strong table insertions
 	public static boolean insertIntoStrongTable_WithPrimaryKey_ArrObj
 	(String table, ArrayList<Object> tableInputs) {			
@@ -29,7 +31,7 @@ public class DBInsert extends DBRetrieve {
 			queryInserts += String.format("(%s), ", temp);
 		}
 		queryInserts = queryInserts.substring(0, queryInserts.length() - 2);
-						
+		
 		String query = String.format(
 						"INSERT INTO %s (%s) VALUES %s", 
 					   	table, queryColumns, queryInserts

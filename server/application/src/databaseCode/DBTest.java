@@ -243,10 +243,16 @@ public class DBTest {
 		}
 	}
 	
-	public static void main (String args[]) throws SQLException {
-		con = new DBConnetion();
+	public static void main (String args[]) throws SQLException {\
+		String [] dbs = {
+				"nectarDB_administration", 
+				"nectarDB_products", 
+				"nectarDB_user"
+			};
+	
+		DBConnetion con = new DBConnetion();
 		con.startConnection(dbs[2]);		
-		test = new DBQuery(con);
+		DBQuery test = new DBQuery(con);
 	
 		System.out.println(test.initServer());
 	}

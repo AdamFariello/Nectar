@@ -29,6 +29,11 @@ public class UserDao {
         return null;
     }
     
+    public boolean addProductToUserWishlist(String userID, String productID) {
+    	//add product found already in the database based on the given product id to user's wishlist and return success or failer
+    	return false;
+    }
+    
     public boolean removeProductFromUserWishlist(String userID, String productID){
     	//remove product to user's wishlist and return if its successful or not
         return false;

@@ -1,18 +1,34 @@
 package bl;
 import java.util.HashMap;
 
+import tests.ScraperCommandStub;
+
 public class WebScraper {
     HashMap<String, ScraperCommand> scraperCommands;
+    private static String[] supportedWebsites = {"Amazon", "Stub"};
 
     public WebScraper(){
     	scraperCommands = new HashMap<String, ScraperCommand>();
     }
-    public void addProduct(String productID, String url, String website, Receiver receiver){
+    public boolean addProduct(String productID, String url, String website, Receiver receiver){
         switch (website) {
             case "Amazon": 
                 scraperCommands.put(productID, new AmazonScraperCommand(productID, url, receiver));
-                break;
+                return true;
+            case "Stub":
+            	scraperCommands.put(productID, new ScraperCommandStub(productID, url, receiver));
+            default:
+            	return false;
         }
+    }
+    
+    public boolean checkWebsiteSupport(String website) {
+    	for (String s : supportedWebsites) {
+    		if (website.equals(s)) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
 
     public void removeProduct(String productID){

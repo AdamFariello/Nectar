@@ -4,12 +4,12 @@ import bl.ProductVO;
 import bl.Receiver;
 import bl.ScraperCommand;
 
-public class StubScraperCommand extends ScraperCommand {
+public class ScraperCommandStub extends ScraperCommand {
     private ProductVO first;
     private ProductVO second;
     private boolean before;
 
-    public StubScraperCommand(String productID, String url, Receiver receiver) {
+    public ScraperCommandStub(String productID, String url, Receiver receiver) {
         super(productID, url, receiver);
         this.first = new ProductVO("Beats Studio3 Wireless Noise Cancelling Over-Ear Headphones", "0", false, 10, 0);
         this.second = new ProductVO("Beats Studio3 Wireless Noise Cancelling Over-Ear Headphones", "0", true, 200, 15);

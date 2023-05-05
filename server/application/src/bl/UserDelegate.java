@@ -40,15 +40,34 @@ public class UserDelegate {
         	return new JSONMessage("Login Result", result.toString());
     	}catch (Exception e) {
     		JSONObject obj = new JSONObject();
-    		obj.put("msg", "Invalid Login Request Data");
+    		obj.put("Error Message", "Invalid Login Request Data");
 			return new JSONMessage("Error", obj.toString());
     	}	
+    }
+    
+    private JSONMessage handleAddProductRequest(JSONObject data) {
+    	String userID = data.get("UserID").toString();
+    	String productID = data.get("ProductID").toString();
+    	String url = data.getString("Url").toString();
+    	String website = data.getString("Website").toString();
+    	boolean success = productTracker.addUser(userID, productID, url, website);
+    	JSONObject result = new JSONObject();
+		result.put("result", success);
+    	return new JSONMessage("Add Product Result", result.toString());
+    }
+    
+    private JSONMessage handleRemoveProductRequest(JSONObject data) {
+    	JSONObject result = new JSONObject();
+		result.put("Remove Success", true);
+    	return new JSONMessage("Remove Product Result", result.toString());
     }
     
     public JSONMessage handleJSONRequest(JSONMessage request) {
     	switch(request.message) {
     		case "login":
     			return handleLoginRequest(request.data);
+    		case "add product":
+    			return handleAddProductRequest(request.data);
     		default:
     			JSONObject obj = new JSONObject();
     			obj.put("msg", "Invalid Request");

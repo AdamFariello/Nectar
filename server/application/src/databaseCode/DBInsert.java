@@ -6,13 +6,13 @@ import java.util.ArrayList;
 
 public class DBInsert extends DBRetrieve {			
 	//Strong table insertions
-	public static boolean insertIntoTableWithPrimaryKey_ArrObj
+	public static boolean insertIntoStrongTable_WithPrimaryKey_ArrObj
 	(String table, ArrayList<Object> tableInputs) {			
 		ArrayList<ArrayList<Object>> temp = new ArrayList<ArrayList<Object>>();
 		temp.add(tableInputs);
-		return insertIntoTableWithPrimaryKey_2DArrObj(table, temp);
+		return insertIntoStrongTable_WithPrimaryKey_2DArrObj(table, temp);
 	}
-	public static boolean insertIntoTableWithPrimaryKey_2DArrObj
+	public static boolean insertIntoStrongTable_WithPrimaryKey_2DArrObj
 	(String table, ArrayList< ArrayList<Object> > tableInputs) {					
 		ArrayList<String> columnsOfTable   = getColumnsOfTable_ArrStr(table);
 		ArrayList<String> datatypesOfTable = getDatatypesOfTable_ArrStr(table);
@@ -36,13 +36,13 @@ public class DBInsert extends DBRetrieve {
 					   );
 		return insertIntoTable (query, tableInputs, columnsOfTable, datatypesOfTable);
 	}
-	public static boolean insertIntoTableWithOutPrimaryKey_ArrObj
+	public static boolean insertIntoStrongTable_WithOutPrimaryKey_ArrObj
 	(String table, ArrayList<Object> tableInputs) {
 		ArrayList<ArrayList<Object>> temp = new ArrayList<ArrayList<Object>>();
 		temp.add(tableInputs);
-		return insertIntoTableWithOutPrimaryKey_2DArrObj(table, temp);
+		return insertIntoStrongTable_WithOutPrimaryKey_2DArrObj(table, temp);
 	}
-	public static boolean insertIntoTableWithOutPrimaryKey_2DArrObj
+	public static boolean insertIntoStrongTable_WithOutPrimaryKey_2DArrObj
 	(String table, ArrayList<ArrayList<Object>> tableInputs) {
 		ArrayList<String> columnsOfTable = getColumnsOfTable_ArrStr(table);
 		columnsOfTable.remove(0);
@@ -74,40 +74,54 @@ public class DBInsert extends DBRetrieve {
 	//Weak table insertions
 	public static boolean insertIntoWeakTable_ArrObj
 	(String weakTable, ArrayList<Object> strongTablePrimaryKeys) {
-		return insertIntoTableWithPrimaryKey_ArrObj(weakTable, strongTablePrimaryKeys);
+		return insertIntoStrongTable_WithPrimaryKey_ArrObj(weakTable, strongTablePrimaryKeys);
 	}
 	public static boolean insertIntoWeakTable_2DArrObj
 	(String weakTable, ArrayList< ArrayList<Object> > strongTablePrimaryKeys) {
-		return insertIntoTableWithPrimaryKey_2DArrObj(weakTable, strongTablePrimaryKeys);
+		return insertIntoStrongTable_WithPrimaryKey_2DArrObj(weakTable, strongTablePrimaryKeys);
 	}
-	public static boolean insertIntoWeakTableWithLastStrongTableInsertedInto_ArrObj
-	(ArrayList<Object> strongTablePrimaryKeysExceptLastTable,
-	 String lastStrongTableName, ArrayList<Object> lastStrongTableInputs, 		
-	 String weakTable) {
-		ArrayList<Object> weakTableInputs = strongTablePrimaryKeysExceptLastTable;
-		weakTableInputs.add(weakTableInputs.get(0));
+	
+	public static boolean insertIntoWeakTable_AndStrongTables_WithPrimaryKey
+	(String weakTable, ArrayList<String> strongTableNames, 
+	 ArrayList<ArrayList<Object>> strongMultiTableInputs) {
+		ArrayList<Object> weakTableInputs = new ArrayList<Object>();
+		for (ArrayList<Object> strongTableInputs: strongMultiTableInputs) {
+			String strongTableName = strongTableNames.remove(0);
+			weakTableInputs.add(strongTableInputs.get(0));
+			
+			Boolean bool = insertIntoStrongTable_WithPrimaryKey_ArrObj(
+								strongTableName, strongTableInputs
+						   );
+			if (!bool) { return false;}
+		}
+		return insertIntoWeakTable_ArrObj(weakTable, weakTableInputs);
+	}	
+	public static boolean insertIntoWeakTable_AndFirstStrongTable_WithPrimaryKey
+	(String weakTable, ArrayList<Object> strongTablePrimaryKeysExceptFirstTable,
+	 String firstStringTableName, ArrayList<Object> firstStrongTableInputs) {
+		ArrayList<Object> weakTableInputs = new ArrayList<Object>();
+		weakTableInputs.add(firstStrongTableInputs.get(0));
+		weakTableInputs.addAll(strongTablePrimaryKeysExceptFirstTable);
 		
-		Boolean bool = insertIntoTableWithPrimaryKey_ArrObj(
-							lastStrongTableName, lastStrongTableInputs
+		Boolean bool = insertIntoStrongTable_WithPrimaryKey_ArrObj(
+							firstStringTableName, firstStrongTableInputs
 					   );
-		if (!bool) {return false;}
-		return insertIntoTableWithPrimaryKey_ArrObj(weakTable, weakTableInputs);
+		if (bool) {
+			return insertIntoWeakTable_ArrObj(weakTable, weakTableInputs);
+		} else {return false;}
 	}
-	public static boolean insertIntoWeakTableWithLastStrongTableInsertedInto_2DArrObj
-	(ArrayList<Object> strongTablePrimaryKeysExceptLastTable,
-	 String lastStrongTableName, ArrayList<ArrayList<Object>> lastStrongTableInputs, 		
-	 String weakTable) {
-		ArrayList<ArrayList<Object>> weakTableInputs = new ArrayList<ArrayList<Object>>();
-		for (ArrayList<Object> lastStringTableInput: lastStrongTableInputs) {
-			ArrayList<Object> temp = strongTablePrimaryKeysExceptLastTable;
-			temp.add(lastStringTableInput.get(0));
-			weakTableInputs.add(temp);
-		}	
-		Boolean bool = insertIntoTableWithPrimaryKey_2DArrObj(
+	public static boolean insertIntoWeakTable_AndLastStrongTable_WithPrimaryKey
+	(String weakTable, ArrayList<Object> strongTablePrimaryKeysExceptLastTable,
+	 String lastStrongTableName, ArrayList<Object> lastStrongTableInputs) {
+		ArrayList<Object> weakTableInputs = strongTablePrimaryKeysExceptLastTable;
+		weakTableInputs.add(lastStrongTableInputs.get(0));
+		
+		Boolean bool = insertIntoStrongTable_WithPrimaryKey_ArrObj(
 							lastStrongTableName, lastStrongTableInputs
 					   );
-		if (!bool) {return false;}
-		return insertIntoTableWithPrimaryKey_2DArrObj(weakTable, weakTableInputs);
+		if (bool) {
+			return insertIntoWeakTable_ArrObj(weakTable, weakTableInputs);
+		} else {return false;}
 	}
 	
 	

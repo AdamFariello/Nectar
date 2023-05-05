@@ -29,7 +29,7 @@ public class UserDao {
         return null;
     }
 
-    public boolean addProductToUserWishlist(String userID, ProductVO product){
+    public String addProductToUserWishlist(String userID, ProductVO product){
     	//add product to user's wishlist and return if its successful or not 
     	DBConnetion con = new DBConnetion();
 		con.startConnection(dbs[1]);		
@@ -52,7 +52,7 @@ public class UserDao {
 		test.insertIntoStrongTable_WithPrimaryKey_ArrObj();
 		
 		con.endConnection();
-        return true;
+		return null;
     }
     
     public boolean removeProductFromUserWishlist(String userID, String productID){

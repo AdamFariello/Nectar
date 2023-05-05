@@ -25,7 +25,7 @@ public class UserDelegateUnitTests {
 		wrongLoginData.put("Error", "hi");
 		JSONMessage request = new JSONMessage("login", wrongLoginData.toString());
 		JSONMessage result = delegate.handleJSONRequest(request);
-		assertEquals(result.message, "Error");
+		assertEquals(result.message, "Login Error");
 		assertEquals(result.data.get("Error Message"), "Invalid Login Request Data");
 	}
 	
@@ -85,29 +85,45 @@ public class UserDelegateUnitTests {
 		int productID = (int) result.data.get("ProductID");
 		assertTrue(productID > 1);
 	}
+	
 	@Test
-	public void testAddProductUnsupportedWebsite() {
-		JSONObject correctLoginData = new JSONObject();
-		correctLoginData.put("Username", "john@gmail.com");
-		correctLoginData.put("Password", "Pass");
-		JSONMessage request = new JSONMessage("login", correctLoginData.toString());
+	public void testAddProductInvalid() {
+		JSONObject AddProductInvalid = new JSONObject();
+		AddProductInvalid.put("Username", "john@gmail.com");
+		AddProductInvalid.put("Password", "Pass");
+		JSONMessage request = new JSONMessage("add product", AddProductInvalid.toString());
 		JSONMessage result = delegate.handleJSONRequest(request);
-		assertEquals(result.message, "Login Result");
-		assertEquals(result.data.get("result"), true);	
-		int userID = (int) result.data.get("UserID");
-		assertTrue(userID > 1);
+		assertEquals(result.message, "Add Product Error");
+		assertEquals(result.data.get("Error Message"), "Invalid Add Product Request Data");	
 	}
 	
 	@Test
-	public void testAddProductInvalidProduct() {
-		JSONObject correctLoginData = new JSONObject();
-		correctLoginData.put("Username", "john@gmail.com");
-		correctLoginData.put("Password", "Pass");
-		JSONMessage request = new JSONMessage("login", correctLoginData.toString());
+	public void testRemoveProduct() {
+		JSONObject RemoveProduct = new JSONObject();
+		RemoveProduct.put("UserID", "123");
+		RemoveProduct.put("ProductID", "234");
+		JSONMessage request = new JSONMessage("remove product", RemoveProduct.toString());
 		JSONMessage result = delegate.handleJSONRequest(request);
-		assertEquals(result.message, "Login Result");
-		assertEquals(result.data.get("result"), true);	
-		int userID = (int) result.data.get("UserID");
-		assertTrue(userID > 1);
+		assertEquals(result.message, "Remove Product Result");
+		assertEquals(result.data.get("result"), true);
+		
+		JSONObject RemoveProductUnsuccessful = new JSONObject();
+		RemoveProduct.put("UserID", "123");
+		RemoveProduct.put("ProductID", "123");
+		JSONMessage request2 = new JSONMessage("remove product", RemoveProductUnsuccessful.toString());
+		JSONMessage result2 = delegate.handleJSONRequest(request);
+		assertEquals(result.message, "Remove Product Result");
+		assertEquals(result.data.get("result"), false);	
+	}
+	
+	@Test
+	public void testInvalidRequest() {
+		JSONObject RemoveProduct = new JSONObject();
+		RemoveProduct.put("UserID", "123");
+		RemoveProduct.put("ProductID", "234");
+		JSONMessage request = new JSONMessage("Bad request", RemoveProduct.toString());
+		JSONMessage result = delegate.handleJSONRequest(request);
+		assertEquals(result.message, "Error");
+		assertEquals(result.data.get("msg"), "Invalid Request");	
 	}
 }

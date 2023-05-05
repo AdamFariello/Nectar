@@ -19,7 +19,8 @@ public class WebSocketServer {
         UserDelegate delegate = new UserDelegate(tracker, new UserDao());
         WebSocketServer server = new WebSocketServer(tracker, delegate);
         //server.tracker.addUser("1", "1", testUrl, "Amazon");
-        //server.tracker.start();
+        delegate.initializeTracker();
+        server.tracker.start();
         server.setPort(8994);
         server.start();
         server.join();

@@ -3,7 +3,8 @@ import java.util.HashMap;
 
 import server.EventEndpoint;
 
-public class ProductTracker {
+public class ProductTracker implements Runnable{
+	private Thread t;
     private WebScraper webScraper;
     HashMap<String, Receiver> receivers;
 
@@ -66,6 +67,10 @@ public class ProductTracker {
     public ScrapedProductVO getProductData(String productID){
         return webScraper.getProductData(productID);
     }
+    
+    public ScrapedProductVO getProductDataFromUrl(String url, String website){
+        return webScraper.getProductDataFromUrl(url, website);
+    }
 
 	public void setEndpoint(EventEndpoint eventEndpoint, String currentSessionUserID) {
 		receivers.forEach((k, v) -> v.setEndpoint(eventEndpoint, currentSessionUserID));		
@@ -73,5 +78,26 @@ public class ProductTracker {
 
 	public void closeEndpoint() {
 		receivers.forEach((k, v) -> v.closeEndpoint());
+	}
+	
+	@Override
+	synchronized public void run() {
+		while(!Thread.currentThread().isInterrupted()) {
+			try {
+				System.out.println("Tracking");
+				trackProducts();
+				wait(1000);	
+			} catch (InterruptedException ex) {
+		        Thread.currentThread().interrupt();
+		    }
+		}
+	}
+	
+	public void start() {
+		//System.out.println("Starting");
+	     if (t == null) {
+	    	 t = new Thread (this, "tracker");
+	         t.start ();
+	     }
 	}
 }

@@ -29,7 +29,7 @@ public class ScraperCommandStub extends ScraperCommand {
     }
 
     @Override
-    protected ScrapedProductVO scrape() {
+	public ScrapedProductVO scrape() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'scrape'");
     }

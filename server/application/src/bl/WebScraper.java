@@ -42,4 +42,15 @@ public class WebScraper {
     public ScrapedProductVO getProductData(String productID){
         return scraperCommands.get(productID).scrape();
     }
+    
+    public ScrapedProductVO getProductDataFromUrl(String url, String website) {
+    	switch (website) {
+        case "Amazon": 
+            return new AmazonScraperCommand(null, url, null).scrape();
+        case "Stub":
+        	return new ScraperCommandStub(null, url, null).scrape();
+        default:
+        	return null;
+    }
+    }
 }

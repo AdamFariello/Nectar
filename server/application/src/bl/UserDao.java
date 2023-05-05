@@ -19,6 +19,11 @@ public class UserDao {
     	return null;
     }
     
+    public ArrayList<String> getUserWishList(String userID){
+    	//return a list of all the product ids a user tracks
+    	return null;
+    }
+    
     public ProductVO getProductInfoByProductID() {
     	//reeturn product url, sitename and make a product vo setting the public variables with what you got
     	return null;
@@ -26,23 +31,33 @@ public class UserDao {
 
     public UserVO getUserByEmailAdress(String emailAddress){
     	//What to do:
-    	//	1) Return: user id, user email, user password 
+    	//	1) Return: user id, user email, user password (using email address)
     	//	2) Make a user vo by setting the public variables with what you got
+    	
+    	DBConnetion con = new DBConnetion();
+    	con.startConnection(dbs[2]);		
+		DBQuery test = new DBQuery(con);
+    	
     	String table = "user"; 
-    	ArrayList<String> columns; 
-    	ArrayList<String> wheres; 
-    	ArrayList<String> wheresValues;
     	
-    	getFromTable_2DArrObj(String table, ArrayList<String> columns, 
-	 ArrayList<String> wheres, ArrayList<String> wheresValues)
+    	ArrayList<String> columns = new ArrayList<String>(); 
+    	columns.add("user_id"); columns.add("user_email"); columns.add("user_password");
     	
-        return null;
+    	ArrayList<String> wheres = new ArrayList<String>();
+    	wheres.add("user_email");
+    	
+    	ArrayList<String> wheresValues = new ArrayList<String>();
+    	wheresValues.add(emailAddress);
+    	
+    	ArrayList<ArrayList<String>> user = test.getFromTable_2DArrStr(table, columns, wheres, wheresValues);
+    	
+    	UserVo userVo = new UserVo(user.get());
+    	return null;
     }
 
     public Boolean addProductToUserWishlist(int userID, ProductVO product){
     	//add product to user's wishlist and return if its successful or not 
 		DBConnetion con = new DBConnetion();
-		
 		Boolean bool = false;
 		
     	try { 

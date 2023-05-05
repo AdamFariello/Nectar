@@ -25,7 +25,7 @@ public class UserDao {
     }
 
     public String addProductToUserWishlist(String userID, ProductVO product){
-    	//add product to user's wishlist and return its productID
+    	//add new product to user's wishlist and return its productID
         return null;
     }
     

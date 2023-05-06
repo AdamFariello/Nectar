@@ -25,8 +25,8 @@ public class UserDelegateUnitTests {
 		wrongLoginData.put("Error", "hi");
 		JSONMessage request = new JSONMessage("login", wrongLoginData.toString());
 		JSONMessage result = delegate.handleJSONRequest(request);
-		assertEquals(result.message, "Login Error");
-		assertEquals(result.data.get("Error Message"), "Invalid Login Request Data");
+		assertEquals("Login Error", result.message);
+		assertEquals("Invalid Login Request Data", result.data.get("Error Message"));
 	}
 	
 	@Test
@@ -36,16 +36,16 @@ public class UserDelegateUnitTests {
 		wrongPassword.put("Password", "wrongPass");
 		JSONMessage request = new JSONMessage("login", wrongPassword.toString());
 		JSONMessage result = delegate.handleJSONRequest(request);
-		assertEquals(result.message, "Login Result");
-		assertEquals(result.data.get("result"), false);	
+		assertEquals("Login Result", result.message);
+		assertEquals(false, result.data.get("result"));	
 		
 		JSONObject invalidUsername = new JSONObject();
 		invalidUsername.put("Username", "jason@gmail.com");
 		invalidUsername.put("Password", "Pass");
 		JSONMessage request2 = new JSONMessage("login", invalidUsername.toString());
-		JSONMessage result2 = delegate.handleJSONRequest(request);
-		assertEquals(result2.message, "Login Result");
-		assertEquals(result2.data.get("result"), false);	
+		JSONMessage result2 = delegate.handleJSONRequest(request2);
+		assertEquals("Login Error", result2.message);
+		assertEquals(false, result2.data.get("result"));	
 	}
 	
 	@Test
@@ -55,8 +55,8 @@ public class UserDelegateUnitTests {
 		correctLoginData.put("Password", "Pass");
 		JSONMessage request = new JSONMessage("login", correctLoginData.toString());
 		JSONMessage result = delegate.handleJSONRequest(request);
-		assertEquals(result.message, "Login Result");
-		assertEquals(result.data.get("result"), true);	
+		assertEquals("Login Result", result.message);
+		assertEquals(true, result.data.get("result"));	
 		int userID = (int) result.data.get("UserID");
 		assertTrue(userID > 1);
 	}
@@ -70,18 +70,18 @@ public class UserDelegateUnitTests {
 		addProduct.put("Website", "Amazon");
 		JSONMessage request = new JSONMessage("add product", addProduct.toString());
 		JSONMessage result = delegate.handleJSONRequest(request);
-		assertEquals(result.message, "Add Product Result");
-		assertEquals(result.data.get("result"), true);	
+		assertEquals("Add Product Result", result.message);
+		assertEquals(true, result.data.get("result"));	
 		
 		JSONObject addUntrackedProduct = new JSONObject();
 		addProduct.put("UserID", "123");
 		addProduct.put("ProductID", "");
 		addProduct.put("Url", "https://www.amazon.com/Test-5-Nintendo-Switch/dp/B09YZXLYG4/ref=sr_1_2?keywords=nintendo%2Bswitch&qid=1681979362&sprefix=nin%2Caps%2C82&sr=8-2&th=1");	
 		addProduct.put("Website", "Amazon");
-		JSONMessage request2 = new JSONMessage("add product", addProduct.toString());
-		JSONMessage result2 = delegate.handleJSONRequest(request);
-		assertEquals(result2.message, "Add Product Result");
-		assertEquals(result2.data.get("result"), true);	
+		JSONMessage request2 = new JSONMessage("add product", addUntrackedProduct.toString());
+		JSONMessage result2 = delegate.handleJSONRequest(request2);
+		assertEquals("Add Product Result", result2.message);
+		assertEquals(true, result2.data.get("result"));	
 		int productID = (int) result.data.get("ProductID");
 		assertTrue(productID > 1);
 	}
@@ -93,8 +93,8 @@ public class UserDelegateUnitTests {
 		AddProductInvalid.put("Password", "Pass");
 		JSONMessage request = new JSONMessage("add product", AddProductInvalid.toString());
 		JSONMessage result = delegate.handleJSONRequest(request);
-		assertEquals(result.message, "Add Product Error");
-		assertEquals(result.data.get("Error Message"), "Invalid Add Product Request Data");	
+		assertEquals("Add Product Error", result.message);
+		assertEquals("Invalid Add Product Request Data", result.data.get("Error Message"));	
 	}
 	
 	@Test
@@ -104,16 +104,16 @@ public class UserDelegateUnitTests {
 		RemoveProduct.put("ProductID", "234");
 		JSONMessage request = new JSONMessage("remove product", RemoveProduct.toString());
 		JSONMessage result = delegate.handleJSONRequest(request);
-		assertEquals(result.message, "Remove Product Result");
-		assertEquals(result.data.get("result"), true);
+		assertEquals("Remove Product Result", result.message);
+		assertEquals(true, result.data.get("result"));
 		
 		JSONObject RemoveProductUnsuccessful = new JSONObject();
 		RemoveProduct.put("UserID", "123");
 		RemoveProduct.put("ProductID", "123");
 		JSONMessage request2 = new JSONMessage("remove product", RemoveProductUnsuccessful.toString());
 		JSONMessage result2 = delegate.handleJSONRequest(request);
-		assertEquals(result.message, "Remove Product Result");
-		assertEquals(result.data.get("result"), false);	
+		assertEquals("Remove Product Result", result.message);
+		assertEquals(false, result.data.get("result"));	
 	}
 	
 	@Test
@@ -123,7 +123,12 @@ public class UserDelegateUnitTests {
 		RemoveProduct.put("ProductID", "234");
 		JSONMessage request = new JSONMessage("Bad request", RemoveProduct.toString());
 		JSONMessage result = delegate.handleJSONRequest(request);
-		assertEquals(result.message, "Error");
-		assertEquals(result.data.get("msg"), "Invalid Request");	
+		assertEquals("Error", result.message);
+		assertEquals("Invalid Request", result.data.get("msg"));	
+	}
+	
+	@Test
+	public void testGetUserWishlistRequest() {
+		
 	}
 }

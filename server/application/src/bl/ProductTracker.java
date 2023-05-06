@@ -3,12 +3,17 @@ import java.util.HashMap;
 
 import server.EventEndpoint;
 
-public class ProductTracker {
+public class ProductTracker implements Runnable{
+	private Thread t;
     private WebScraper webScraper;
+    private EventEndpoint endpoint;
+    private String sessionUserID;
+    
     HashMap<String, Receiver> receivers;
 
     public ProductTracker(){
         webScraper = new WebScraper();
+        receivers = new HashMap<String, Receiver>();
     }
 
     private void addProduct(String productID, String url, String website, Receiver receiver){
@@ -21,10 +26,12 @@ public class ProductTracker {
         receivers.remove(productID);
     }
 
-    public boolean addUser(String userID, String productID, String url, String website){
+    public boolean addUser(UserVO user, String productID, String url, String website){
+    	String userID = user.userID;
         if (!receivers.containsKey(productID)){
             Receiver receiver = new Receiver();
-            receiver.addUser(userID);
+            receiver.setEndpoint(endpoint, sessionUserID);
+            receiver.addUser(userID, user);
             if(webScraper.checkWebsiteSupport(website)) {
             	addProduct(productID, url, website, receiver);
             }else {
@@ -32,15 +39,15 @@ public class ProductTracker {
             }
             
         }else{
-            receivers.get(productID).addUser(userID);
+            receivers.get(productID).addUser(userID, user);
         }
         return true;
     }
     //TODO: make this method accept a value object array for the product info to make command objects for them right now
     //This isn't functional
-    public void addUserWishList(String userID, String[] wishlist){
+    public void addUserWishList(UserVO user, String[] wishlist){
         for(String productID : wishlist){
-            addUser(userID, productID, "Place Holder", "Place Holder");
+            addUser(user, productID, "Place Holder", "Place Holder");
         }
 
     }
@@ -72,10 +79,36 @@ public class ProductTracker {
     }
 
 	public void setEndpoint(EventEndpoint eventEndpoint, String currentSessionUserID) {
-		receivers.forEach((k, v) -> v.setEndpoint(eventEndpoint, currentSessionUserID));		
+		receivers.forEach((k, v) -> v.setEndpoint(eventEndpoint, currentSessionUserID));	
+		sessionUserID = currentSessionUserID;
+		endpoint = eventEndpoint;
 	}
 
 	public void closeEndpoint() {
 		receivers.forEach((k, v) -> v.closeEndpoint());
+	}
+	
+	@Override
+	synchronized public void run() {
+		while(!Thread.currentThread().isInterrupted()) {
+			try {
+				//System.out.println("Tracking");
+				wait(1000);
+				trackProducts();
+				trackProducts();
+				//wait(1000);	
+				Thread.currentThread().interrupt();
+			} catch (InterruptedException ex) {
+		        Thread.currentThread().interrupt();
+		    }
+		}
+	}
+	
+	public void start() {
+		//System.out.println("Starting");
+	     if (t == null) {
+	    	 t = new Thread (this, "tracker");
+	         t.start ();
+	     }
 	}
 }

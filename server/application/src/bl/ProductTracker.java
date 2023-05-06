@@ -53,6 +53,9 @@ public class ProductTracker implements Runnable{
     }
 
     public boolean removeUser(String userID, String productID){
+    	if(!receivers.containsKey(productID)) {
+    		return false;
+    	}
         boolean noUsersLeft = receivers.get(productID).removeUser(userID);
         if (noUsersLeft){
             removeProduct(productID);
@@ -90,6 +93,18 @@ public class ProductTracker implements Runnable{
 	
 	@Override
 	synchronized public void run() {
+		while(!Thread.currentThread().isInterrupted()) {
+			try {
+				//System.out.println("Tracking");
+				trackProducts();
+				wait(1000);	
+			} catch (InterruptedException ex) {
+		        Thread.currentThread().interrupt();
+		    }
+		}
+	}
+	
+	synchronized public void testRun() {
 		while(!Thread.currentThread().isInterrupted()) {
 			try {
 				//System.out.println("Tracking");

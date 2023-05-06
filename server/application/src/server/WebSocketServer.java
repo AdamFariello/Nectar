@@ -20,10 +20,13 @@ public class WebSocketServer {
         WebSocketServer server = new WebSocketServer(tracker, delegate);
         //UserVO user = new UserVO("1", "", "", "");
         //server.tracker.addUser(user, "1", testUrl, "Amazon");
-        //delegate.initializeTracker();
-        //server.tracker.start();
-        //
-        server.setPort(8993);
+        delegate.initializeTracker();
+        server.tracker.start();
+        if(args != null && args.length > 0) {
+        	server.setPort(Integer.parseInt(args[0]));
+        }else {
+            server.setPort(8993);
+        }
         server.start();
         server.join();
     }

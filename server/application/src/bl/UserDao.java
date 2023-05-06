@@ -23,7 +23,7 @@ public class UserDao {
     	return null;
     }
     
-    public ProductVO getProductInfoByProductID() {
+    public ProductVO getProductInfoByProductID(String productID) {
     	//reeturn product url, sitename and make a product vo setting the public variables with what you got
     	return null;
     }

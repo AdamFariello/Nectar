@@ -17,8 +17,21 @@ public class UserDao {
     	con.startConnection(dbs[2]);		
 		DBQuery test = new DBQuery(con);
     	
+		String table = "user_id";
+		ArrayList<String> columns = new ArrayList<String>();
+		columns.add(table);
+		ArrayList<String> wheres = new ArrayList<String>();
+		ArrayList<String> wheresValues = new ArrayList<String>();
 		
-		
+		String groupBy = "user_id";
+		 
+		ArrayList<ArrayList<String>> table = test.getFromTable_2DArrStr(table, columns, wheres, wheresValues, groupBy);		
+
+		HashMap<String, ArrayList<String>> hashMap = new HashMap<String, ArrayList<String>>();
+		for (ArrayList<String> row: table) {
+			
+		}
+
     	return null;
     }
     

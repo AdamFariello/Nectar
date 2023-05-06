@@ -58,7 +58,8 @@ public class DBRetrieve {
 	}
 	
 	
-	//Calling from table using: table
+	//Calling from table using: 
+	//	a) table name
 	public static ArrayList<ArrayList<String>> getFromTable_2DArrStr
 	(String table) {
 		DBConversions<String> dbc = new DBConversions<String>();
@@ -83,7 +84,9 @@ public class DBRetrieve {
 	}
 	
 	
-	//Calling from table using: table, and columns
+	//Calling from table using: 
+	//	a) table name
+	//	b) columns of the table 
 	public static ArrayList<ArrayList<String>> getFromTable_2DArrStr
 	(String table, ArrayList<String> columns) {
 		DBConversions<String> dbc = new DBConversions<String>();
@@ -110,7 +113,10 @@ public class DBRetrieve {
 	}
 	
 	
-	//Calling from table using: table, and where values (plus where columns)
+	//Calling from table using: 
+	//	a) table name
+	//	b) where colums (columns to check for command
+	//	c) where values
 	public static ArrayList<ArrayList<String>> getFromTable_2DArrStr
 	(String table, ArrayList<String> wheres, ArrayList<String> wheresValues) {
 		DBConversions<String> dbc = new DBConversions<String>();
@@ -147,7 +153,11 @@ public class DBRetrieve {
 	}
 	
 	
-	//Calling from table using: table, columns, and where values (plus where columns)
+	//Calling from table using: 
+	//	a) table name
+	//	b) columns of the table 
+	//	c) where colums (columns to check for command
+	//	d) where values
 	public static ArrayList<ArrayList<String>> getFromTable_2DArrStr
 	(String table, ArrayList<String> columns, 
 	 ArrayList<String> wheres, ArrayList<String> wheresValues) {
@@ -190,5 +200,62 @@ public class DBRetrieve {
 		}
 		return null;
 	}
+
 	
+	//Calling from table using: 
+	//	a) table name
+	//	b) columns of the table 
+	//	c) where colums (columns to check for command
+	//	d) where values
+	//	e) group by
+	public static ArrayList<ArrayList<String>> getFromTable_2DArrStr
+	(String table, ArrayList<String> columns, 
+	 ArrayList<String> wheres, ArrayList<String> wheresValues,
+	 String groupBy) {
+		DBConversions<String> dbc = new DBConversions<String>();
+		return dbc.convertEntireTable(
+			getFromTable_RS(table, columns, wheres, wheresValues, groupBy)
+		);
+	}
+	public static ArrayList<ArrayList<Object>> getFromTable_2DArrObj
+	(String table, ArrayList<String> columns, 
+	 ArrayList<String> wheres, ArrayList<String> wheresValues,
+	 String groupBy) {
+		DBConversions<Object> dbc = new DBConversions<Object>();
+		return dbc.convertEntireTable(
+			getFromTable_RS(table, columns, wheres, wheresValues, groupBy)
+		);
+	}
+	public static ResultSet getFromTable_RS
+	(String table, ArrayList<String> columns, 
+	 ArrayList<String> wheres, ArrayList<String> wheresValues,
+	 String groupBy) {
+		try {		
+			if (wheres.size() != wheresValues.size()) {
+				throw new errorUnequalArrayListLengths("wheres", "wheresValues");
+			}
+			
+			String queryColumns = columns.toString()
+					 					 .substring(1, columns.toString().length()-1);
+			
+			String queryWheres = wheres.toString()
+									   .replace(",", " = ? AND")
+									   .replace("[","")
+									   .replace("]"," = ?");
+			
+			String queryFormat = "SELECT %s FROM %s WHERE %s GROUP BY %s";
+			String query 	   = String.format(
+									queryFormat, 
+									queryColumns, table, queryWheres, groupBy
+						 	   );
+			PreparedStatement ps = dbConnetion.getConnection().prepareStatement(query);
+			for (int i = 1; !wheresValues.isEmpty(); i++) {
+				ps.setString(i, wheresValues.remove(0));
+			}
+			return ps.executeQuery();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

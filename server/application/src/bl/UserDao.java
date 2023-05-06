@@ -12,6 +12,7 @@ public class UserDao {
     public void initializeDatabaseWithSampleUsers() {
     	//Add sample users with username and password here 
     }
+    
     public HashMap<String, ArrayList<String>> getAllUserWishLists(){
     	//return a hashmap mapping user ids to a list of all the product ids they track
         return null;
@@ -50,6 +51,11 @@ public class UserDao {
     public boolean removeProductFromUserWishlist(String userID, String productID){
     	//remove product to user's wishlist and return if its successful or not
         return false;
+    }
+    
+    public boolean addUser(UserVO user) {
+    	//add user to database return true if its added successfully
+    	return false;
     }
 
     //TODO: We can decide on more later on

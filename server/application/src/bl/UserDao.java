@@ -53,9 +53,9 @@ public class UserDao {
         return false;
     }
     
-    public boolean addUser(UserVO user) {
-    	//add user to database return true if its added successfully
-    	return false;
+    public String addUser(UserVO user) {
+    	//add user to database return its userID
+    	return null;
     }
 
     //TODO: We can decide on more later on

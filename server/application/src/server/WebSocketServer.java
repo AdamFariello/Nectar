@@ -18,7 +18,8 @@ public class WebSocketServer {
 		ProductTracker tracker = new ProductTracker();
         UserDelegate delegate = new UserDelegate(tracker, new UserDao());
         WebSocketServer server = new WebSocketServer(tracker, delegate);
-        server.tracker.addUser("1", "1", testUrl, "Amazon");
+        UserVO user = new UserVO("1", "", "", "");
+        server.tracker.addUser(user, "1", testUrl, "Amazon");
         //delegate.initializeTracker();
         server.tracker.start();
         server.setPort(8993);

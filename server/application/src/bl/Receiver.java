@@ -70,10 +70,12 @@ public class Receiver {
         	for (Entry<String, UserVO> entry : userSubscribers.entrySet()) {
                 UserVO user = entry.getValue();
                 try {
-                	if(user.userPhoneNumber != null) {
+                	if(!user.userPhoneNumber.isEmpty()) {
                 		sendTextMessage(productVO, user.userPhoneNumber);
                 	}
-                	sendEmailMessage(productVO, user.userEmail);
+                	if(!user.userEmail.isEmpty()) {
+                		sendEmailMessage(productVO, user.userEmail);
+                	}                	
 					
 				} catch (MessagingException e) {
 					// TODO Auto-generated catch block

@@ -24,9 +24,27 @@ public class UserDao {
     	return null;
     }
     
-    public ProductVO getProductInfoByProductID() {
-    	//reeturn product url, sitename and make a product vo setting the public variables with what you got
-    	return null;
+    public ProductVO getProductInfoByProductID(int productID) {
+    	//What to do:
+    	//	1) Return: product url, sitename 
+    	//	2) Make a productVO, setting the public variables with what you got
+    	DBConnetion con = new DBConnetion();
+    	con.startConnection(dbs[1]);		
+		DBQuery test = new DBQuery(con);
+    	
+    	String table = "product"; 
+    	
+    	//ArrayList<String> columns = new ArrayList<String>();
+    	//columns.add("product_siteName"); columns.add("product_siteURL");
+    	
+    	ArrayList<String> wheres = new ArrayList<String>();
+    	wheres.add("product_id");
+    	
+    	ArrayList<String> wheresValues = new ArrayList<String>();
+    	wheresValues.add("user_id");
+    	
+    	ArrayList<String> list = (test.getFromTable_2DArrStr(table, wheres, wheresValues)).get(0);
+    	return new ProductVO (productID, list.get(1), list.get(2));
     }
 
     public UserVO getUserByEmailAdress(String emailAddress){
@@ -52,7 +70,6 @@ public class UserDao {
     	ArrayList<String> user = (test.getFromTable_2DArrStr(table, columns, wheres, wheresValues)).get(0);
     	return new UserVO(user.get(0), user.get(1), user.get(2), user.get(3));
     }
-
     public Boolean addProductToUserWishlist(int userID, ProductVO product){
     	//add product to user's wishlist and return if its successful or not 
 		DBConnetion con = new DBConnetion();
@@ -95,7 +112,7 @@ public class UserDao {
     }
     
     public boolean removeProductFromUserWishlist(int userID, String productID){
-    	//remove product to user's wishlist and return if its successful or not
+    	//remove product to user's wish-list and return if its successful or not
         return false;
     }
     

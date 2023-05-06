@@ -3,9 +3,17 @@ package bl;
 import org.json.simple.JSONObject;
 
 public class ProductVO extends JSONEncodeableValueObject{
-	public String title;
+	//TODO public vs private
+	public int id;
     public String url;
     public String siteName;
+    
+    public ProductVO (int id, String url, String siteName) {
+    	this.id = id;
+        this.url = url;
+        this.siteName = siteName;
+    }
+    
 	@Override
 	protected String[] getEqualityComponents() {
 		String[] s = {title, url, siteName};

@@ -1,9 +1,8 @@
 package bl;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import databaseCode.DBConnetion;
-import databaseCode.DBQuery;
+import databaseCode.*;
 
 public class UserDao {
     String [] dbs = {
@@ -14,17 +13,38 @@ public class UserDao {
 
     public HashMap<String, ArrayList<String>> getAllUserWishLists(){
     	//return a hashmap mapping user ids to a list of all the product ids they track
-        
+    	DBConnetion con = new DBConnetion();
+    	con.startConnection(dbs[2]);		
+		DBQuery test = new DBQuery(con);
     	
+		
+		
     	return null;
     }
     
     public ArrayList<String> getUserWishList(String userID){
     	//return a list of all the product ids a user tracks
-    	return null;
-    }
+    	DBConnetion con = new DBConnetion();
+    	con.startConnection(dbs[2]);		
+		DBQuery test = new DBQuery(con);
+		
+		String table = "userWishList"; 
+		ArrayList<String> columns = new ArrayList<String>(); 
+		columns.add("product_id");
+		
+		ArrayList<String> wheres = new ArrayList<String>();
+		wheres.add("user_id");
+		
+		ArrayList<String> wheresValues = new ArrayList<String>();
+		wheresValues.add(userID);
+		
+		
+		DBConversions<String> DBConversion = new DBConversions<String>();
+		ResultSet rs = test.getFromTable_RS(table, columns, wheres, wheresValues);
+		return DBConversion.convertColumn(rs);	
+	}
     
-    public ProductVO getProductInfoByProductID(int productID) {
+    public ProductVO getProductInfoByProductID(String productID) {
     	//What to do:
     	//	1) Return: product url, sitename 
     	//	2) Make a productVO, setting the public variables with what you got
@@ -41,10 +61,10 @@ public class UserDao {
     	wheres.add("product_id");
     	
     	ArrayList<String> wheresValues = new ArrayList<String>();
-    	wheresValues.add("user_id");
+    	wheresValues.add(productID);
     	
     	ArrayList<String> list = (test.getFromTable_2DArrStr(table, wheres, wheresValues)).get(0);
-    	return new ProductVO (productID, list.get(1), list.get(2));
+    	return new ProductVO (Integer.parseInt(productID), list.get(1), list.get(2));
     }
 
     public UserVO getUserByEmailAdress(String emailAddress){
@@ -70,8 +90,9 @@ public class UserDao {
     	ArrayList<String> user = (test.getFromTable_2DArrStr(table, columns, wheres, wheresValues)).get(0);
     	return new UserVO(user.get(0), user.get(1), user.get(2), user.get(3));
     }
-    public Boolean addProductToUserWishlist(int userID, ProductVO product){
-    	//add product to user's wishlist and return if its successful or not 
+    
+    public Boolean addProductToUserWishlist(String userID, ProductVO product){
+    	//add product to user's wish-list and return if its successful or not 
 		DBConnetion con = new DBConnetion();
 		Boolean bool = false;
 		
@@ -101,7 +122,8 @@ public class UserDao {
 			test.setCurrentServer(dbs[1]);
 			String weakTable = "userWishList";
 			ArrayList<Object> strongTablePrimaryKeys = new ArrayList<Object>();
-			strongTablePrimaryKeys.add(userID); strongTablePrimaryKeys.add(product_id);
+			strongTablePrimaryKeys.add(Integer.parseInt(product_siteUrl)); 
+			strongTablePrimaryKeys.add(product_id);
 			bool = test.insertIntoWeakTable_ArrObj(weakTable, strongTablePrimaryKeys);
 		} catch (Exception e) {
 			e.printStackTrace();

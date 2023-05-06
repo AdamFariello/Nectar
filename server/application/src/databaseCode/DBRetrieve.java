@@ -205,16 +205,12 @@ public class DBRetrieve {
 	//Calling from table using: 
 	//	a) table name
 	//	b) columns of the table 
-	//	c) where colums (columns to check for command
-	//	d) where values
 	//	e) group by
 	public static ArrayList<ArrayList<String>> getFromTable_2DArrStr
-	(String table, ArrayList<String> columns, 
-	 ArrayList<String> wheres, ArrayList<String> wheresValues,
-	 String groupBy) {
+	(String table, ArrayList<String> columns, String groupBy) {
 		DBConversions<String> dbc = new DBConversions<String>();
 		return dbc.convertEntireTable(
-			getFromTable_RS(table, columns, wheres, wheresValues, groupBy)
+			getFromTable_RS(table, columns, groupBy)
 		);
 	}
 	public static ArrayList<ArrayList<Object>> getFromTable_2DArrObj
@@ -223,35 +219,22 @@ public class DBRetrieve {
 	 String groupBy) {
 		DBConversions<Object> dbc = new DBConversions<Object>();
 		return dbc.convertEntireTable(
-			getFromTable_RS(table, columns, wheres, wheresValues, groupBy)
+			getFromTable_RS(table, columns, groupBy)
 		);
 	}
 	public static ResultSet getFromTable_RS
-	(String table, ArrayList<String> columns, 
-	 ArrayList<String> wheres, ArrayList<String> wheresValues,
-	 String groupBy) {
-		try {		
-			if (wheres.size() != wheresValues.size()) {
-				throw new errorUnequalArrayListLengths("wheres", "wheresValues");
-			}
-			
+	(String table, ArrayList<String> columns, String groupBy) {
+		try {					
 			String queryColumns = columns.toString()
-					 					 .substring(1, columns.toString().length()-1);
+					 					 .substring(1, columns.toString()
+					 							 			  .length()-1);
 			
-			String queryWheres = wheres.toString()
-									   .replace(",", " = ? AND")
-									   .replace("[","")
-									   .replace("]"," = ?");
-			
-			String queryFormat = "SELECT %s FROM %s WHERE %s GROUP BY %s";
+			String queryFormat = "SELECT %s FROM %s GROUP BY %s";
 			String query 	   = String.format(
 									queryFormat, 
-									queryColumns, table, queryWheres, groupBy
+									queryColumns, table, groupBy
 						 	   );
 			PreparedStatement ps = dbConnetion.getConnection().prepareStatement(query);
-			for (int i = 1; !wheresValues.isEmpty(); i++) {
-				ps.setString(i, wheresValues.remove(0));
-			}
 			return ps.executeQuery();
 		} catch (Exception e) {
 			e.printStackTrace();

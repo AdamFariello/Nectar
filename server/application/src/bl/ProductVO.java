@@ -16,13 +16,13 @@ public class ProductVO extends JSONEncodeableValueObject{
     
 	@Override
 	protected String[] getEqualityComponents() {
-		String[] s = {title, url, siteName};
+		String[] s = {Integer.toString(id), url, siteName};
         return s;   
 	}
 	@Override
 	protected String encode() {
 		JSONObject obj = new JSONObject();
-		obj.put("title", title);
+		obj.put("id", id);
 		obj.put("siteName", siteName);
 		obj.put("url", url);
 		return obj.toString();

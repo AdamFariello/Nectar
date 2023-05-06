@@ -1,9 +1,7 @@
 package tests;
 import java.sql.*;
 import java.util.ArrayList;
-
-import databaseCode.DBConnetion;
-import databaseCode.DBQuery;
+import databaseCode.*;
 
 public class DBTest {
 	private static String [] dbs = {
@@ -246,18 +244,22 @@ public class DBTest {
 		}
 	}
 	
-	public static void main (String args[]) throws SQLException {
-		String [] dbs = {
-				"nectarDB_administration", 
-				"nectarDB_products", 
-				"nectarDB_user"
-			};
-	
-		DBConnetion con = new DBConnetion();
-		con.startConnection(dbs[2]);		
-		DBQuery test = new DBQuery(con);
-	
+	public static boolean DBEdit_delete() {
+		DBEdit<Object> dbE = new DBEdit<Object>(con);
 		
+		String table = "user";
+		ArrayList<Object> columns = new ArrayList<Object>();
+		columns.add("user_password"); columns.add("user_telephone");
+		ArrayList<Object> values  = new ArrayList<Object>();
+		values.add("e"); values.add("null");
+		
+		return dbE.delete(table, columns, values);
 	}
-
+	
+	public static void main (String args[]) throws SQLException {
+		con = new DBConnetion();
+		con.startConnection(dbs[2]);		
+		test = new DBQuery(con);
+		DBEdit_delete();
+	}
 }

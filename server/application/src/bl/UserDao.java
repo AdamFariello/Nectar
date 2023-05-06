@@ -201,7 +201,17 @@ public class UserDao {
     
     public boolean removeProductFromUserWishlist(int userID, String productID){
     	//remove product to user's wish-list and return if its successful or not
-        return false;
+    	DBConnetion con = new DBConnetion();
+    	con.startConnection(dbs[2]);		
+    	DBEdit<Object> dbE = new DBEdit<Object>(con);
+    	
+    	String table = "userWishList";
+    	ArrayList<Object> columns = new ArrayList<Object>();
+    	columns.add("product_id");
+    	ArrayList<Object> values  = new ArrayList<Object>();
+    	values.add(productID);
+    	
+    	return dbE.delete(productID, null, null);
     }
 
     public String addUser(UserVO user) {
@@ -231,5 +241,6 @@ public class UserDao {
     	return s;
     }
 
+    
     //TODO: We can decide on more later on
 }

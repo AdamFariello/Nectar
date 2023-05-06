@@ -13,7 +13,6 @@ var sendJSONRequest = function (request){
     ws.send(JSON.stringify(request));
 }
 
-
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse){
         alert("received");

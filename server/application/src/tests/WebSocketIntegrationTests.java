@@ -35,27 +35,28 @@ public class WebSocketIntegrationTests {
     public void createTestConnection() throws Exception{
         //URI destUri = server.getURI().resolve("/nectar/");
         //URI wsUri = WSURI.toWebsocket(destUri);
-    	System.out.println("testconnect1");
+    	//System.out.println("testconnect1");
     	URI uri = URI.create("ws://localhost:8090/nectar");
-    	System.out.println("testconnect2");
+    	//System.out.println("testconnect2");
         client = new WebSocketClientStub();
-        System.out.println("testconnect3");
+        //System.out.println("testconnect3");
         //client.run(uri, tracker, delegate);
         session = client.connect(uri, tracker, delegate);
-        System.out.println("testconnect4");
+        //System.out.println("testconnect4");
         
     }
     
     @Test
-    public void testNotifyUserOnProductChange() {
-    	System.out.println("Step1");
+    public void testNotifyUserOnProductChange() throws InterruptedException {
+    	//System.out.println("Step1");
     	tracker.setEndpoint(client.getEndpoint(), "1");
-    	System.out.println("Step2");
+    	//System.out.println("Step2");
     	UserVO user = new UserVO("1", "", "", "");
-    	System.out.println("Step3");
+    	//System.out.println("Step3");
     	tracker.addUser(user, "1", "testurl", "Stub");
-    	System.out.println("Step4");
-    	tracker.run();
+    	//System.out.println("Step4");
+    	tracker.testRun();
+    	Thread.sleep(6000);
     }
     
     @After

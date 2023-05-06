@@ -59,6 +59,9 @@ public class Receiver {
     }
 
     public void receive(ScrapedProductVO productVO){
+    	if(productVO == null) {
+    		return;
+    	}
         if (previousProductVO != productVO){
         	System.out.println("diff");
         	if(currentEndPointUserID != null) {

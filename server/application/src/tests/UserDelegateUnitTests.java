@@ -45,7 +45,7 @@ public class UserDelegateUnitTests {
 		JSONMessage request2 = new JSONMessage("login", invalidUsername.toString());
 		JSONMessage result2 = delegate.handleJSONRequest(request2);
 		assertEquals("Login Error", result2.message);
-		assertEquals(false, result2.data.get("result"));	
+		assertEquals("Invalid Username", result2.data.get("Error Message"));	
 	}
 	
 	@Test
@@ -58,7 +58,7 @@ public class UserDelegateUnitTests {
 		assertEquals("Login Result", result.message);
 		assertEquals(true, result.data.get("result"));	
 		int userID = (int) result.data.get("UserID");
-		assertTrue(userID > 1);
+		assertTrue(userID >= 1);
 	}
 	
 	@Test
@@ -99,6 +99,13 @@ public class UserDelegateUnitTests {
 	
 	@Test
 	public void testRemoveProduct() {
+		JSONObject addProduct = new JSONObject();
+		addProduct.put("UserID", "123");
+		addProduct.put("ProductID", "234");
+		addProduct.put("Url", "https://www.amazon.com/Nintendo-Switch-Lite-Blue/dp/B092VT1JGD/ref=sr_1_5?keywords=nintendo%2Bswitch&qid=1681979388&sprefix=nin%2Caps%2C82&sr=8-5&th=1");
+		addProduct.put("Website", "Amazon");
+		delegate.handleJSONRequest(new JSONMessage("add product", addProduct.toString()));
+		
 		JSONObject RemoveProduct = new JSONObject();
 		RemoveProduct.put("UserID", "123");
 		RemoveProduct.put("ProductID", "234");

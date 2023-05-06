@@ -91,10 +91,8 @@ public class UserDelegate {
     		String website = data.getString("Website").toString();
     		boolean success = true;
         	if(productID.isEmpty()) {      		
-        		ProductVO productVO = new ProductVO();
-            	productVO.url = data.getString("Url").toString();
-            	productVO.siteName = website;
-            	productVO.title = productTracker.getProductDataFromUrl(url, website).title;
+        		ProductVO productVO = new ProductVO(productTracker.getProductDataFromUrl(url, website).title, 
+        				data.getString("Url").toString(), website);
             	
             	productID = userDao.addProductToUserWishlist(userID, productVO);
         	}else {

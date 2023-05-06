@@ -45,7 +45,8 @@ public class WebSocketIntegrationTests {
     
     @Test
     public void testNotifyUserOnProductChange() {
-    	tracker.addUser("1", "1", "testurl", "Stub");
+    	UserVO user = new UserVO("1", "", "", "");
+    	tracker.addUser(user, "1", "testurl", "Stub");
         tracker.trackProducts();
         tracker.trackProducts();
     }

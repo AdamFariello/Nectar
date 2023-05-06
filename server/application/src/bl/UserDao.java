@@ -49,10 +49,8 @@ public class UserDao {
     	ArrayList<String> wheresValues = new ArrayList<String>();
     	wheresValues.add(emailAddress);
     	
-    	ArrayList<ArrayList<String>> user = test.getFromTable_2DArrStr(table, columns, wheres, wheresValues);
-    	
-    	UserVo userVo = new UserVo(user.get());
-    	return null;
+    	ArrayList<String> user = (test.getFromTable_2DArrStr(table, columns, wheres, wheresValues)).get(0);
+    	return new UserVo(user.get(0), user.get(1), user.get(2), user.get(3));
     }
 
     public Boolean addProductToUserWishlist(int userID, ProductVO product){
@@ -76,7 +74,8 @@ public class UserDao {
 			String product_siteUrl  = product.getEqualityComponents()[1];
 			wheresValues.add(product_siteUrl); wheresValues.add(product_siteUrl);
 			
-			ArrayList<ArrayList<Object>> arr = test.getFromTable_2DArrObj(
+			
+			ArrayList<ArrayList<Object>> temp = test.getFromTable_2DArrObj(
 				table, columns, wheres, wheresValues
 			);
 			int product_id = (Integer) arr.get(0).get(0);

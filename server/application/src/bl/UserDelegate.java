@@ -61,6 +61,28 @@ public class UserDelegate {
     	}	
     }
     
+    private JSONMessage handleRegisterRequest(JSONObject data) {
+    	String username = data.get("Username").toString();
+		String password = data.get("Password").toString();
+		UserVO user = userDao.getUserByEmailAdress(username);
+		if(user!= null) {
+			JSONObject obj = new JSONObject();
+    		obj.put("Error Message", "Username already in use");
+			return new JSONMessage("Register Error", obj.toString());
+		}
+		user = new UserVO("", username, password, "");
+		String userID = userDao.addUser(user);
+		if (userID != null) {
+			JSONObject result = new JSONObject();
+    		result.put("UserID", 1);
+			return new JSONMessage("Login Result", result.toString());
+		}else {
+			JSONObject obj = new JSONObject();
+    		obj.put("Error Message", "Could not create user");
+			return new JSONMessage("Register Error", obj.toString());
+		}
+    }
+    
     private JSONMessage handleAddProductRequest(JSONObject data) {
     	try{
     		String userID = data.get("UserID").toString();
@@ -123,6 +145,8 @@ public class UserDelegate {
     	switch(request.message) {
     		case "login":
     			return handleLoginRequest(request.data);
+    		case "register":
+    			return handleRegisterRequest(request.data);
     		case "add product":
     			return handleAddProductRequest(request.data);
     		case "remove product":

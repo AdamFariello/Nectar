@@ -1,4 +1,9 @@
-ws = new WebSocket("ws://localhost:8993/nectar/");
+var port = prompt("Enter port number")
+if (port != null){
+    ws = new WebSocket("ws://localhost:" + port + "/nectar/");
+}else{
+    ws = new WebSocket("ws://localhost:8993/nectar/");
+}
 
 
 ws.onopen = function(){

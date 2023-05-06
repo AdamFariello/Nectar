@@ -50,7 +50,7 @@ public class UserDao {
     	wheresValues.add(emailAddress);
     	
     	ArrayList<String> user = (test.getFromTable_2DArrStr(table, columns, wheres, wheresValues)).get(0);
-    	return new UserVo(user.get(0), user.get(1), user.get(2), user.get(3));
+    	return new UserVO(user.get(0), user.get(1), user.get(2), user.get(3));
     }
 
     public Boolean addProductToUserWishlist(int userID, ProductVO product){
@@ -78,7 +78,7 @@ public class UserDao {
 			ArrayList<ArrayList<Object>> temp = test.getFromTable_2DArrObj(
 				table, columns, wheres, wheresValues
 			);
-			int product_id = (Integer) arr.get(0).get(0);
+			int product_id = (Integer) temp.get(0).get(0);
 			
 			
 			test.setCurrentServer(dbs[1]);

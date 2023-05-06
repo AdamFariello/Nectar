@@ -1,6 +1,8 @@
 package bl;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
+import java.util.Map.Entry;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -18,20 +20,18 @@ public class Receiver {
     private static String[] carrierEmails = {"@tmomail.com", "@vmobl.com", "@cingularme.com", "@messaging.sprintpcs.com",
         "@vtext.com", "@messaging.nextel.com"};
 
-    private ArrayList<String> userSubscribers;
-    private ArrayList<String> phoneNumbers;
-    private ArrayList<String> emailAddresses;
+    private HashMap<String, UserVO> userSubscribers;
     private EventEndpoint endpoint;
     private String currentEndPointUserID;
     
     ScrapedProductVO previousProductVO;
     
     public Receiver() {
-    	userSubscribers = new ArrayList<String>();
+    	userSubscribers = new HashMap<String, UserVO>();
     }
 
-    public void addUser(String userID){
-        userSubscribers.add(userID);
+    public void addUser(String userID, UserVO user){
+        userSubscribers.put(userID, user);
     }
 
     public void setEndpoint(EventEndpoint endpoint, String userID) {
@@ -58,45 +58,33 @@ public class Receiver {
     }
 
     public void receive(ScrapedProductVO productVO){
-        if (previousProductVO == null){
-            previousProductVO = productVO;
-        } else if (previousProductVO != productVO){
-        	//System.out.println(productVO.toString());
-            //userSubscribers.forEach((k, v) -> v.notify(productVO, previousProductVO));
-            //Get user email and phone and tracker settings from database
-            //Send message
+        if (previousProductVO != productVO){
         	if(currentEndPointUserID != null) {
-        		if(userSubscribers.contains(currentEndPointUserID)){
+        		if(userSubscribers.containsKey(currentEndPointUserID)){
         			JSONObject result = new JSONObject();
             		result.put("previousProductInfo", previousProductVO.encode());
             		result.put("currentProductInfo", productVO.encode());
-    		
-            		endpoint.sendJSONMessageToSession(new JSONMessage("Product Change", result.toString()));  	
+            		endpoint.sendJSONMessageToSession(new JSONMessage("Product Change", result.toString()));  
         		}
-        	}     		
-        	for (String number : phoneNumbers) {
-        		try {
-					sendTextMessage(productVO, number);
+        	}  
+        	for (Entry<String, UserVO> entry : userSubscribers.entrySet()) {
+                UserVO user = entry.getValue();
+                try {
+                	if(!user.userPhoneNumber.isEmpty()) {
+                		sendTextMessage(productVO, user.userPhoneNumber);
+                	}
+                	if(!user.userEmail.isEmpty()) {
+                		sendEmailMessage(productVO, user.userEmail);
+                	}                	
+					
 				} catch (MessagingException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-        	}
-        	for (String email : emailAddresses) {
-        		try {
-					sendEmailMessage(productVO, email);
-				} catch (MessagingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-        	}
-            /*try {
-                sendEmailMessage(productVO, "dankedest444@gmail.com");
-                //sendTextMessage(productVO, "9083706809");
-            } catch (MessagingException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }*/
+            } 
+        }
+        if (previousProductVO == null){
+            previousProductVO = productVO;
         }
     }
     

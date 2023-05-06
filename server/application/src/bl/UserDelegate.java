@@ -25,7 +25,8 @@ public class UserDelegate {
     	for (Entry<String, ArrayList<String>> entry : wishlists.entrySet()) {
             String userID = entry.getKey();
             ArrayList<String> wishlist = entry.getValue();
-            productTracker.addUserWishList(userID, wishlist.toArray(new String[wishlist.size()]));
+            UserVO user = userDao.getUserByUserID(userID);
+            productTracker.addUserWishList(user, wishlist.toArray(new String[wishlist.size()]));
         }
     }
 
@@ -60,6 +61,28 @@ public class UserDelegate {
     	}	
     }
     
+    private JSONMessage handleRegisterRequest(JSONObject data) {
+    	String username = data.get("Username").toString();
+		String password = data.get("Password").toString();
+		UserVO user = userDao.getUserByEmailAdress(username);
+		if(user!= null) {
+			JSONObject obj = new JSONObject();
+    		obj.put("Error Message", "Username already in use");
+			return new JSONMessage("Register Error", obj.toString());
+		}
+		user = new UserVO("", username, password, "");
+		String userID = userDao.addUser(user);
+		if (userID != null) {
+			JSONObject result = new JSONObject();
+    		result.put("UserID", 1);
+			return new JSONMessage("Login Result", result.toString());
+		}else {
+			JSONObject obj = new JSONObject();
+    		obj.put("Error Message", "Could not create user");
+			return new JSONMessage("Register Error", obj.toString());
+		}
+    }
+    
     private JSONMessage handleAddProductRequest(JSONObject data) {
     	try{
     		String userID = data.get("UserID").toString();
@@ -68,17 +91,16 @@ public class UserDelegate {
     		String website = data.getString("Website").toString();
     		boolean success = true;
         	if(productID.isEmpty()) {      		
-        		ProductVO productVO = new ProductVO();
-            	productVO.url = data.getString("Url").toString();
-            	productVO.siteName = website;
-            	productVO.title = productTracker.getProductDataFromUrl(url, website).title;
+        		ProductVO productVO = new ProductVO(productTracker.getProductDataFromUrl(url, website).title, 
+        				data.getString("Url").toString(), website);
             	
             	productID = userDao.addProductToUserWishlist(userID, productVO);
         	}else {
         		success = userDao.addProductToUserWishlist(userID, productID);
         	}
         	if(success) {
-        		success = productTracker.addUser(userID, productID, url, website);
+        		UserVO user = userDao.getUserByUserID(userID);
+        		success = productTracker.addUser(user, productID, url, website);
         	}	
         	JSONObject result = new JSONObject();
     		result.put("result", success);
@@ -103,6 +125,12 @@ public class UserDelegate {
     private JSONMessage handleGetUserWishlistRequest(JSONObject data) {
     	String userID = data.get("UserID").toString();
     	JSONObject result = new JSONObject();
+    	
+    	/*ArrayList<String> wishlist = userDao.getUserWishList(userID);
+    	for (String productID: wishlist) {
+    		JSONObject productInfo = new JSONObject();
+        	productInfo = productTracker.getProductData(productID);
+    	}*/
     	/*JSONArray array = new JSONArray();
     	for(int i = 0; i < wishlist.size(); i++) {
     		array.put();
@@ -115,6 +143,8 @@ public class UserDelegate {
     	switch(request.message) {
     		case "login":
     			return handleLoginRequest(request.data);
+    		case "register":
+    			return handleRegisterRequest(request.data);
     		case "add product":
     			return handleAddProductRequest(request.data);
     		case "remove product":

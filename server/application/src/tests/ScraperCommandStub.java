@@ -22,8 +22,11 @@ public class ScraperCommandStub extends ScraperCommand {
         if(this.before){
             receiver.receive(first);
             this.before = false;
+            System.out.println("first");
         }else{
             receiver.receive(second);
+            //this.before = true;
+            System.out.println("second");
         }
         
     }

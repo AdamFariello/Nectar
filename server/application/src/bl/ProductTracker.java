@@ -6,6 +6,9 @@ import server.EventEndpoint;
 public class ProductTracker implements Runnable{
 	private Thread t;
     private WebScraper webScraper;
+    private EventEndpoint endpoint;
+    private String sessionUserID;
+    
     HashMap<String, Receiver> receivers;
 
     public ProductTracker(){
@@ -27,6 +30,7 @@ public class ProductTracker implements Runnable{
     	String userID = user.userID;
         if (!receivers.containsKey(productID)){
             Receiver receiver = new Receiver();
+            receiver.setEndpoint(endpoint, sessionUserID);
             receiver.addUser(userID, user);
             if(webScraper.checkWebsiteSupport(website)) {
             	addProduct(productID, url, website, receiver);
@@ -49,6 +53,9 @@ public class ProductTracker implements Runnable{
     }
 
     public boolean removeUser(String userID, String productID){
+    	if(!receivers.containsKey(productID)) {
+    		return false;
+    	}
         boolean noUsersLeft = receivers.get(productID).removeUser(userID);
         if (noUsersLeft){
             removeProduct(productID);
@@ -75,7 +82,9 @@ public class ProductTracker implements Runnable{
     }
 
 	public void setEndpoint(EventEndpoint eventEndpoint, String currentSessionUserID) {
-		receivers.forEach((k, v) -> v.setEndpoint(eventEndpoint, currentSessionUserID));		
+		receivers.forEach((k, v) -> v.setEndpoint(eventEndpoint, currentSessionUserID));	
+		sessionUserID = currentSessionUserID;
+		endpoint = eventEndpoint;
 	}
 
 	public void closeEndpoint() {
@@ -86,9 +95,24 @@ public class ProductTracker implements Runnable{
 	synchronized public void run() {
 		while(!Thread.currentThread().isInterrupted()) {
 			try {
-				System.out.println("Tracking");
+				//System.out.println("Tracking");
 				trackProducts();
 				wait(1000);	
+			} catch (InterruptedException ex) {
+		        Thread.currentThread().interrupt();
+		    }
+		}
+	}
+	
+	synchronized public void testRun() {
+		while(!Thread.currentThread().isInterrupted()) {
+			try {
+				//System.out.println("Tracking");
+				wait(1000);
+				trackProducts();
+				trackProducts();
+				//wait(1000);	
+				Thread.currentThread().interrupt();
 			} catch (InterruptedException ex) {
 		        Thread.currentThread().interrupt();
 		    }

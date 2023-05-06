@@ -35,6 +35,7 @@ public class Receiver {
     }
 
     public void setEndpoint(EventEndpoint endpoint, String userID) {
+    	System.out.println("user id " + userID);
     	this.endpoint = endpoint;
     	this.currentEndPointUserID = userID;
     }
@@ -58,11 +59,17 @@ public class Receiver {
     }
 
     public void receive(ScrapedProductVO productVO){
+    	if(productVO == null) {
+    		return;
+    	}
         if (previousProductVO != productVO){
+        	System.out.println("diff");
         	if(currentEndPointUserID != null) {
         		if(userSubscribers.containsKey(currentEndPointUserID)){
         			JSONObject result = new JSONObject();
-            		result.put("previousProductInfo", previousProductVO.encode());
+        			if(previousProductVO != null) {
+        				result.put("previousProductInfo", previousProductVO.encode());
+        			}     		
             		result.put("currentProductInfo", productVO.encode());
             		endpoint.sendJSONMessageToSession(new JSONMessage("Product Change", result.toString()));  
         		}
@@ -82,6 +89,7 @@ public class Receiver {
 					e.printStackTrace();
 				}
             } 
+        	previousProductVO = productVO;
         }
         if (previousProductVO == null){
             previousProductVO = productVO;

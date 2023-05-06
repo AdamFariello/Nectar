@@ -10,8 +10,22 @@ registerButton.addEventListener("click", (e) => {
     const password2 = registerForm.passwordTwo.value;
 
     if (username === username2 && password === password2) {
+        var registerInfo = { Username: username, Password: password }
+        var request = { message: "register", data: registerInfo }
+        chrome.runtime.sendMessage(request, function (response) {
+            console.log(response);
+            var jresponse = JSON.parse(response)
+            if (jresponse.message === "Login Error") {
+                loginErrorMsg.style.opacity = 1;
+            }
+            else {
+                ws.send("Logged in: user pass");
+                alert("You have successfully logged in.");
+                location.href = "../view/home.html";
+            }
+        });
         alert("You have successfully registered.");
-        location.href = "../pages/home.html";
+        location.href = "../view/home.html";
     } else {
         registerErrorMsg.style.opacity = 1;
     }

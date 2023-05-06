@@ -6,6 +6,7 @@ import bl.*;
 import org.eclipse.jetty.websocket.api.util.WSURI;
 import org.eclipse.jetty.websocket.client.WebSocketClient;
 import org.eclipse.jetty.websocket.api.Session;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,6 +17,7 @@ public class WebSocketIntegrationTests {
     private WebSocketServer server;
     private ProductTracker tracker;
     private UserDelegate delegate;
+    private WebSocketClientStub client;
     private Session session;
     
     @Before
@@ -23,32 +25,42 @@ public class WebSocketIntegrationTests {
     	tracker = new ProductTracker();
         delegate = new UserDelegate(tracker, new UserDao());
     	server = new WebSocketServer(tracker, delegate);
-    	server.setPort(8080);
+    	//tracker.start();
+    	server.setPort(8090);
         server.start();
-        server.join();
+        //server.join();
         createTestConnection();
     }
     
     public void createTestConnection() throws Exception{
         //URI destUri = server.getURI().resolve("/nectar/");
         //URI wsUri = WSURI.toWebsocket(destUri);
-    	URI uri = URI.create("ws://localhost:8080/nectar");
-        WebSocketClientStub client = new WebSocketClientStub();
+    	//System.out.println("testconnect1");
+    	URI uri = URI.create("ws://localhost:8090/nectar");
+    	//System.out.println("testconnect2");
+        client = new WebSocketClientStub();
+        //System.out.println("testconnect3");
+        //client.run(uri, tracker, delegate);
         session = client.connect(uri, tracker, delegate);
+        //System.out.println("testconnect4");
         
     }
     
     @Test
-    public void testLogin() throws IOException {
-    	//session.getRemote().sendString();
+    public void testNotifyUserOnProductChange() throws InterruptedException {
+    	//System.out.println("Step1");
+    	tracker.setEndpoint(client.getEndpoint(), "1");
+    	//System.out.println("Step2");
+    	UserVO user = new UserVO("1", "", "", "");
+    	//System.out.println("Step3");
+    	tracker.addUser(user, "1", "testurl", "Stub");
+    	//System.out.println("Step4");
+    	tracker.testRun();
+    	Thread.sleep(6000);
     }
     
-    @Test
-    public void testNotifyUserOnProductChange() {
-    	UserVO user = new UserVO("1", "", "", "");
-    	tracker.addUser(user, "1", "testurl", "Stub");
-        tracker.trackProducts();
-        tracker.trackProducts();
+    @After
+    public void closeSession() {
+    	session.close();
     }
-
 }

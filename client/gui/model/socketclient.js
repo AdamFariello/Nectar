@@ -1,4 +1,4 @@
-ws = new WebSocket("ws://localhost:8994/nectar/");
+ws = new WebSocket("ws://localhost:8993/nectar/");
 
 
 ws.onopen = function(){

@@ -6,6 +6,13 @@ public class ProductVO extends JSONEncodeableValueObject{
 	public String title;
     public String url;
     public String siteName;
+    
+    public ProductVO(String title, String url, String siteName) {
+    	this.title = title;
+    	this.url = url;
+    	this.siteName = siteName;
+    }
+    
 	@Override
 	protected String[] getEqualityComponents() {
 		String[] s = {title, url, siteName};

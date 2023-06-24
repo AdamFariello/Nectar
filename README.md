@@ -36,15 +36,43 @@ it also contains each teammates contributions.
 
 &nbsp;
 
+&nbsp;
+
+## Setup 
+---
+### Step 0: Downloading the Repository
+#### Using the terminal
+`
+git clone https://github.com/AdamFariello/Nectar.git 
+&&
+
+`
+
+Step 1: Setup mysql database
+
+See 
+[release/instructions.pdf]( https://github.com/AdamFariello/Nectar/blob/main/release/Instructions.pdf )
+
+&nbsp;
+
+&nbsp;
+
 ### Questions
+---
 #### Why not fork the repository?
 1. I want to keep the original submitted repository intact.
 2. I want all the branches in the repository for development.
 
 #### What is the functionality of the original repository?
-The python scraper script, and the database, are finished.   
-Other parts, such as the gui, and the logic connector, arent.
+The python scraper script, the database, 
+and notifications via email and text -- are completed.   
 
+If you're not interested in running the program,
+you can look at screen shots of email and text messaging working.   
+Look at page one in
+[release/Contributions.pdf]( https://github.com/AdamFariello/Nectar/blob/main/release/Contributions.pdf ).   
+
+ 
 #### Does this repository have the same level of functionality? 
 As of right now of writing this answer -- 
 (June 24, 2023) --
@@ -55,11 +83,4 @@ For a week or few.
 Other repositories need attention first, 
 plusother priorities need to be dealt with first.
 
-&nbsp;
 
-&nbsp;
-
-## Setup 
----
-See 
-[release/instructions.pdf]( https://github.com/AdamFariello/Nectar/blob/main/release/Instructions.pdf )

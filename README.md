@@ -165,6 +165,39 @@ they've been left in
 
 &nbsp;
 
+## Test Report
+---
+### Preface
+Below was written by one of the original team members, Rood-Landy.   
+To look at the original, go 
+[here on page 1](https://github.com/DoubleAyyBatteries/Nectar/blob/main/release/Contributions.pdf),
+and it's mentioned after Rood-Landys contributions.
+
+### The test report
+Email and text sending is functional on its own through the IDE.    
+Here’s proof from my phone.    
+![alt text](screenshot.png)
+
+
+It can’t be tested easily.     
+You would have to rewrite the receiver code, 
+so that it doesn’t ask the database for email and phone but you put it in yourself.
+
+Socket server is functional and sending and receiving json objects.   
+Same for the extension, 
+the socket client in the extension can send,
+and receive json objects functionally.  
+Product tracking is also functional,
+it can scrape the websites of products that are on a user’s wishlist.
+
+These are all functional on their own though, 
+but require running the code files directly, 
+(like though an IDE).
+
+&nbsp;
+
+&nbsp;
+
 ### Contributions
 ---
 #### Preface
@@ -236,12 +269,7 @@ Questions below are questions not answered earlier in the README
 
 #### What is the functionality of the original repository?
 The python scraper script, the database, 
-and notifications via email and text -- are completed.   
-
-If you're not interested in running the program,
-you can look at screen shots of email and text messaging working.   
-Look at page one in
-[release/Contributions.pdf]( https://github.com/AdamFariello/Nectar/blob/main/release/Contributions.pdf ).   
+and notifications via email and text -- are completed.     
 
 &nbsp;
 

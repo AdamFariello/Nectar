@@ -3,8 +3,8 @@
 ## Table of Contents
 ---
 - [Introduction](#Introduction)
-- [Setup](#Setup)
-- [Running the extension](#Running-the-extension)
+- [Setting up the Extension](#Setting-up-the-Extension)
+- [Running the Extension](#Running-the-Extension)
 - [Contributions](#Contributions)
 - [Questions](#Questions)
 
@@ -74,7 +74,7 @@ but it doesn’t test everything.
 
 &nbsp;
 
-## Setup
+## Setting up the Extension
 ---
 The instructions below are based off 
 [instructions.pdf]( https://github.com/DoubleAyyBatteries/Nectar/blob/main/release/Instructions.pdf )
@@ -146,7 +146,7 @@ When you load the extension, a prompt will appear, go to section "Running"
 
 &nbsp;
 
-## Running the extension
+## Running the Extension
 ---
 When you the extension is loaded, a prompt will appear, 
 asking for a port number, enter the port number used back in part 2.  

@@ -3,7 +3,8 @@
 ## Table of Contents
 ---
 - [Introduction](#Introduction)
-- [Setup and Running the Program](#Setup and Running the Program)
+- [Setup](#Setup)
+- [Running the extension](#Running-the-extension)
 - [Contributions](#Contributions)
 - [Questions](#Questions)
 
@@ -69,9 +70,11 @@ the server can't fully function as intended
 Unit tests and integration tests were also made, and are functional -- 
 but it doesn’t test everything.
 
+&nbsp;
 
+&nbsp;
 
-## Setup and Running the Program
+## Setup
 ---
 The instructions below are based off 
 [instructions.pdf]( https://github.com/DoubleAyyBatteries/Nectar/blob/main/release/Instructions.pdf )
@@ -129,8 +132,7 @@ Remember that port number, it will be used in the next step
 
 &nbsp;
 
-### Step 3: Running the extension in the chrome browser 
-#### Loading the extension  
+### Step 3: Preparing the chrome browser  
 On chrome, go to your extensions page (`chrome://extensions/`).   
 
 Then: toggle the "developer mode" button at the top right corner of the page. 
@@ -138,8 +140,15 @@ Then: toggle the "developer mode" button at the top right corner of the page.
 Click "load unpacked" top left corner of the page.    
 Go to the folder where the files were downloaded -> client -> gui 
 
-#### Using the extension
-When you load the extension, a prompt will appear, 
+When you load the extension, a prompt will appear, go to section "Running"
+
+&nbsp;
+
+&nbsp;
+
+## Running the extension
+---
+When you the extension is loaded, a prompt will appear, 
 asking for a port number, enter the port number used back in part 2.  
 (An alert will appear, letting you know that the connection has been established.)
 
@@ -151,6 +160,8 @@ The reason they're there is was for testing the app,
 but since the project is unfinished,
 they've been left in
 )*
+
+&nbsp;
 
 &nbsp;
 
@@ -206,18 +217,6 @@ Its usage refers to, all sub-folders, and files, within that folder
 (Finished coding the scraper script)
 - Nectar/client/gui/*    
 (everything except model folder)
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
 
 &nbsp;
 

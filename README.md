@@ -1,5 +1,16 @@
 # Nectar (On hiatus) 
 
+## Table of Contents
+---
+- [Introduction](#Introduction)
+- [Setup and Running the Program](#Setup and Running the Program)
+- [Contributions](#Contributions)
+- [Questions](#Questions)
+
+&nbsp;
+
+&nbsp;
+
 ## Introduction
 --- 
 ### Project Description
@@ -58,55 +69,40 @@ the server can't fully function as intended
 Unit tests and integration tests were also made, and are functional -- 
 but it doesn’t test everything.
 
-&nbsp;
 
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
 
 ## Setup and Running the Program
 ---
-The instructions below are based off the original repository's 
+The instructions below are based off 
 [instructions.pdf]( https://github.com/DoubleAyyBatteries/Nectar/blob/main/release/Instructions.pdf )
+from the original repository 
 
 ### Step 0: Downloading the Repository
-#### Option A: Using the terminal
-`
-git clone https://github.com/AdamFariello/Nectar.git 
-&&
-cd Nectar.git
-`
+You can input the following in the terminal:   
+` git clone https://github.com/AdamFariello/Nectar.git `
 
-#### Option B: Using releases
-Click on the most recent release.
+Or alternatively, just download the file: "Final.jar"
 
 &nbsp;
 
 ### Step 1: Seting up the (mysql) database
-#### Download mysql
-Click on one of the following operating systems to be taken to an 
-installation guide for that OS.
+#### Download and Installing mysql
+Click on one of the following operating systems below to be taken to an 
+download + installation guide for it.
 
 - [Windows]( https://dev.mysql.com/doc/refman/8.0/en/windows-installation.html )
 - [Mac]( https://dev.mysql.com/doc/refman/8.0/en/macos-installation.html  )
 - [Linux]( https://dev.mysql.com/doc/refman/8.0/en/linux-installation.html )
+- [For Anything Else]( https://dev.mysql.com/doc/refman/8.0/en/installing.html )
 
-For any other situation, or you need to upgrade/downgrade mysql, 
-click [here]( https://dev.mysql.com/doc/refman/8.0/en/installing.html ),
-and go through the table of content.
+*(
+When installing, choose: "Server Only"
+*)
 
 #### Starting the mysql service/daemon
-Starting mysql differentiates between operating systems,
-so I recommend following a tutorial, 
-such as [this one]( https://phoenixnap.com/kb/start-mysql-server ).
+Starting mysql differentiates between operating systems.  
+I recommend following a tutorial, such as 
+[this one]( https://phoenixnap.com/kb/start-mysql-server ).
 
 *(
 Mysql is a service/daemon; 
@@ -121,8 +117,11 @@ For an IDE, I recommend
 &nbsp;
 
 ### Step 2: Running the server
-Run the file releases/Final.jar in a command prompt with a port number.
-`java final.jar 8000`
+Run the following in the terminal:    
+`java final.jar {port number}`
+
+Example:   
+`java final.jar 8000"`
 
 *(
 Remember that port number, it will be used in the next step
@@ -130,29 +129,95 @@ Remember that port number, it will be used in the next step
 
 &nbsp;
 
-### Step 3: Setting up the chrome browser 
+### Step 3: Running the extension in the chrome browser 
+#### Loading the extension  
 On chrome, go to your extensions page (`chrome://extensions/`).   
-Then: toggle the developer mode button, and click load unpacked on the top left.   
+
+Then: toggle the "developer mode" button at the top right corner of the page. 
+ 
+Click "load unpacked" top left corner of the page.    
+Go to the folder where the files were downloaded -> client -> gui 
+
+#### Using the extension
+When you load the extension, a prompt will appear, 
+asking for a port number, enter the port number used back in part 2.  
+(An alert will appear, letting you know that the connection has been established.)
+
+Then, a dialogue will appear, asking for your: username, and password.   
+Enter whatever you want in both fields, click "login", 
+and you will be flooded with alerts.   
+*( 
+The reason they're there is was for testing the app, 
+but since the project is unfinished,
+they've been left in
+)*
 
 &nbsp;
 
-### Step 4: Installing the chrome extension
-Navigate to the Nectar/client folder and click the gui folder.   
-*(
-This will load the extension in your browser. 
-*)
+### Contributions
+---
+#### Preface
+##### Link to original contribution file
+https://github.com/DoubleAyyBatteries/Nectar/blob/main/release/Contributions.pdf
 
-A prompt will appear asking for your port number,    
-put in the port number you used in step 2.    
-*(
-There should be an alert letting you know the connection has been established 
-)*
+##### Why are they listed here
+Since this repository was duplicated from the original repository,
+the contributions to the original repository are listed below.   
+The order of the contributions is solely based on reading comprehension.        
 
-Then, a dialogue will appear asking for: your username, and password.   
-Enter whatever you want in both fields, click "login", and an alert will appear.   
-*(
-These alerts are remnants of testing the app, since of the project being unfinished
-)*
+The contributions listed are also only based off the main branch.   
+
+##### When the contributions are updated
+Contributions listed below may be deleted, 
+(because they don't fit the the project anymore).   
+Appendations will be added below for the deleted Contributions.
+
+##### What is the purpose of "*" ?
+Its usage refers to, all sub-folders, and files, within that folder 
+
+&nbsp;
+
+#### Rood-Landy Thezard rt576
+- Nectar/server/application/src/bl/*    
+(everything except: scripts folder, and UserDao.java)
+- Nectar/server/application/src/server/*
+- Nectar/server/application/src/tests/*
+- Nectar/release/*
+- Nectar/client/gui/model/*
+
+&nbsp;
+
+#### Adam Fariello ajf270
+- Nectar/server/database/*
+- Nectar/server/application/src/databaseCode/*
+- Nectar/server/application/src/bl/UserDao.java   
+
+&nbsp;
+
+#### Fiaz Mushfeq fm398
+- Nectar/server/application/src/bl/scripts     
+(Started coding the scraper script)
+- Nectar/test/*
+
+&nbsp;
+
+#### Akshat Adlakha aa2040
+- Nectar/server/application/src/bl/scripts/*     
+(Finished coding the scraper script)
+- Nectar/client/gui/*    
+(everything except model folder)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
 
 &nbsp;
 
@@ -160,9 +225,15 @@ These alerts are remnants of testing the app, since of the project being unfinis
 
 ### Questions
 ---
+*(
+Questions below are questions not answered earlier in the README
+)*
+
 #### Why not fork the repository?
 1. I want to keep the original submitted repository intact.
 2. I want all the branches in the repository for development.
+
+&nbsp;
 
 #### What is the functionality of the original repository?
 The python scraper script, the database, 
@@ -173,11 +244,14 @@ you can look at screen shots of email and text messaging working.
 Look at page one in
 [release/Contributions.pdf]( https://github.com/AdamFariello/Nectar/blob/main/release/Contributions.pdf ).   
 
- 
+&nbsp;
+
 #### Does this repository have the same level of functionality? 
 As of right now of writing this answer -- 
 (June 24, 2023) --
 yes. 
+
+&nbsp;
 
 #### How long will this repository be on hiatus?
 For a week or few.   

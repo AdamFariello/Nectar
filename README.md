@@ -5,6 +5,7 @@
 - [Introduction](#Introduction)
 - [Setting up the Extension](#Setting-up-the-Extension)
 - [Running the Extension](#Running-the-Extension)
+- [Test Report](#Test-Report)
 - [Contributions](#Contributions)
 - [Questions](#Questions)
 
@@ -176,7 +177,7 @@ and it's mentioned after Rood-Landys contributions.
 ### The test report
 Email and text sending is functional on its own through the IDE.    
 Here’s proof from my phone.    
-![alt text](screenshot.png)
+![alt text](readme/screenshot.png)
 
 
 It can’t be tested easily.     

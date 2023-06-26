@@ -199,7 +199,7 @@ but require running the code files directly,
 Go here:   
 `https://github.com/DoubleAyyBatteries/Nectar/blob/main/release/Contributions.pdf`
 
-And bellow Rood-Landy's contributions, it's written there.
+It's starts below Rood-Landy's contributions section.
 
 &nbsp;
 

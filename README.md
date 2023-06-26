@@ -169,15 +169,13 @@ they've been left in
 ## Test Report
 ---
 ### Preface
-Below was written by one of the original team members, Rood-Landy.   
-To look at the original, go 
-[here on page 1](https://github.com/DoubleAyyBatteries/Nectar/blob/main/release/Contributions.pdf),
-and it's mentioned after Rood-Landys contributions.
+Below was written by one of the original team members, Rood-Landy.      
+*( Re-worded a little bit though *)
 
-### The test report
+### The Test Report
 Email and text sending is functional on its own through the IDE.    
 Here’s proof from my phone.    
-![alt text](readme/screenshot.png)
+![alt text](.readme/screenshot.png)
 
 
 It can’t be tested easily.     
@@ -193,7 +191,15 @@ it can scrape the websites of products that are on a user’s wishlist.
 
 These are all functional on their own though, 
 but require running the code files directly, 
-(like though an IDE).
+(like though an IDE).   
+"    
+-- Rood-Landy
+
+### Original
+Go here:   
+`https://github.com/DoubleAyyBatteries/Nectar/blob/main/release/Contributions.pdf`
+
+And bellow Rood-Landy's contributions, it's written there.
 
 &nbsp;
 
